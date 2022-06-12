@@ -1,23 +1,20 @@
-import { Button, IconButton, styled, Typography } from "@mui/material";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
+import { Box, Button, Stack } from "@mui/material";
+import { Container } from "@mui/system";
+import Feed from "./components/Feed";
+import Navbar from "./components/Navbar";
+import Rightbar from "./components/Rightbar";
+import Sidebar from "./components/Sidebar";
 
 function App() {
-  const BlueButton = styled(Button)(({ theme }) => ({
-    backgroundColor: theme.palette.customColor.main,
-    "&:hover": { backgroundColor: "green" },
-  }));
-
   return (
-    <div className="App">
-      <Button color="primary" variant="contained">
-        MY BUTTON
-      </Button>
-
-      <Fab color="primary" aria-label="add" size="small">
-        <AddIcon />
-      </Fab>
-    </div>
+    <Box sx={{ border: "2px solid green", background: "gray" }}>
+      {/* <Navbar /> */}
+      <Stack direction="row" spacing={2} justifyContent="space-around">
+        <Sidebar />
+        <Feed />
+        <Rightbar />
+      </Stack>
+    </Box>
   );
 }
 
