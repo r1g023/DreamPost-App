@@ -5,11 +5,12 @@ const Sidebar = () => {
   return (
     <Box
       flex={2}
+      p={2}
       sx={{
-        backgroundColor: "primary.dark",
-        "&:hover": {
-          backgroundColor: "primary.main",
-          opacity: [0.9, 0.8, 0.7],
+        background: "skyblue",
+        display: {
+          xs: "none",
+          sm: "block",
         },
       }}
     >

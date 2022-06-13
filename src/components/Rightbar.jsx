@@ -3,7 +3,17 @@ import React from "react";
 
 const Rightbar = () => {
   return (
-    <Box flex={3} sx={{ border: "3px dashed red" }}>
+    <Box
+      p={2}
+      flex={3}
+      sx={{
+        background: "purple",
+        display: {
+          xs: "none",
+          sm: "block",
+        },
+      }}
+    >
       Rightbar
     </Box>
   );

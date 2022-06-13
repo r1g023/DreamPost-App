@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, Divider, Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import Feed from "./components/Feed";
 import Navbar from "./components/Navbar";
@@ -7,9 +7,14 @@ import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <Box sx={{ border: "2px solid green", background: "gray" }}>
-      {/* <Navbar /> */}
-      <Stack direction="row" spacing={2} justifyContent="space-around">
+    <Box>
+      <Navbar />
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="space-around"
+        divider={<Divider orientation="vertical" flexItem />}
+      >
         <Sidebar />
         <Feed />
         <Rightbar />
