@@ -4,8 +4,8 @@ import React from "react";
 const Rightbar = () => {
   return (
     <Box
-      p={2}
       flex={3}
+      p={2}
       sx={{
         background: "purple",
         display: {

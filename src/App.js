@@ -9,12 +9,7 @@ function App() {
   return (
     <Box>
       <Navbar />
-      <Stack
-        direction="row"
-        spacing={2}
-        justifyContent="space-around"
-        divider={<Divider orientation="vertical" flexItem />}
-      >
+      <Stack direction="row" spacing={2} justifyContent="space-around">
         <Sidebar />
         <Feed />
         <Rightbar />
