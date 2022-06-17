@@ -1,6 +1,6 @@
 export const postList = [
   {
-    id: Date.now(),
+    id: 1,
     title: "Shrimp and Chorizo Paella",
     date: "Jun 15, 2022",
     image:
@@ -11,7 +11,7 @@ export const postList = [
     methodTwo: "Mix rice with shrimp and chorizo",
   },
   {
-    id: Date.now(),
+    id: 2,
     title: "Shrimp Tacos",
     date: "Jun 16, 2022",
     image:
@@ -22,7 +22,7 @@ export const postList = [
     methodTwo: "add shrimp to tortilla with guacamole and lime",
   },
   {
-    id: Date.now(),
+    id: 3,
     title: "Frozen Pizza just like delivery",
     date: "Jun 17, 2022",
     image:

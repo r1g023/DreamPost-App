@@ -8,14 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import { friends, itemData } from "../online-users";
+import RightBarConversations from "./RightBarConversations";
 
 const Rightbar = () => {
   return (
-    <Box
-      flex={3}
-      p={2}
-      sx={{ display: { xs: "none", sm: "block" }, border: "1px solid red" }}
-    >
+    <Box flex={3} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
       {/* container for the rightbar */}
       <Box position="fixed" p={2}>
         <Typography variant="h4">Online Friends</Typography>
@@ -27,11 +24,12 @@ const Rightbar = () => {
         </AvatarGroup>
 
         {/* latest posts */}
-        <Typography variant="h5" fontWeight={400}>
-          Latest Posts
+        <Typography variant="h5" fontWeight={400} mt={2} mb={2}>
+          Latest Photos
         </Typography>
+
         {/* container for the latest posts */}
-        <ImageList cols={3} rowHeight={100} gap={5}>
+        <ImageList cols={3} rowHeight={100} gap={10}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img
@@ -43,6 +41,14 @@ const Rightbar = () => {
             </ImageListItem>
           ))}
         </ImageList>
+        <Typography variant="h5" fontWeight={400} mt={4} mb={2}>
+          Latest Conversations
+        </Typography>
+
+        {/* latest conversations by each user */}
+        {friends.map((item, index) => {
+          return <RightBarConversations key={item.id} data={item} />;
+        })}
       </Box>
     </Box>
   );

@@ -18,7 +18,7 @@ export const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: "10px",
+    borderRadius: 10,
     width: "40%",
   },
   displays: {

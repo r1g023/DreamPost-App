@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AppBar,
   Avatar,
@@ -9,11 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import React from "react";
+
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import { Notifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { UserContext } from "../App";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -27,7 +29,7 @@ const Search = styled("div")(({ theme }) => ({
   width: theme.shape.width,
 }));
 
-const Icons = styled(Box)(({ theme }) => ({
+const StyledIcons = styled(Box)(({ theme }) => ({
   display: "none", //
   gap: "20px", // gap between icons
   alignItems: "center",
@@ -36,7 +38,7 @@ const Icons = styled(Box)(({ theme }) => ({
   },
 }));
 
-const UserBox = styled(Box)(({ theme }) => ({
+const StyledUserBox = styled(Box)(({ theme }) => ({
   display: "flex", // flex
   gap: "10px", // gap between icons
   alignItems: "center", // align icons vertically
@@ -46,6 +48,7 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const { user, setUser } = React.useContext(UserContext);
   const [open, setOpen] = React.useState(false);
   return (
     <>
@@ -56,7 +59,7 @@ const Navbar = () => {
             variant="h4"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            Rigo Dev
+            {user} Dev
           </Typography>
 
           {/* Search and show Icon when screen is XS */}
@@ -67,8 +70,8 @@ const Navbar = () => {
             <InputBase placeholder="Search..." error={true} />
           </Search>
 
-          {/* Mail and notification icons + avatar */}
-          <Icons>
+          {/* Mail and notification icons + avatar - remove if display is mobile */}
+          <StyledIcons>
             <Badge badgeContent={2} color="secondary">
               <MailIcon />
             </Badge>
@@ -81,17 +84,17 @@ const Navbar = () => {
               src="https://avatars.githubusercontent.com/u/57161327?v=4"
               onClick={() => setOpen(!open)}
             />
-          </Icons>
+          </StyledIcons>
 
-          {/* User avatar and name for smaller screens*/}
-          <UserBox onClick={() => setOpen(!open)}>
+          {/* User avatar and name for smaller screens - display if mobile */}
+          <StyledUserBox onClick={() => setOpen(!open)}>
             <Avatar
               sx={{ height: 30, width: 30 }}
               alt="Github Avatar"
               src="https://avatars.githubusercontent.com/u/57161327?v=4"
             />
-            <Typography variant="span">Rigo</Typography>
-          </UserBox>
+            <Typography variant="span">{user}</Typography>
+          </StyledUserBox>
         </StyledToolbar>
 
         {/* Menu */}
@@ -111,7 +114,7 @@ const Navbar = () => {
         >
           <MenuItem>Profile</MenuItem>
           <MenuItem>My account</MenuItem>
-          <MenuItem>Logout</MenuItem>
+          <MenuItem onClick={() => setUser("")}>Logout</MenuItem>
           <MenuItem>FAQ</MenuItem>
         </Menu>
       </AppBar>

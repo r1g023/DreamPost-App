@@ -14,7 +14,19 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ExpandMore, Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import styled from "@emotion/styled";
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 const Post = ({ data }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -63,8 +75,8 @@ const Post = ({ data }) => {
         </IconButton>
         {/* Card Expand Button */}
         <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
+          expand={expanded} // false
+          onClick={handleExpandClick} // toggle true || false
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -73,7 +85,7 @@ const Post = ({ data }) => {
       </CardActions>
 
       {/* ------Card Expand Content------ */}
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse in={expanded} timeout={1000} unmountOnExit>
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>{data.method}</Typography>

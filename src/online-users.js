@@ -1,36 +1,48 @@
+// Online friends
 export const friends = [
   {
     id: 1,
     name: "Jane Doe",
     avatar:
       "https://cdn.pixabay.com/photo/2016/09/22/16/38/avatar-1687700_1280.jpg",
+    comment: " - I'll be in your neighborhood doing errands this…",
+    subject: "Brunch this weekend?",
   },
   {
     id: 2,
     name: "John Doe",
     avatar:
       "https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027366_1280.png",
+    comment: " - Wish I could come, but I'm out of town this…",
+    subject: "Summer BBQ",
   },
   {
     id: 3,
     name: "Cat Doe",
     avatar:
       "https://cdn.pixabay.com/photo/2016/03/31/20/31/amazed-1295833_1280.png",
+    comment: " - Do you have Paris recommendations? Have you ever…",
+    subject: "Oui Oui ",
   },
   {
     id: 4,
     name: "Green Doe",
     avatar:
       "https://cdn.pixabay.com/photo/2022/05/16/06/54/woman-7199635_1280.png",
+    comment: " - I'm getting ready to go but I just realized that ....",
+    subject: "Forgot my keys",
   },
   {
     id: 5,
     name: "Night Sky",
     avatar:
       "https://cdn.pixabay.com/photo/2015/02/24/15/41/wolf-647528_1280.jpg",
+    comment: " - Don't forget to pick up the groceries or else ....",
+    subject: "Dinner",
   },
 ];
 
+// Latest photos
 export const itemData = [
   {
     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",

@@ -7,9 +7,7 @@ const Feed = () => {
   return (
     <Box flex={6} p={3}>
       {postList.map((item) => (
-        <>
-          <Post data={item} key={item.id} />
-        </>
+        <Post data={item} key={item.id} />
       ))}
     </Box>
   );
