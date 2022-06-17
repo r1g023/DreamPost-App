@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
+import { UserContext } from "../App";
 
 const StyledModal = styled(Modal)({
   display: "flex",
@@ -29,6 +30,9 @@ const CreatePost = () => {
   const toggleModal = () => {
     setOpen(!open);
   };
+
+  const { user, setUser } = React.useContext(UserContext);
+
   return (
     <>
       <Tooltip
@@ -68,7 +72,7 @@ const CreatePost = () => {
             {/*userbox of current logged in user */}
             <UserBox>
               <Avatar src="https://i.pravatar.cc/300" />
-              <Typography variant="h6">John Doe</Typography>
+              <Typography variant="h6">{user}</Typography>
 
               {/*form */}
               <FormControl style={{ border: "1px solid gray" }}>

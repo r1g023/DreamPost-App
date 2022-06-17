@@ -14,6 +14,8 @@ export default function useForm(initialValue) {
       .string()
       .required("please enter username")
       .min(3, "minimum of 3 characters needed to login"),
+    // password should give out error if it's incorrect
+    password: yup.string().required("please enter password"),
   });
 
   useEffect(() => {
