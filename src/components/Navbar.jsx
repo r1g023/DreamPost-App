@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Avatar,
@@ -48,6 +49,7 @@ const StyledUserBox = styled(Box)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
   const [open, setOpen] = React.useState(false);
   return (
@@ -114,7 +116,15 @@ const Navbar = () => {
         >
           <MenuItem>Profile</MenuItem>
           <MenuItem>My account</MenuItem>
-          <MenuItem onClick={() => setUser("")}>Logout</MenuItem>
+          <MenuItem
+            onClick={() => {
+              window.localStorage.removeItem("auth-token");
+              window.localStorage.removeItem("user");
+              navigate("/login");
+            }}
+          >
+            Logout
+          </MenuItem>
           <MenuItem>FAQ</MenuItem>
         </Menu>
       </AppBar>

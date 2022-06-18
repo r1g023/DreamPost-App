@@ -3,6 +3,7 @@ import useForm from "../formHooks/useForm";
 import { Box, Button, styled, TextField } from "@mui/material";
 import { useMutation, gql } from "@apollo/client";
 import { AUTH_TOKEN } from "../auth-token";
+import { useNavigate } from "react-router-dom";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -25,6 +26,7 @@ const LOGIN_USER = gql`
 `;
 
 function Login({ setUser }) {
+  let navigate = useNavigate();
   const [value, setValue, errors, buttonDisabled, handleChanges] = useForm({
     username: "",
     password: "",
@@ -47,10 +49,14 @@ function Login({ setUser }) {
       onCompleted: ({ loginUser }) => {
         console.log("loginUser------TOKEN>", loginUser);
         localStorage.setItem(AUTH_TOKEN, loginUser.token);
+        localStorage.setItem("user", JSON.stringify(loginUser.username));
       },
+      context: { clientName: "authLink" },
     });
     setUser(loginNewUser.data.loginUser.username);
+
     console.log("loginNewUser------>", loginNewUser);
+    navigate("/");
   }
 
   if (loading) return <h1>Loading...</h1>;
@@ -62,9 +68,6 @@ function Login({ setUser }) {
     <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
       <StyledBox>
         <h1 style={{ color: "white" }}>User Login</h1>
-        {/* <p style={{ color: "red" }}>
-          {!error ? <h1>Error can't login {error.Error}</h1> : null}
-        </p> */}
 
         <form
           onSubmit={handleSubmit}

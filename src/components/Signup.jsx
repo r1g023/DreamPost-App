@@ -41,6 +41,7 @@ const Signup = () => {
         password: createUser.password,
         role: createUser.role,
       },
+      context: { clientName: "authAPI" },
     });
     console.log("newUser------>", newUser);
   }

@@ -2,12 +2,36 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "@mui/material";
 import App from "./App";
-//import theme from theme.js
+import { BrowserRouter } from "react-router-dom";
 import { theme } from "./theme";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  ApolloLink,
+  HttpLink,
+} from "@apollo/client";
+import { AUTH_TOKEN } from "./auth-token";
+
+const authLink = new HttpLink({
+  uri: "https://node-express-graphql-api.herokuapp.com/graphql/auth",
+});
+
+const graphqlAPI = new HttpLink({
+  uri: "https://node-express-graphql-api.herokuapp.com/graphql",
+  // get token from local storage and add to headers
+  headers: {
+    authorization: localStorage.getItem(AUTH_TOKEN) || "",
+  },
+});
 
 const client = new ApolloClient({
-  uri: "https://node-express-graphql-api.herokuapp.com/graphql/auth",
+  link: ApolloLink.split(
+    (operation) => operation.getContext().clientName === "authLink",
+    // the string "authAPI" can be anything you want,
+    authLink, // <= apollo will send to this if clientName is "authLink"
+    graphqlAPI // <= otherwise will send to this
+  ),
   cache: new InMemoryCache(),
 });
 
@@ -15,7 +39,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   </ApolloProvider>
 );
