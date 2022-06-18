@@ -38,7 +38,7 @@ function App() {
       <Box>
         {/* <CreatePost /> */}
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/page" element={<MainPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route
