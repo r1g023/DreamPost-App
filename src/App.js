@@ -17,12 +17,12 @@ function App() {
   const navigate = useNavigate();
   const [user, setUser] = React.useState("");
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem("user");
-  //   if (data) {
-  //     setUser(JSON.parse(data));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const data = localStorage.getItem("user");
+    if (data) {
+      setUser(JSON.parse(data));
+    }
+  }, []);
 
   //save note card to local storage
   useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
       <Box>
         {/* <CreatePost /> */}
         <Routes>
-          <Route path="/" element={!user ? navigate("/login") : <MainPage />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route
