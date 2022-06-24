@@ -39,8 +39,9 @@ function App() {
       <Box>
         <Navbar user={user} setUser={setUser} />
         <Routes>
+          <Route path={"/"} element={<Login setUser={setUser} />} />
           <Route path="/home" element={<MainPage posts={posts} />} />
-          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
 
           {/* <Route
