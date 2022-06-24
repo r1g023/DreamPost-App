@@ -1,5 +1,6 @@
 import React from "react";
 import { useMutation, gql } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 const REGISTER_USER = gql`
   mutation registerUser(
@@ -41,7 +42,7 @@ const Signup = () => {
         password: createUser.password,
         role: createUser.role,
       },
-      context: { clientName: "authAPI" },
+      context: { clientName: "authLink" },
     });
     console.log("newUser------>", newUser);
   }

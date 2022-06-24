@@ -3,7 +3,7 @@ import useForm from "../formHooks/useForm";
 import { Box, Button, styled, TextField } from "@mui/material";
 import { useMutation, gql } from "@apollo/client";
 import { AUTH_TOKEN } from "../auth-token";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -33,10 +33,10 @@ function Login({ setUser }) {
   });
   const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
 
-  React.useEffect(() => {
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-    console.log("get token---->", authToken);
-  }, [data]);
+  // React.useEffect(() => {
+  //   const authToken = localStorage.getItem(AUTH_TOKEN);
+  //   console.log("get token---->", authToken);
+  // }, [data]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -44,7 +44,7 @@ function Login({ setUser }) {
       variables: {
         username: value.username,
         password: value.password,
-        token: "",
+        token: value.token,
       },
       onCompleted: ({ loginUser }) => {
         console.log("loginUser------TOKEN>", loginUser);
@@ -56,7 +56,7 @@ function Login({ setUser }) {
     setUser(loginNewUser.data.loginUser.username);
 
     console.log("loginNewUser------>", loginNewUser);
-    navigate("/page");
+    navigate("/home");
   }
 
   if (loading) return <h1>Loading...</h1>;
@@ -120,6 +120,10 @@ function Login({ setUser }) {
             Login
           </Button>
         </form>
+        {/*not signed in link to route */}
+        <p style={{ color: "white" }}>
+          Not registered? Click here to <Link to="/signup">Signup</Link>
+        </p>
       </StyledBox>
     </div>
   );

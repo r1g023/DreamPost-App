@@ -9,6 +9,7 @@ export const postList = [
       "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
     method: "Cook Shrimp: 1 lb, Chorizo: 1 lb",
     methodTwo: "Mix rice with shrimp and chorizo",
+    liked: false,
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ export const postList = [
       "These shrimp tacos are a great way to start the week off right. They are super easy to make and will be a great addition to your menu.",
     method: "Cook Shrimp: 1 lb",
     methodTwo: "add shrimp to tortilla with guacamole and lime",
+    liked: false,
   },
   {
     id: 3,
@@ -31,5 +33,6 @@ export const postList = [
       "Every meal would be better if it were pizza. Adding some bright, fresh ingredients on top of a frozen pizza can almost make it taste homemade. ",
     method: "place frozen pizza in the oven",
     methodTwo: "enjoy pizza",
+    liked: false,
   },
 ];

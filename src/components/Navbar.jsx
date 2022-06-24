@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Avatar,
@@ -51,55 +51,68 @@ const StyledUserBox = styled(Box)(({ theme }) => ({
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
+  // console.log("user on navbar logged in----->", currentUser);
+  // const isCurrentUser = currentUser.user === user;
+
   const [open, setOpen] = React.useState(false);
   return (
     <>
       <AppBar position="sticky">
-        <StyledToolbar>
-          {/* header*/}
-          <Typography
-            variant="h4"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            {user} Dev
-          </Typography>
+        {!user ? (
+          <p style={{ fontSize: "2em", textAlign: "center" }}>SOCIAL MEDIA</p>
+        ) : null}
+        {user ? (
+          <StyledToolbar>
+            {/* header*/}
 
-          {/* Search and show Icon when screen is XS */}
-          <MenuIcon
-            sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
-          />
-          <Search>
-            <InputBase placeholder="Search..." error={true} />
-          </Search>
-
-          {/* Mail and notification icons + avatar - remove if display is mobile */}
-          <StyledIcons>
-            <Badge badgeContent={2} color="secondary">
-              <MailIcon />
-            </Badge>
-            <Badge badgeContent={2} color="secondary">
-              <Notifications />
-            </Badge>
-            <Avatar
-              sx={{ height: 30, width: 30 }}
-              alt="Github Avatar"
-              src="https://avatars.githubusercontent.com/u/57161327?v=4"
-              onClick={() => setOpen(!open)}
+            <Typography
+              variant="h4"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              {user ? `welcome ${user}` : setUser("")}
+            </Typography>
+            {/* Search and show Icon when screen is XS */}
+            <MenuIcon
+              sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
             />
-          </StyledIcons>
+            {user ? (
+              <Search>
+                <InputBase placeholder="Search..." error={true} />
+              </Search>
+            ) : (
+              setUser("")
+            )}
+            {/* Mail and notification icons + avatar - remove if display is mobile */}
+            <StyledIcons>
+              <Badge badgeContent={2} color="secondary">
+                <MailIcon />
+              </Badge>
+              <Badge badgeContent={2} color="secondary">
+                <Notifications />
+              </Badge>
 
-          {/* User avatar and name for smaller screens - display if mobile */}
-          <StyledUserBox onClick={() => setOpen(!open)}>
-            <Avatar
-              sx={{ height: 30, width: 30 }}
-              alt="Github Avatar"
-              src="https://avatars.githubusercontent.com/u/57161327?v=4"
-            />
-            <Typography variant="span">{user}</Typography>
-          </StyledUserBox>
-        </StyledToolbar>
-
-        {/* Menu */}
+              <Avatar
+                sx={{ height: 30, width: 30 }}
+                alt="Github Avatar"
+                src="https://avatars.githubusercontent.com/u/57161327?v=4"
+                onClick={() => setOpen(!open)}
+              />
+            </StyledIcons>
+            {/* User avatar and name for smaller screens - display if mobile */}
+            <StyledUserBox onClick={() => setOpen(!open)}>
+              <Avatar
+                sx={{ height: 30, width: 30 }}
+                alt="Github Avatar"
+                src="https://avatars.githubusercontent.com/u/57161327?v=4"
+              />
+              <Typography variant="span">{user}</Typography>
+              {/*Link to books */}
+            </StyledUserBox>
+          </StyledToolbar>
+        ) : (
+          setUser("")
+        )}
+        {/* Hidden Menu */}
         <Menu
           id="demo-positioned-menu"
           aria-labelledby="demo-positioned-button"
@@ -120,12 +133,16 @@ const Navbar = () => {
             onClick={() => {
               window.localStorage.removeItem("auth-token");
               window.localStorage.removeItem("user");
+              setUser("");
               navigate("/login");
             }}
           >
             Logout
           </MenuItem>
-          <MenuItem>FAQ</MenuItem>
+
+          <MenuItem>
+            <Link to="/books">Books</Link>
+          </MenuItem>
         </Menu>
       </AppBar>
     </>
