@@ -11,11 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import { Notifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
+//import DreamPost.png from "../assets/DreamPost.png";
+import DreamPost from "../assets/DreamPost.png";
+
 import { UserContext } from "../App";
 
 const StyledToolbar = styled(Toolbar)({
@@ -57,9 +59,13 @@ const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   return (
     <>
-      <AppBar position="sticky">
+      <AppBar position="sticky" style={{ paddingTop: "9px" }}>
         {!user ? (
-          <p style={{ fontSize: "2em", textAlign: "center" }}>SOCIAL MEDIA</p>
+          <img
+            src={DreamPost}
+            alt="DreamPost logo"
+            style={{ height: "50px", width: "200px", margin: "0 auto" }}
+          />
         ) : null}
         {user ? (
           <StyledToolbar>
@@ -69,7 +75,17 @@ const Navbar = () => {
               variant="h4"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              {user ? `welcome ${user}` : setUser("")}
+              {user ? (
+                <p>
+                  <img
+                    src={DreamPost}
+                    alt="DreamPost logo"
+                    style={{ height: "50px", width: "200px" }}
+                  />
+                </p>
+              ) : (
+                setUser("")
+              )}
             </Typography>
             {/* Search and show Icon when screen is XS */}
             <MenuIcon
@@ -134,7 +150,7 @@ const Navbar = () => {
               window.localStorage.removeItem("auth-token");
               window.localStorage.removeItem("user");
               setUser("");
-              navigate("/login");
+              navigate("/");
             }}
           >
             Logout

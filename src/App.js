@@ -44,14 +44,14 @@ function App() {
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* <Route
+          <Route
             path="/books"
             element={
               <PrivateRoute>
                 <Books />
               </PrivateRoute>
             }
-          /> */}
+          />
         </Routes>
       </Box>
     </UserContext.Provider>
