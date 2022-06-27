@@ -129,6 +129,7 @@ const Navbar = () => {
           setUser("")
         )}
         {/* Hidden Menu */}
+
         <Menu
           id="demo-positioned-menu"
           aria-labelledby="demo-positioned-button"
@@ -150,7 +151,8 @@ const Navbar = () => {
               window.localStorage.removeItem("auth-token");
               window.localStorage.removeItem("user");
               setUser("");
-              navigate("/");
+              navigate("/login");
+              setOpen(!open);
             }}
           >
             Logout

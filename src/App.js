@@ -4,17 +4,18 @@ import { Box } from "@mui/material";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Books from "./components/Books";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 import MainPage from "./pages/MainPage";
 import { postList } from "./postList";
 import Navbar from "./components/Navbar";
-
+import NoMatch from "./pages/NoMatch";
 export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = React.useState("");
   const [posts, setPosts] = React.useState(postList);
+  const navigate = useNavigate();
   console.log("user---->", user);
 
   useEffect(() => {
@@ -22,10 +23,6 @@ function App() {
     if (data) {
       setUser(JSON.parse(data));
     }
-  }, []);
-
-  //save note card to local storage
-  useEffect(() => {
     // localStorage.setItem("user", JSON.stringify(user));
     document.title = user ? `Welcome ${user}` : "please login";
   }, [user]);
@@ -39,11 +36,22 @@ function App() {
       <Box>
         <Navbar user={user} setUser={setUser} />
         <Routes>
-          <Route path={"/"} element={<Login setUser={setUser} />} />
-          <Route path="/home" element={<MainPage posts={posts} />} />
+          {/* <Route path="/" element={<MainPage posts={posts} />} /> */}
+
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NoMatch />} />
 
+          {/*home page */}
+
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <MainPage posts={posts} />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/books"
             element={
@@ -53,6 +61,7 @@ function App() {
             }
           />
         </Routes>
+        {/* add MainPage to private route */}
       </Box>
     </UserContext.Provider>
   );

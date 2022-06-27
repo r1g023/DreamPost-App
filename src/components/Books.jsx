@@ -18,6 +18,7 @@ const Books = () => {
   console.log("user on Books----->", user);
   const navigate = useNavigate();
   const { data, error, loading } = useQuery(GET_BOOKS);
+  console.log("data on Books----->", data);
 
   if (loading) return <h1>Loading...</h1>;
   if (error) {
@@ -39,7 +40,7 @@ const Books = () => {
               <p>{book.name}</p>
             </div>
           ))}
-          <Link to="/home">Home</Link>
+          <Link to="/">Home</Link>
         </div>
       ) : (
         navigate("/login")

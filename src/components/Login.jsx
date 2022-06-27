@@ -56,7 +56,7 @@ function Login({ setUser }) {
     setUser(loginNewUser.data.loginUser.username);
 
     console.log("loginNewUser------>", loginNewUser);
-    navigate("/home");
+    navigate("/");
   }
 
   if (loading) return <h1>Loading...</h1>;
