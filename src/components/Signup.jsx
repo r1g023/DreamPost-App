@@ -66,14 +66,8 @@ const Signup = () => {
   let [result, setResult] = React.useState("");
 
   console.log("value--->", value);
-  const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
-  const { data } = useQuery(GET_USERS);
-
-  React.useEffect(() => {
-    console.log("result--->", result);
-    let info = result;
-    return info;
-  }, [result]);
+  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER);
+  // const { data } = useQuery(GET_USERS);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -84,17 +78,23 @@ const Signup = () => {
         password: value.password,
         role: value.role,
       },
+
       context: { clientName: "authLink" },
       //check if username exist then return error
     });
     console.log("registerNEW USER----->", registerNewUser);
-    return registerNewUser;
+    navigate("/login");
   }
 
   if (loading) return <h1>Loading...</h1>;
   // if (error) return <h1>Error</h1>;
-  console.log("error register------>", error);
-  console.log("data register GET------>", data);
+  let signupError = "";
+  let signupErrorMessage = "";
+  if (error) {
+    signupError = error.message.split(" ").slice(-1).join(" ");
+    signupErrorMessage = signupError.split("_").slice(1, 2).join(" ");
+    console.log("signupErrorMessage--->", signupErrorMessage);
+  }
 
   return (
     <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
@@ -171,7 +171,12 @@ const Signup = () => {
 
           {error ? (
             <p style={{ color: "red", fontSize: "11px" }}>
-              Error: please {result}
+              Error:
+              {signupErrorMessage === "email"
+                ? "Email exists already, have you registered before? "
+                : signupErrorMessage === "username"
+                ? "Username exists already, please choose another username"
+                : null}
             </p>
           ) : null}
 
