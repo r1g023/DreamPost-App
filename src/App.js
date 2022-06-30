@@ -1,4 +1,6 @@
 import React, { createContext, useEffect } from "react";
+//import css from index.css
+import "./index.css";
 import { Box } from "@mui/material";
 
 import Login from "./components/Login";
