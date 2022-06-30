@@ -14,44 +14,41 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = React.useState("");
-  const [posts, setPosts] = React.useState(postList);
-  const navigate = useNavigate();
-  console.log("user---->", user);
+  const [userId, setUserId] = React.useState();
+
+  console.log("user on app---->", user);
+  console.log("userId on app---->", userId);
 
   useEffect(() => {
     const data = localStorage.getItem("user");
-    if (data) {
-      setUser(JSON.parse(data));
-    }
-    // localStorage.setItem("user", JSON.stringify(user));
-    document.title = user ? `Welcome ${user}` : "please login";
-  }, [user]);
-
-  // if (!user) {
-  //   return <Login setUser={setUser} />;
-  // }
+    const myUserId = localStorage.getItem("userId");
+    if (data) setUser(JSON.parse(data));
+    if (myUserId) setUserId(JSON.parse(myUserId));
+    document.title = user ? `Welcome  ${user} ` : "please login";
+  }, [user, userId]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, posts, setPosts }}>
+    <UserContext.Provider value={{ user, setUser, userId }}>
       <Box>
         <Navbar user={user} setUser={setUser} />
         <Routes>
-          {/* <Route path="/" element={<MainPage posts={posts} />} /> */}
-
-          <Route path={"/login"} element={<Login setUser={setUser} />} />
+          <Route
+            path={"/login"}
+            element={<Login setUser={setUser} setUserId={setUserId} />}
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NoMatch />} />
 
           {/*home page */}
-
           <Route
             path="/"
             element={
               <PrivateRoute>
-                <MainPage posts={posts} />
+                <MainPage />
               </PrivateRoute>
             }
           />
+          {/*books page */}
           <Route
             path="/books"
             element={

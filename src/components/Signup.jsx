@@ -2,6 +2,8 @@ import React from "react";
 import {
   Box,
   Button,
+  CircularProgress,
+  FormControl,
   InputLabel,
   MenuItem,
   Select,
@@ -11,6 +13,7 @@ import {
 import { useMutation, useQuery, gql } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
 import useSignupForm from "../formHooks/useSignupForm";
+import { LoadingButton } from "@mui/lab";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -21,6 +24,7 @@ const StyledBox = styled(Box)({
   gap: "1rem",
 });
 
+// graphql post user mutation
 const REGISTER_USER = gql`
   mutation registerUser(
     $email: String!
@@ -43,19 +47,8 @@ const REGISTER_USER = gql`
   }
 `;
 
-const GET_USERS = gql`
-  query getUsers {
-    getUsers {
-      id
-      username
-      email
-    }
-  }
-`;
-
 const Signup = () => {
-  //make this Signup component similar to Login component
-  let navigate = useNavigate();
+  // this custom form hook is used to handle the form, less coe on signup component
   const [value, setValue, errors, buttonDisabled, handleChanges] =
     useSignupForm({
       email: "",
@@ -63,12 +56,11 @@ const Signup = () => {
       password: "",
       role: "",
     });
-  let [result, setResult] = React.useState("");
+  let navigate = useNavigate();
+  // mutation for signup user
+  const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
 
-  console.log("value--->", value);
-  const [registerUser, { data, loading, error }] = useMutation(REGISTER_USER);
-  // const { data } = useQuery(GET_USERS);
-
+  // Signup user
   async function handleSubmit(e) {
     e.preventDefault();
     let registerNewUser = await registerUser({
@@ -78,28 +70,23 @@ const Signup = () => {
         password: value.password,
         role: value.role,
       },
-
       context: { clientName: "authLink" },
-      //check if username exist then return error
     });
-    console.log("registerNEW USER----->", registerNewUser);
     navigate("/login");
   }
 
-  if (loading) return <h1>Loading...</h1>;
-  // if (error) return <h1>Error</h1>;
+  // signupError to validate if user/email already exist in database upon signup
   let signupError = "";
   let signupErrorMessage = "";
   if (error) {
     signupError = error.message.split(" ").slice(-1).join(" ");
     signupErrorMessage = signupError.split("_").slice(1, 2).join(" ");
-    console.log("signupErrorMessage--->", signupErrorMessage);
   }
 
   return (
     <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
-      <h1>Signup</h1>
       <StyledBox>
+        <h1 style={{ color: "white" }}>Register</h1>
         <form
           onSubmit={handleSubmit}
           style={{
@@ -109,6 +96,7 @@ const Signup = () => {
             gap: "1rem",
             display: "flex",
             flexDirection: "column",
+            width: "50%",
           }}
         >
           {/* Email */}
@@ -150,46 +138,71 @@ const Signup = () => {
             <p style={{ color: "red", fontSize: "11px" }}>{errors.password}</p>
           ) : null}
 
-          {/* Role select values input*/}
-          <InputLabel id="demo-simple-select-label">Role</InputLabel>
-
-          <Select
-            sx={{ color: "black" }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            name="role"
-            label="Role"
-            onChange={handleChanges}
-            value={value.role}
-          >
-            <MenuItem value={"admin"}>admin</MenuItem>
-            <MenuItem value={"user"}>user</MenuItem>
-          </Select>
+          {/* Role select values input */}
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-helper-label">Role</InputLabel>
+            <Select
+              sx={{ color: "black" }}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="role"
+              label="Role"
+              onChange={handleChanges}
+              value={value.role}
+            >
+              <MenuItem value="">
+                <em>Must Select One</em>
+              </MenuItem>
+              <MenuItem value={"admin"}>admin</MenuItem>
+              <MenuItem value={"user"}>user</MenuItem>
+            </Select>
+          </FormControl>
           {errors.role ? (
             <p style={{ color: "red", fontSize: "11px" }}>{errors.role}</p>
           ) : null}
 
+          {/* this will show if either username or email is already in Database */}
           {error ? (
             <p style={{ color: "red", fontSize: "11px" }}>
               Error:
               {signupErrorMessage === "email"
-                ? "Email exists already, have you registered before? "
+                ? "This email address is already being used"
                 : signupErrorMessage === "username"
-                ? "Username exists already, please choose another username"
+                ? "This username is already being used"
                 : null}
             </p>
           ) : null}
 
-          {/* Signup Button */}
-          <Button
+          {/* Signup Button with a loader spinner */}
+          <LoadingButton
             variant="contained"
             color="success"
             disabled={buttonDisabled}
             type="submit"
+            loading={loading}
+            loadingPosition={"start"}
+            loadingIndicator={<CircularProgress color="primary" size={20} />}
           >
             Signup
-          </Button>
+          </LoadingButton>
         </form>
+
+        {/* if registered, go back to login */}
+        <p style={{ color: "white" }}>
+          Already registered? Click here to
+          <Link to="/login">
+            <span
+              style={{
+                color: "orange",
+                padding: "5px",
+                borderRadius: "5px",
+                textDecoration: "none",
+              }}
+            >
+              Login
+            </span>
+          </Link>
+        </p>
       </StyledBox>
     </div>
   );

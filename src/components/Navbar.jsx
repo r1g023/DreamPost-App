@@ -60,6 +60,7 @@ const Navbar = () => {
   return (
     <>
       <AppBar position="sticky" style={{ paddingTop: "9px" }}>
+        {/* If there's no user logged in, display logo */}
         {!user ? (
           <img
             src={DreamPost}
@@ -67,10 +68,11 @@ const Navbar = () => {
             style={{ height: "50px", width: "200px", margin: "0 auto" }}
           />
         ) : null}
+
+        {/* If there's a user logged in, display all the tools on navbar */}
         {user ? (
           <StyledToolbar>
             {/* header*/}
-
             <Typography
               variant="h4"
               sx={{ display: { xs: "none", sm: "block" } }}
@@ -128,6 +130,7 @@ const Navbar = () => {
         ) : (
           setUser("")
         )}
+
         {/* Hidden Menu */}
 
         <Menu

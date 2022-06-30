@@ -14,11 +14,13 @@ const GET_BOOKS = gql`
 `;
 
 const Books = () => {
-  const { user } = React.useContext(UserContext);
-  console.log("user on Books----->", user);
+  const { userId } = React.useContext(UserContext);
+  console.log("user on Books----->", userId);
   const navigate = useNavigate();
   const { data, error, loading } = useQuery(GET_BOOKS);
-  console.log("data on Books----->", data);
+  React.useEffect(() => {
+    console.log("books array on USE EFFECT---->", data);
+  }, [data]);
 
   if (loading) return <h1>Loading...</h1>;
   if (error) {
@@ -31,21 +33,15 @@ const Books = () => {
   }
 
   return (
-    <>
-      {user ? (
-        <div>
-          <h1>Books</h1>
-          {data.getBooks.map((book) => (
-            <div key={book.id}>
-              <p>{book.name}</p>
-            </div>
-          ))}
-          <Link to="/">Home</Link>
+    <div>
+      <h1>Books</h1>
+      {data.getBooks.map((book) => (
+        <div key={book.id}>
+          <p>{book.name}</p>
         </div>
-      ) : (
-        navigate("/login")
-      )}
-    </>
+      ))}
+      <Link to="/">Home</Link>
+    </div>
   );
 };
 

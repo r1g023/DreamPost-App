@@ -1,9 +1,10 @@
 import React from "react";
 import useForm from "../formHooks/useForm";
-import { Box, Button, styled, TextField } from "@mui/material";
+import { Box, CircularProgress, styled, TextField } from "@mui/material";
 import { useMutation, gql } from "@apollo/client";
 import { AUTH_TOKEN } from "../auth-token";
 import { Link, useNavigate } from "react-router-dom";
+import { LoadingButton } from "@mui/lab";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -14,6 +15,7 @@ const StyledBox = styled(Box)({
   gap: "1rem",
 });
 
+// login user mutation with graphql and auth-token
 const LOGIN_USER = gql`
   mutation loginUser($username: String!, $password: String!) {
     loginUser(username: $username, password: $password) {
@@ -25,19 +27,18 @@ const LOGIN_USER = gql`
   }
 `;
 
-function Login({ setUser }) {
-  let navigate = useNavigate();
+function Login({ setUser, setUserId }) {
+  // custom form created for login component
   const [value, setValue, errors, buttonDisabled, handleChanges] = useForm({
     username: "",
     password: "",
   });
-  const [loginUser, { data, loading, error }] = useMutation(LOGIN_USER);
+  let navigate = useNavigate();
 
-  // React.useEffect(() => {
-  //   const authToken = localStorage.getItem(AUTH_TOKEN);
-  //   console.log("get token---->", authToken);
-  // }, [data]);
+  // mutation for login user
+  const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
+  // login user
   async function handleSubmit(e) {
     e.preventDefault();
     let loginNewUser = await loginUser({
@@ -47,28 +48,22 @@ function Login({ setUser }) {
         token: value.token,
       },
       onCompleted: ({ loginUser }) => {
-        console.log("loginUser------TOKEN>", loginUser);
         localStorage.setItem(AUTH_TOKEN, loginUser.token);
         localStorage.setItem("user", JSON.stringify(loginUser.username));
+        localStorage.setItem("userId", JSON.stringify(loginUser.id));
       },
       context: { clientName: "authLink" },
     });
     setUser(loginNewUser.data.loginUser.username);
-
-    console.log("loginNewUser------>", loginNewUser);
+    setUserId(loginNewUser.data.loginUser.id);
     navigate("/");
+    return loginNewUser;
   }
-
-  if (loading) return <h1>Loading...</h1>;
-  // if (error) return <h1>Error....</h1>;
-  console.log("data------>", data);
-  console.log("error login------>", error);
 
   return (
     <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
       <StyledBox>
-        <h1 style={{ color: "white" }}>User Login</h1>
-
+        <h1 style={{ color: "white" }}>Login</h1>
         <form
           onSubmit={handleSubmit}
           style={{
@@ -78,6 +73,7 @@ function Login({ setUser }) {
             gap: "1rem",
             display: "flex",
             flexDirection: "column",
+            width: "40%",
           }}
         >
           {/*username */}
@@ -106,23 +102,42 @@ function Login({ setUser }) {
             <p style={{ color: "red", fontSize: "11px" }}>{errors.password}</p>
           ) : null}
 
+          {/* Show this error if username or password is incorrect */}
           {error ? (
             <p style={{ color: "red", fontSize: "11px" }}>
               Error: please check credentials and try again
             </p>
           ) : null}
-          <Button
+
+          {/* loading button with a loading indicator */}
+          <LoadingButton
             variant="contained"
             color="success"
             disabled={buttonDisabled}
             type="submit"
+            loading={loading}
+            loadingPosition={"start"}
+            loadingIndicator={<CircularProgress color="primary" size={20} />}
           >
             Login
-          </Button>
+          </LoadingButton>
         </form>
-        {/*not signed in link to route */}
+
+        {/*not registered yet link leading to signup form */}
         <p style={{ color: "white" }}>
-          Not registered? Click here to <Link to="/signup">Signup</Link>
+          Not registered? Click here to
+          <Link to="/signup">
+            <span
+              style={{
+                color: "orange",
+                padding: "5px",
+                borderRadius: "5px",
+                textDecoration: "none",
+              }}
+            >
+              Signup
+            </span>
+          </Link>
         </p>
       </StyledBox>
     </div>

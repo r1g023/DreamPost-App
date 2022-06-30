@@ -28,7 +28,7 @@ export default function useSignupForm(initialValue) {
     role: yup
       .string()
       .oneOf(["admin", "user"])
-      .required("Please indicate your communications preference"),
+      .required("Please indicate your role."),
   });
 
   useEffect(() => {

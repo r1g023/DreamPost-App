@@ -17,6 +17,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import styled from "@emotion/styled";
 
+// drop down arrow on comments
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -28,6 +29,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+// Post Card for the Post List on the Feed component
 const Post = ({ data }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -89,7 +91,6 @@ const Post = ({ data }) => {
         <CardContent>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>{data.method}</Typography>
-          <Typography>{data.methodTwo}</Typography>
         </CardContent>
       </Collapse>
     </Card>

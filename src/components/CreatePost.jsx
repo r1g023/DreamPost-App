@@ -1,4 +1,7 @@
 import React from "react";
+import { useMutation, useQuery, gql } from "@apollo/client";
+import { Image } from "cloudinary-react";
+import axios from "axios";
 
 import {
   Avatar,
@@ -18,39 +21,110 @@ import { Box } from "@mui/system";
 import { UserContext } from "../App";
 import { PhotoCamera } from "@mui/icons-material";
 
+const GET_POSTS = gql`
+  query getPosts {
+    getPosts {
+      id
+      title
+      image
+      date
+      content
+      method
+      liked
+      user_id
+    }
+  }
+`;
+
+const ADD_POST = gql`
+  mutation createPost(
+    $title: String!
+    $date: String!
+    $image: String!
+    $content: String!
+    $method: String!
+    $user_id: Int!
+  ) {
+    createPost(
+      title: $title
+      date: $date
+      image: $image
+      content: $content
+      method: $method
+      user_id: $user_id
+    ) {
+      id
+      title
+      date
+      image
+      content
+      method
+      liked
+      user_id
+    }
+  }
+`;
+
+// Styled Modal on top of the default MUI Modal
 const StyledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 });
 
+// Styled Box on top of the default MUI Box
 const UserBox = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 });
 
+//Styled form
+const StyledForm = styled(FormControl)({
+  background: "white",
+  padding: "1rem",
+  borderRadius: "0.7rem",
+  gap: "0.2rem",
+});
+
+// Remove image upload button from the form
 const Input = styled("input")({
   display: "none",
 });
 
 const CreatePost = () => {
   const [open, setOpen] = React.useState(false);
-  const toggleModal = () => {
-    setOpen(!open);
-  };
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, userId } = React.useContext(UserContext);
+  const [createPost, { data, loading, error }] = useMutation(ADD_POST);
+  const [myImage, setMyImage] = React.useState("");
+
+  React.useEffect(() => {
+    console.log("useEffect for image upload");
+  }, []);
+
+  console.log("user on create post----->", user);
+  console.log("userId on create post----->", userId);
+  console.log("post data--->", data);
+
   const [addPost, setAddPost] = React.useState({
     title: "",
     date: "",
-    image: null,
+    image: "",
     content: "",
     method: "",
-    liked: false,
   });
+  console.log("addPost---->", addPost);
 
+  // Post button, opens the modal
+  // const toggleModal = () => {
+  //   setOpen(!open);
+  // };
+
+  // handle changes for posts  input fields
   function handleChange(e) {
-    console.log(e.target.name, e.target.value, e.target.files);
+    console.log(e.target.name, e.target.value || e.target.files);
+    // console.log("e.target.files", e.target.files);
+
     setAddPost({
       ...addPost,
       [e.target.name]:
@@ -58,9 +132,60 @@ const CreatePost = () => {
     });
   }
 
+  //upload image to Cloud
+  function uploadImage(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", addPost.image);
+    formData.append("upload_preset", "xhfk3bp5_u");
+
+    const postImage = async () => {
+      try {
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
+          formData
+        );
+        console.log("response", response);
+        // add response to my addPost image form
+        setAddPost({
+          ...addPost,
+          image: response.data.secure_url,
+        });
+      } catch {
+        console.log("error uploading image");
+      }
+    };
+    postImage();
+    handleSubmit();
+  }
+
+  // handle submit for posts
+  async function handleSubmit(e) {
+    // add upload image to my submit form
+    const newPost = await createPost({
+      variables: {
+        title: addPost.title,
+        date: addPost.date,
+        image: addPost.image,
+        content: addPost.content,
+        method: addPost.method,
+        user_id: userId,
+      },
+
+      refetchQueries: [{ query: GET_POSTS }],
+    });
+    uploadImage();
+    console.log("new post---------------------", newPost);
+  }
+
+  if (loading) return <h1>Loading....</h1>;
+  // if (error) return <h1>Error: Error....</h1>;
+  console.log("error----->", error);
+  console.log("myImage-----THIS ONE?>", myImage);
+
   return (
     <>
-      <Tooltip
+      {/* <Tooltip
         onClick={toggleModal}
         title="Delete"
         sx={{
@@ -75,94 +200,75 @@ const CreatePost = () => {
       </Tooltip>
 
       {/* Modal to create a new post */}
-      {open ? (
-        <StyledModal
-          open={open}
-          onClose={toggleModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+      {/* {open ? ( */}
+      {/* <StyledModal
+        open={open}
+        onClose={toggleModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          width={300}
+          height={420}
+          bgcolor="white"
+          borderRadius={"10px"}
+          p={3}
+          textAlign="center"
         >
-          <Box
-            width={300}
-            height={420}
-            bgcolor="white"
-            borderRadius={"10px"}
-            p={3}
-            textAlign="center"
-          >
-            {/*userbox of current logged in user */}
-            <UserBox>
-              {/*form */}
+          {/*userbox of current logged in user */}
+      {/* <UserBox>
+            form */}
+      <form onSubmit={uploadImage}>
+        {/* generate inputs for createPost*/}
+        <input
+          type="text"
+          name="title"
+          value={addPost.title}
+          onChange={handleChange}
+          placeholder="Title"
+        />
 
-              <FormControl
-                style={{
-                  background: "white",
-                  padding: "1rem",
-                  borderRadius: "0.7rem",
-                  gap: "0.2rem",
-                }}
-              >
-                <Avatar
-                  src="https://i.pravatar.cc/300"
-                  sx={{ border: "1px solid red", margin: "0 auto" }}
-                />
-                <Typography variant="h6">{user}</Typography>
-                {/* title, date, image, content, method & methodTwo to create a new post */}
-                <TextField
-                  id="demo-helper-text-aligned"
-                  label="title"
-                  name="title"
-                  onChange={handleChange}
-                />
+        {/* generate remaining inputs */}
+        <input
+          type="text"
+          name="date"
+          value={addPost.date}
+          onChange={handleChange}
+          placeholder="Date"
+        />
 
-                <TextField
-                  id="demo-helper-text-aligned"
-                  label="date"
-                  name="date"
-                  onChange={handleChange}
-                />
+        {/* *--------------------image input------------------------- */}
+        <input type="file" id="image" name="image" onChange={handleChange} />
 
-                <TextField
-                  id="demo-helper-text-aligned"
-                  label="content"
-                  name="content"
-                  onChange={handleChange}
-                />
+        <input
+          type="text"
+          name="content"
+          value={addPost.content}
+          onChange={handleChange}
+          placeholder="Content"
+        />
+        <input
+          type="text"
+          name="method"
+          value={addPost.method}
+          onChange={handleChange}
+          placeholder="Method"
+        />
 
-                <TextField
-                  id="demo-helper-text-aligned"
-                  label="method"
-                  name="method"
-                  onChange={handleChange}
-                />
+        <button>Create post</button>
+      </form>
+      {/* </UserBox> */}
+      <>
+        <p>Title {addPost.title}</p>
+        <p>Date {addPost.date}</p>
+        <p>Content {addPost.content}</p>
+        <p>Method {addPost.method}</p>
 
-                <label htmlFor="icon-button-file">
-                  <Input
-                    accept="image/*"
-                    id="icon-button-file"
-                    type="file"
-                    onChange={handleChange}
-                  />
-                  <IconButton
-                    color="primary"
-                    aria-label="upload picture"
-                    component="span"
-                  >
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
-                <Button variant="contained" color="success">
-                  Add Post
-                </Button>
-              </FormControl>
-            </UserBox>
-            <p>Title {addPost.title}</p>
-            <p>Date {addPost.date}</p>
-            <p>Content {addPost.content}</p>
-            <p>Method {addPost.method}</p>
-          </Box>
-        </StyledModal>
-      ) : null}
+        <Image
+          cloudName="dcvh93esc"
+          publicId={`https://res.cloudinary.com/dcvh93esc/image/upload/v1656537173/${addPost.image.public_id}`}
+        />
+      </>
     </>
   );
 };
