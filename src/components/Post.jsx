@@ -55,7 +55,10 @@ const Post = ({ data }) => {
       />
 
       {/* Card Photo */}
-      <CardMedia component="img" height="20%" image={data.image} />
+
+      {data.image && (
+        <CardMedia component="img" height="20%" image={data.image} />
+      )}
 
       {/* Card Content */}
       <CardContent>

@@ -96,16 +96,8 @@ const CreatePost = () => {
   const [open, setOpen] = React.useState(false);
   const { user, userId } = React.useContext(UserContext);
   const [createPost, { data, loading, error }] = useMutation(ADD_POST);
-  const [myImage, setMyImage] = React.useState("");
-
-  React.useEffect(() => {
-    console.log("useEffect for image upload");
-  }, []);
-
-  console.log("user on create post----->", user);
-  console.log("userId on create post----->", userId);
-  console.log("post data--->", data);
-
+  const [selectedImages, setSelectedImages] = React.useState([]);
+  const [myImage, setMyImage] = React.useState(null);
   const [addPost, setAddPost] = React.useState({
     title: "",
     date: "",
@@ -114,6 +106,14 @@ const CreatePost = () => {
     method: "",
   });
   console.log("addPost---->", addPost);
+
+  React.useEffect(() => {
+    console.log("useEffect for image upload");
+  }, []);
+
+  console.log("user on create post----->", user);
+  console.log("userId on create post----->", userId);
+  console.log("post data--->", data);
 
   // Post button, opens the modal
   // const toggleModal = () => {
@@ -134,9 +134,8 @@ const CreatePost = () => {
 
   //upload image to Cloud
   function uploadImage(e) {
-    e.preventDefault();
     const formData = new FormData();
-    formData.append("file", addPost.image);
+    formData.append("file", selectedImages);
     formData.append("upload_preset", "xhfk3bp5_u");
 
     const postImage = async () => {
@@ -147,35 +146,36 @@ const CreatePost = () => {
         );
         console.log("response", response);
         // add response to my addPost image form
-        setAddPost({
-          ...addPost,
-          image: response.data.secure_url,
-        });
+        setMyImage(response.data.secure_url);
       } catch {
         console.log("error uploading image");
       }
     };
     postImage();
-    handleSubmit();
   }
 
   // handle submit for posts
   async function handleSubmit(e) {
+    e.preventDefault();
+
     // add upload image to my submit form
     const newPost = await createPost({
       variables: {
         title: addPost.title,
         date: addPost.date,
-        image: addPost.image,
+        image: myImage,
         content: addPost.content,
         method: addPost.method,
         user_id: userId,
       },
+      onCompleted: (data) => {
+        console.log("data", data);
+      },
 
       refetchQueries: [{ query: GET_POSTS }],
     });
-    uploadImage();
     console.log("new post---------------------", newPost);
+    return newPost;
   }
 
   if (loading) return <h1>Loading....</h1>;
@@ -218,7 +218,7 @@ const CreatePost = () => {
           {/*userbox of current logged in user */}
       {/* <UserBox>
             form */}
-      <form onSubmit={uploadImage}>
+      <form onSubmit={handleSubmit}>
         {/* generate inputs for createPost*/}
         <input
           type="text"
@@ -238,7 +238,8 @@ const CreatePost = () => {
         />
 
         {/* *--------------------image input------------------------- */}
-        <input type="file" id="image" name="image" onChange={handleChange} />
+        {/* <input type="file" id="image" name="image" onChange={handleChange} />
+        <button onClick={uploadImage}>Upload image</button> */}
 
         <input
           type="text"
@@ -257,6 +258,16 @@ const CreatePost = () => {
 
         <button>Create post</button>
       </form>
+      <input
+        type="file"
+        id="image"
+        name="image"
+        onChange={(e) => {
+          console.log("e.target.files", e.target.files);
+          setSelectedImages(e.target.files[0]);
+        }}
+      />
+      <button onClick={uploadImage}>Upload image</button>
       {/* </UserBox> */}
       <>
         <p>Title {addPost.title}</p>
@@ -264,10 +275,10 @@ const CreatePost = () => {
         <p>Content {addPost.content}</p>
         <p>Method {addPost.method}</p>
 
-        <Image
+        {/* <Image
           cloudName="dcvh93esc"
           publicId={`https://res.cloudinary.com/dcvh93esc/image/upload/v1656537173/${addPost.image.public_id}`}
-        />
+        /> */}
       </>
     </>
   );
