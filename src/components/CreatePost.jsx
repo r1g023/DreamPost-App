@@ -275,10 +275,7 @@ const CreatePost = () => {
         <p>Content {addPost.content}</p>
         <p>Method {addPost.method}</p>
 
-        {/* <Image
-          cloudName="dcvh93esc"
-          publicId={`https://res.cloudinary.com/dcvh93esc/image/upload/v1656537173/${addPost.image.public_id}`}
-        /> */}
+        <Image cloudName="dcvh93esc" publicId={`${myImage}`} height="100" />
       </>
     </>
   );
