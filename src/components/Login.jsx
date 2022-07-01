@@ -56,6 +56,7 @@ function Login({ setUser, setUserId }) {
     });
     setUser(loginNewUser.data.loginUser.username);
     setUserId(loginNewUser.data.loginUser.id);
+    window.location.reload();
     navigate("/");
     return loginNewUser;
   }
