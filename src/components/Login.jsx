@@ -34,6 +34,9 @@ function Login({ setUser, setUserId }) {
     password: "",
   });
   let navigate = useNavigate();
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   // mutation for login user
   const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
@@ -56,8 +59,8 @@ function Login({ setUser, setUserId }) {
     });
     setUser(loginNewUser.data.loginUser.username);
     setUserId(loginNewUser.data.loginUser.id);
-    window.location.reload();
     navigate("/");
+    refreshPage();
     return loginNewUser;
   }
 
