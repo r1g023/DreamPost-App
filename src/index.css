@@ -1,3 +1,7 @@
 .mytitle {
     background: red;
 }
+
+.displayNone {
+    border: "11px solid red";
+}

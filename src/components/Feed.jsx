@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import Post from "./Post";
 import { useQuery, gql } from "@apollo/client";
 
@@ -10,15 +10,14 @@ const GET_POSTS = gql`
       title
       date
       image
-      content
-      method
+      post
       liked
       user_id
-      # comments {
-      #   id
-      #   comment
-      #   post_id
-      # }
+      comments {
+        id
+        comment
+        post_id
+      }
     }
   }
 `;
@@ -35,9 +34,11 @@ const Feed = () => {
 
   return (
     <Box flex={6} p={3}>
-      {data.getPosts.map((item) => {
-        return <Post data={item} key={item.id} />;
-      })}
+      {data.getPosts
+        .map((item) => {
+          return <Post post={item} key={item.id} />;
+        })
+        .reverse()}
     </Box>
   );
 };

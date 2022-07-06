@@ -15,11 +15,11 @@ import {
 import { AUTH_TOKEN } from "./auth-token";
 
 const authLink = new HttpLink({
-  uri: "https://node-express-graphql-api.herokuapp.com/graphql/auth",
+  uri: "http://localhost:5000/graphql/auth",
 });
 
 const graphqlAPI = new HttpLink({
-  uri: "https://node-express-graphql-api.herokuapp.com/graphql",
+  uri: "http://localhost:5000/graphql",
   // get token from local storage and add to headers
   headers: {
     authorization: localStorage.getItem(AUTH_TOKEN) || "",

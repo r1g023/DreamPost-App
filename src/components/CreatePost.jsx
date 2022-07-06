@@ -3,6 +3,7 @@ import { useMutation, useQuery, gql } from "@apollo/client";
 import { Image } from "cloudinary-react";
 import axios from "axios";
 // import css file from ilndex.css
+import moment from "moment";
 import "../index.css";
 
 import {
@@ -31,8 +32,7 @@ const GET_POSTS = gql`
       title
       image
       date
-      content
-      method
+      post
       liked
       user_id
     }
@@ -44,24 +44,21 @@ const ADD_POST = gql`
     $title: String!
     $date: String!
     $image: String!
-    $content: String!
-    $method: String!
+    $post: String!
     $user_id: Int!
   ) {
     createPost(
       title: $title
       date: $date
       image: $image
-      content: $content
-      method: $method
+      post: $post
       user_id: $user_id
     ) {
       id
       title
       date
       image
-      content
-      method
+      post
       liked
       user_id
     }
@@ -97,6 +94,8 @@ const Input = styled("input")({
 
 const CreatePost = () => {
   const [open, setOpen] = React.useState(false);
+  //add post date to useEffect
+
   // use useRef
   const ref = React.useRef();
   const toggleModal = () => {
@@ -107,22 +106,30 @@ const CreatePost = () => {
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [togglePhoto, setTogglePhoto] = React.useState(false);
+  const [postDate, setPostDate] = React.useState(
+    moment().subtract(10, "days").calendar()
+  );
   const [addPost, setAddPost] = React.useState({
     title: "",
-    date: "",
-    image: "",
-    content: "",
-    method: "",
+    date: null,
+    image: null,
+    post: "",
   });
+
+  console.log("DATE ------>", postDate);
 
   console.log("user on create post----->", user);
   console.log("userId on create post----->", userId);
   console.log("addPost on create post----->", data);
 
-  // Post button, opens the modal
-  // const toggleModal = () => {
-  //   setOpen(!open);
-  // };
+  //on post submit, scroll to top function call
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
 
   // handle changes for posts  input fields
   function handleChange(e) {
@@ -163,10 +170,9 @@ const CreatePost = () => {
     const newPost = await createPost({
       variables: {
         title: addPost.title,
-        date: addPost.date,
+        date: "now",
         image: uploadPhoto,
-        content: addPost.content,
-        method: addPost.method,
+        post: addPost.post,
         user_id: userId,
       },
 
@@ -176,12 +182,11 @@ const CreatePost = () => {
       title: "",
       date: "",
       image: "",
-      content: "",
-      method: "",
+      post: "",
     });
     toggleModal();
     setUploadPhoto(null);
-
+    scrollToTop();
     console.log("new post---------------------", newPost);
     return newPost;
   }
@@ -248,12 +253,12 @@ const CreatePost = () => {
                       name="title"
                       onChange={handleChange}
                     />
-                    <TextField
+                    {/* <TextField
                       id="demo-helper-text-aligned"
                       label="date"
                       name="date"
                       onChange={handleChange}
-                    />
+                    /> */}
                     <TextField
                       id="demo-helper-text-aligned"
                       label="content"
@@ -262,8 +267,8 @@ const CreatePost = () => {
                     />
                     <TextField
                       id="demo-helper-text-aligned"
-                      label="method"
-                      name="method"
+                      label="post"
+                      name="post"
                       onChange={handleChange}
                     />
                     <Button
@@ -281,7 +286,6 @@ const CreatePost = () => {
                   </>
                 ) : (
                   <>
-                    {" "}
                     <label htmlFor="icon-button-file">
                       <Input
                         accept="image/*"
@@ -305,7 +309,7 @@ const CreatePost = () => {
                       publicId={`${uploadPhoto}`}
                       height="100"
                       width="100"
-                      className="displayNone"
+                      className={`displayNone`}
                       ref={ref}
                     />
                     {/* button to upload image to Cloud */}
@@ -319,6 +323,7 @@ const CreatePost = () => {
                     >
                       Upload Image
                     </button>
+                    <p>Post date: {postDate}</p>
                   </>
                 )}
               </FormControl>
@@ -326,7 +331,7 @@ const CreatePost = () => {
             {/* <p>Title {addPost.title}</p>
             <p>Date {addPost.date}</p>
             <p>Content {addPost.content}</p>
-            <p>Method {addPost.method}</p> */}
+            <p>post {addPost.post}</p> */}
           </Box>
         </StyledModal>
       ) : null}

@@ -16,6 +16,20 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import styled from "@emotion/styled";
+import { gql, useQuery } from "@apollo/client";
+
+import Comments from "./Comments";
+
+const GET_COMMENTS = gql`
+  query getComments {
+    getComments {
+      id
+      comment
+      liked
+      post_id
+    }
+  }
+`;
 
 // drop down arrow on comments
 const ExpandMore = styled((props) => {
@@ -30,11 +44,16 @@ const ExpandMore = styled((props) => {
 }));
 
 // Post Card for the Post List on the Feed component
-const Post = ({ data }) => {
+const Post = ({ post }) => {
+  console.log("post------pros----->", post);
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  React.useEffect(() => {
+    console.log("post data on Post USE EFFECT---->", post);
+  }, [post, post.comments]);
 
   return (
     <Card sx={{ margin: 5 }}>
@@ -50,20 +69,18 @@ const Post = ({ data }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={data.title}
-        subheader={data.date}
+        title={post.title}
+        subheader={post.date}
       />
 
       {/* Card Photo */}
 
-      {data.image && (
-        <CardMedia component="img" height="20%" image={data.image} />
-      )}
+      <CardMedia component="img" height="20%" image={post.image} />
 
       {/* Card Content */}
       <CardContent>
         <Typography variant="body2" color="customColor.main">
-          {data.content}
+          Post: {post.post}
         </Typography>
       </CardContent>
 
@@ -92,8 +109,11 @@ const Post = ({ data }) => {
       {/* ------Card Expand Content------ */}
       <Collapse in={expanded} timeout={1000} unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>{data.method}</Typography>
+          <Typography paragraph>Comments:</Typography>
+          {console.log("post COMMENTS--->", post.comments)}
+          {post.comments.map((item) => (
+            <Comments commentData={item} key={item.id} />
+          ))}
         </CardContent>
       </Collapse>
     </Card>
