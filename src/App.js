@@ -16,29 +16,25 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = React.useState("");
-  const [userId, setUserId] = React.useState();
 
   console.log("user on app---->", user);
-  console.log("userId on app---->", userId);
 
   useEffect(() => {
     const data = localStorage.getItem("user");
-    const myUserId = localStorage.getItem("userId");
     if (data) setUser(JSON.parse(data));
-    if (myUserId) setUserId(JSON.parse(myUserId));
-    document.title = user ? `Welcome  ${user} ` : "please login";
-  }, [user, userId]);
+
+    document.title = user.username
+      ? `Welcome  ${user.username} `
+      : "please login";
+  }, [user.username]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, userId }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {/* console log req.decodedToken from backend API */}
       <Box>
-        <Navbar user={user} setUser={setUser} />
+        <Navbar user={user.username} setUser={setUser} />
         <Routes>
-          <Route
-            path={"/login"}
-            element={<Login setUser={setUser} setUserId={setUserId} />}
-          />
+          <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NoMatch />} />
 

@@ -98,7 +98,7 @@ const Post = ({ post }) => {
       variables: {
         comment: comment.comment,
         post_id: post.id,
-        user: user,
+        user: user.username,
       },
       refetchQueries: [{ query: GET_POSTS }],
     });
@@ -187,7 +187,11 @@ const Post = ({ post }) => {
             </form>
             {data &&
               post.comments.map((item) => (
-                <Comments commentData={item} key={item.id} user={user} />
+                <Comments
+                  commentData={item}
+                  key={item.id}
+                  user={user.username}
+                />
               ))}
           </CardContent>
         </Collapse>

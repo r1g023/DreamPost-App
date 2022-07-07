@@ -23,11 +23,36 @@ const LOGIN_USER = gql`
       username
       email
       token
+      dob
+      avatar
+      dark_mode
+      about_you
+      created_at
+      updated_at
+      posts {
+        id
+        title
+        date
+        image
+        post
+        liked
+        user_id
+        created_at
+        updated_at
+        comments {
+          id
+          comment
+          liked
+          post_id
+          created_at
+          updated_at
+        }
+      }
     }
   }
 `;
 
-function Login({ setUser, setUserId }) {
+function Login({ setUser }) {
   // custom form created for login component
   const [value, setValue, errors, buttonDisabled, handleChanges] = useForm({
     username: "",
@@ -52,17 +77,13 @@ function Login({ setUser, setUserId }) {
       },
       onCompleted: ({ loginUser }) => {
         localStorage.setItem(AUTH_TOKEN, loginUser.token);
-        localStorage.setItem("user", JSON.stringify(loginUser.username));
-        localStorage.setItem("userId", JSON.stringify(loginUser.id));
-        localStorage.setItem("avatar", JSON.stringify(loginUser.avatar));
+        localStorage.setItem("user", JSON.stringify(loginUser));
       },
       context: { clientName: "authLink" },
     });
     setUser(loginNewUser.data.loginUser.username);
-    setUserId(loginNewUser.data.loginUser.id);
     navigate("/");
     refreshPage();
-    return loginNewUser;
   }
 
   return (

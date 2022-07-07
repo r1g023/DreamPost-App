@@ -53,15 +53,15 @@ const StyledUserBox = styled(Box)(({ theme }) => ({
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
-  // console.log("user on navbar logged in----->", currentUser);
-  // const isCurrentUser = currentUser.user === user;
+  // console.log("user.username on navbar logged in----->", currentUser);
+  // const isCurrentUser = currentUser.user.username === user.username;
 
   const [open, setOpen] = React.useState(false);
   return (
     <>
       <AppBar position="sticky" style={{ paddingTop: "9px" }}>
-        {/* If there's no user logged in, display logo */}
-        {!user ? (
+        {/* If there's no user.username logged in, display logo */}
+        {!user.username ? (
           <img
             src={DreamPost}
             alt="DreamPost logo"
@@ -69,15 +69,15 @@ const Navbar = () => {
           />
         ) : null}
 
-        {/* If there's a user logged in, display all the tools on navbar */}
-        {user ? (
+        {/* If there's a user.username logged in, display all the tools on navbar */}
+        {user.username ? (
           <StyledToolbar>
             {/* header*/}
             <Typography
               variant="h4"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              {user ? (
+              {user.username ? (
                 <p>
                   <img
                     src={DreamPost}
@@ -93,7 +93,7 @@ const Navbar = () => {
             <MenuIcon
               sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
             />
-            {user ? (
+            {user.username ? (
               <Search>
                 <InputBase placeholder="Search..." error={true} />
               </Search>
@@ -123,7 +123,7 @@ const Navbar = () => {
                 alt="Github Avatar"
                 src="https://avatars.githubusercontent.com/u/57161327?v=4"
               />
-              <Typography variant="span">{user}</Typography>
+              <Typography variant="span">{user.username}</Typography>
               {/*Link to books */}
             </StyledUserBox>
           </StyledToolbar>

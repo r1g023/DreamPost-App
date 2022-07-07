@@ -101,7 +101,7 @@ const CreatePost = () => {
   const toggleModal = () => {
     setOpen(!open);
   };
-  const { user, userId } = React.useContext(UserContext);
+  const { user, userId, completeUser } = React.useContext(UserContext);
   const [createPost, { data, loading, error }] = useMutation(ADD_POST);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
@@ -285,6 +285,7 @@ const CreatePost = () => {
                       Add Post
                     </Button>{" "}
                     <h2>Need to add Photo?</h2>
+                    <h1>Complete user: {completeUser.email}</h1>
                     <button onClick={() => setTogglePhoto(!togglePhoto)}>
                       Upload Photo
                     </button>
