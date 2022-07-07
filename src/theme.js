@@ -8,13 +8,16 @@ export const theme = createTheme({
       dark: "#4b0082",
     },
     secondary: {
-      main: "#FF0000",
+      main: "#C3555C",
     },
     otherColor: {
       main: "#ff9800",
     },
     customColor: {
       main: "#3e4444",
+    },
+    greenLike: {
+      main: "#008000",
     },
   },
   shape: {

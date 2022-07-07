@@ -54,6 +54,7 @@ function Login({ setUser, setUserId }) {
         localStorage.setItem(AUTH_TOKEN, loginUser.token);
         localStorage.setItem("user", JSON.stringify(loginUser.username));
         localStorage.setItem("userId", JSON.stringify(loginUser.id));
+        localStorage.setItem("avatar", JSON.stringify(loginUser.avatar));
       },
       context: { clientName: "authLink" },
     });

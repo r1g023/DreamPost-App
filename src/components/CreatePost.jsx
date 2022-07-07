@@ -116,6 +116,8 @@ const CreatePost = () => {
     post: "",
   });
 
+  const [postID, setPostID] = React.useState(null);
+
   console.log("DATE ------>", postDate);
 
   console.log("user on create post----->", user);
@@ -170,7 +172,7 @@ const CreatePost = () => {
     const newPost = await createPost({
       variables: {
         title: addPost.title,
-        date: "now",
+        date: postDate,
         image: uploadPhoto,
         post: addPost.post,
         user_id: userId,
@@ -178,6 +180,7 @@ const CreatePost = () => {
 
       refetchQueries: [{ query: GET_POSTS }],
     });
+    setPostID(newPost.data.createPost.id);
     setAddPost({
       title: "",
       date: "",
@@ -188,6 +191,7 @@ const CreatePost = () => {
     setUploadPhoto(null);
     scrollToTop();
     console.log("new post---------------------", newPost);
+
     return newPost;
   }
 
@@ -195,6 +199,7 @@ const CreatePost = () => {
   // if (error) return <h1>Error: Error....</h1>;
   console.log("error----->", error);
   console.log("myImage-----THIS ONE?>", uploadPhoto);
+  console.log("postID---->", postID);
 
   return (
     <>
@@ -328,10 +333,6 @@ const CreatePost = () => {
                 )}
               </FormControl>
             </UserBox>
-            {/* <p>Title {addPost.title}</p>
-            <p>Date {addPost.date}</p>
-            <p>Content {addPost.content}</p>
-            <p>post {addPost.post}</p> */}
           </Box>
         </StyledModal>
       ) : null}

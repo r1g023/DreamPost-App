@@ -31,6 +31,7 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, setUser, userId }}>
+      {/* console log req.decodedToken from backend API */}
       <Box>
         <Navbar user={user} setUser={setUser} />
         <Routes>
