@@ -55,7 +55,9 @@ const Comments = ({ commentData }) => {
               <Avatar alt="Remy Sharp" src={""} />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth>
-              <h4 style={{ margin: 0, textAlign: "left" }}>User: {user}</h4>
+              <h4 style={{ margin: 0, textAlign: "left" }}>
+                User: {user.username}
+              </h4>
               <p style={{ textAlign: "left" }}>{commentData.comment}</p>
               <p
                 style={{ textAlign: "left", color: "gray", marginTop: "20px" }}

@@ -12,6 +12,7 @@ const GET_POSTS = gql`
       image
       post
       liked
+      user
       user_id
       comments {
         id

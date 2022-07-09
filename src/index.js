@@ -15,11 +15,11 @@ import {
 import { AUTH_TOKEN } from "./auth-token";
 
 const authLink = new HttpLink({
-  uri: "https://node-express-graphql-api.herokuapp.com/graphql/auth",
+  uri: "http://localhost:5000/graphql/auth",
 });
 
 const graphqlAPI = new HttpLink({
-  uri: "https://node-express-graphql-api.herokuapp.com/graphql",
+  uri: "http://localhost:5000/graphql",
   // get token from local storage and add to headers
   headers: {
     authorization: localStorage.getItem(AUTH_TOKEN) || "",
@@ -29,7 +29,6 @@ const graphqlAPI = new HttpLink({
 const client = new ApolloClient({
   link: ApolloLink.split(
     (operation) => operation.getContext().clientName === "authLink",
-    // the string "authAPI" can be anything you want,
     authLink, // <= apollo will send to this if clientName is "authLink"
     graphqlAPI // <= otherwise will send to this
   ),

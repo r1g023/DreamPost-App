@@ -34,6 +34,7 @@ const GET_POSTS = gql`
       date
       post
       liked
+      user
       user_id
     }
   }
@@ -45,6 +46,7 @@ const ADD_POST = gql`
     $date: String!
     $image: String!
     $post: String!
+    $user: String!
     $user_id: Int!
   ) {
     createPost(
@@ -52,6 +54,7 @@ const ADD_POST = gql`
       date: $date
       image: $image
       post: $post
+      user: $user
       user_id: $user_id
     ) {
       id
@@ -101,7 +104,8 @@ const CreatePost = () => {
   const toggleModal = () => {
     setOpen(!open);
   };
-  const { user, userId, completeUser } = React.useContext(UserContext);
+  const { user } = React.useContext(UserContext);
+
   const [createPost, { data, loading, error }] = useMutation(ADD_POST);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
@@ -113,15 +117,14 @@ const CreatePost = () => {
     title: "",
     date: null,
     image: null,
+    user: "",
     post: "",
   });
-
-  const [postID, setPostID] = React.useState(null);
 
   console.log("DATE ------>", postDate);
 
   console.log("user on create post----->", user);
-  console.log("userId on create post----->", userId);
+
   console.log("addPost on create post----->", data);
 
   //on post submit, scroll to top function call
@@ -175,16 +178,17 @@ const CreatePost = () => {
         date: postDate,
         image: uploadPhoto,
         post: addPost.post,
-        user_id: userId,
+        user: user.username,
+        user_id: user.id,
       },
 
       refetchQueries: [{ query: GET_POSTS }],
     });
-    setPostID(newPost.data.createPost.id);
     setAddPost({
       title: "",
       date: "",
       image: "",
+      user: "",
       post: "",
     });
     toggleModal();
@@ -199,7 +203,6 @@ const CreatePost = () => {
   // if (error) return <h1>Error: Error....</h1>;
   console.log("error----->", error);
   console.log("myImage-----THIS ONE?>", uploadPhoto);
-  console.log("postID---->", postID);
 
   return (
     <>
@@ -233,7 +236,7 @@ const CreatePost = () => {
             p={3}
             textAlign="center"
           >
-            {/*userbox of current logged in user */}
+            {/*userbox of current logged in user.username */}
             <UserBox>
               {/*form */}
 
@@ -251,7 +254,7 @@ const CreatePost = () => {
                       src="https://i.pravatar.cc/300"
                       sx={{ border: "1px solid red", margin: "0 auto" }}
                     />
-                    <Typography variant="h6">{user}</Typography>
+                    <Typography variant="h6">{user.username}</Typography>
                     <TextField
                       id="demo-helper-text-aligned"
                       label="title"
@@ -264,12 +267,6 @@ const CreatePost = () => {
                       name="date"
                       onChange={handleChange}
                     /> */}
-                    <TextField
-                      id="demo-helper-text-aligned"
-                      label="content"
-                      name="content"
-                      onChange={handleChange}
-                    />
                     <TextField
                       id="demo-helper-text-aligned"
                       label="post"
@@ -285,7 +282,6 @@ const CreatePost = () => {
                       Add Post
                     </Button>{" "}
                     <h2>Need to add Photo?</h2>
-                    <h1>Complete user: {completeUser.email}</h1>
                     <button onClick={() => setTogglePhoto(!togglePhoto)}>
                       Upload Photo
                     </button>

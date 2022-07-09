@@ -37,6 +37,8 @@ const GET_POSTS = gql`
     getPosts {
       id
       post
+      user
+      post_id
       comments {
         id
         comment
@@ -78,13 +80,15 @@ const Post = ({ post }) => {
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
 
-  // React.useEffect(() => {
-  //   console.log("post data on Post USE EFFECT---->", post);
-  // }, [data]);
+  React.useEffect(() => {
+    console.log("post data on Post USE EFFECT---->", post);
+  }, [data]);
 
-  const { user } = React.useContext(UserContext);
+  const currentUser = React.useContext(UserContext);
   // add comment to mutation
   const [addComment] = useMutation(ADD_COMMENT);
+  const isCurrentUser = currentUser.user.id === post.user_id;
+  console.log("currentUser data on Post component---->", isCurrentUser);
 
   // add comment post object
   const [comment, setComment] = React.useState({
@@ -98,7 +102,6 @@ const Post = ({ post }) => {
       variables: {
         comment: comment.comment,
         post_id: post.id,
-        user: user.username,
       },
       refetchQueries: [{ query: GET_POSTS }],
     });
@@ -123,7 +126,7 @@ const Post = ({ post }) => {
         <CardHeader
           avatar={
             <Avatar sx={{ background: "navy" }} aria-label="recipe">
-              R
+              {post.user.charAt(0)}
             </Avatar>
           }
           action={
@@ -134,7 +137,8 @@ const Post = ({ post }) => {
           title={post.title}
           subheader={post.date}
         />
-
+        <h4>User: {post.user} </h4>
+        <h3>Post_id: {post.user_id}</h3>
         {/* Card Photo */}
 
         <CardMedia component="img" height="20%" image={post.image} />
@@ -187,11 +191,7 @@ const Post = ({ post }) => {
             </form>
             {data &&
               post.comments.map((item) => (
-                <Comments
-                  commentData={item}
-                  key={item.id}
-                  user={user.username}
-                />
+                <Comments commentData={item} key={item.id} />
               ))}
           </CardContent>
         </Collapse>
