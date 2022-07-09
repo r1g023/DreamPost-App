@@ -62,7 +62,7 @@ const Comments = ({ commentData }) => {
               <p
                 style={{ textAlign: "left", color: "gray", marginTop: "20px" }}
               >
-                posted 1 minute ago
+                posted 1 minute ago..
               </p>
             </Grid>
           </Grid>
