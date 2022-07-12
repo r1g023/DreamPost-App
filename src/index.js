@@ -15,7 +15,11 @@ import {
 import { AUTH_TOKEN } from "./auth-token";
 
 const authLink = new HttpLink({
+<<<<<<< HEAD
   uri: "http://localhost:5000/graphql/auth",
+=======
+  uri: "https://node-express-graphql-api.herokuapp.com/graphql/auth",
+>>>>>>> dfcd6f5276fdcec21e6d01f4312c515772b41d7c
 });
 
 const graphqlAPI = new HttpLink({
