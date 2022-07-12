@@ -27,6 +27,7 @@ const GET_COMMENTS = gql`
     getComments {
       id
       comment
+      liked
       user
       post_id
     }
@@ -74,6 +75,16 @@ const ADD_COMMENT = gql`
   }
 `;
 
+const UPDATE_COMMENT = gql`
+  mutation updateCommentID($id: Int!, $liked: Boolean) {
+    updateCommentID(id: $id, liked: $liked) {
+      id
+
+      liked
+    }
+  }
+`;
+
 // drop down arrow on comments
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -99,6 +110,7 @@ const Post = ({ post }) => {
   const { data, error, loading } = useQuery(GET_COMMENTS);
   // get mutation for delete comment
   const [deleteCommentID] = useMutation(DELETE_COMMENT);
+  const [updateCommentID] = useMutation(UPDATE_COMMENT);
 
   React.useEffect(() => {
     console.log("comment data on Post.jsx USE EFFECT---->", data);
@@ -161,6 +173,18 @@ const Post = ({ post }) => {
       },
     });
     return deletedComment;
+  };
+
+  // handle update comment and like
+  const handleCommentUpdate = (comment) => {
+    updateCommentID({
+      variables: {
+        id: comment.id,
+        liked: !comment.liked,
+      },
+    });
+    // add liked to a count value and add them
+    // to the likes array in the post object
   };
 
   console.log("data----> comment----->", data);
@@ -242,6 +266,7 @@ const Post = ({ post }) => {
                     {...item}
                     key={item.id}
                     handleCommentDelete={() => handleCommentDelete(item)}
+                    handleCommentLike={() => handleCommentUpdate(item)}
                   />
                 ))
                 .reverse()}

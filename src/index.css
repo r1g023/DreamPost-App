@@ -5,3 +5,7 @@
 .displayNone {
     border: "11px solid red";
 }
+
+.like-post {
+    background: red;
+}

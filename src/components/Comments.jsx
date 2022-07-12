@@ -37,13 +37,22 @@ const StyledDeleteEditBox = styled(Box)({
   justifyContent: "flex-end",
 });
 
-const Comments = ({ id, comment, user, handleCommentDelete }) => {
+const Comments = ({
+  id,
+  comment,
+  liked,
+  user,
+  handleCommentDelete,
+  handleCommentLike,
+}) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   const currentUser = React.useContext(UserContext);
   console.log("currentUser", currentUser);
   // get current loggedIn user
   const isCurrentUser = currentUser.user.username === user;
+  const [count, setCount] = React.useState(liked);
+  const [counter, setCounter] = React.useState(0);
 
   console.log("Comment -->", id, comment, user);
   return (
@@ -77,13 +86,31 @@ const Comments = ({ id, comment, user, handleCommentDelete }) => {
           <Divider variant="fullWidth" style={{ margin: "10px 0" }} />
           {/* container for the like and edit/delete buttons */}
           <StyledBox>
-            <Box sx={{ border: "1px solid red", width: "30%" }}>
-              <Checkbox
-                {...label}
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite />}
-                color="greenLike"
-              />
+            <Box
+              onClick={() => {
+                handleCommentLike(id);
+                // add likes to count
+                setCounter(counter + 1);
+              }}
+              sx={{ border: "1px solid red", width: "30%" }}
+            >
+              {liked === true ? (
+                <Checkbox
+                  {...label}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                  color="greenLike"
+                />
+              ) : (
+                <Checkbox
+                  {...label}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                  color="default"
+                />
+              )}
+              {/* add total number of likes and add them to count */}
+              {user && <p>{Number(liked)}</p>}
             </Box>
 
             {/* container for edit and delete buttons */}
