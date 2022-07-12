@@ -17,6 +17,7 @@ const GET_POSTS = gql`
       comments {
         id
         comment
+        user
         post_id
       }
     }

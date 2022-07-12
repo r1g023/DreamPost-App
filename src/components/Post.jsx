@@ -27,6 +27,20 @@ const GET_COMMENTS = gql`
     getComments {
       id
       comment
+      user
+      post_id
+    }
+  }
+`;
+
+// Delete comment by ID if logged in user
+const DELETE_COMMENT = gql`
+  mutation deleteCommentById($id: Int!) {
+    deleteCommentID(id: $id) {
+      id
+      comment
+      liked
+      post_id
     }
   }
 `;
@@ -42,16 +56,19 @@ const GET_POSTS = gql`
       comments {
         id
         comment
+        user
+        post_id
       }
     }
   }
 `;
 
 const ADD_COMMENT = gql`
-  mutation addComment($comment: String!, $post_id: Int!) {
-    addComment(comment: $comment, post_id: $post_id) {
+  mutation addComment($comment: String!, $user: String!, $post_id: Int!) {
+    addComment(comment: $comment, user: $user, post_id: $post_id) {
       id
       comment
+      user
       post_id
     }
   }
@@ -77,36 +94,41 @@ const Post = ({ post }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
+  // get mutation for delete comment
+  const [deleteCommentID] = useMutation(DELETE_COMMENT);
 
   React.useEffect(() => {
-    console.log("post data on Post USE EFFECT---->", post);
+    console.log("comment data on Post.jsx USE EFFECT---->", data);
   }, [data]);
 
-  const currentUser = React.useContext(UserContext);
+  const { user } = React.useContext(UserContext);
   // add comment to mutation
   const [addComment] = useMutation(ADD_COMMENT);
-  const isCurrentUser = currentUser.user.id === post.user_id;
-  console.log("currentUser data on Post component---->", isCurrentUser);
 
   // add comment post object
   const [comment, setComment] = React.useState({
     comment: "",
+    user: "",
     post_id: "",
   });
 
+  // Add new comment to comment list
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newComment = await addComment({
       variables: {
         comment: comment.comment,
+        user: user.username,
         post_id: post.id,
       },
-      refetchQueries: [{ query: GET_POSTS }],
+      refetchQueries: [{ query: GET_COMMENTS }],
     });
     setComment({
       comment: "",
+      user: "",
       post_id: "",
     });
     console.log("newComment", newComment);
@@ -118,9 +140,33 @@ const Post = ({ post }) => {
     setComment({ ...comment, [e.target.name]: e.target.value });
   };
 
+  // handle delete comment
+  const handleCommentDelete = async (comment) => {
+    let deletedComment = await deleteCommentID({
+      variables: { id: comment.id },
+      //get from cache and update upon delete instead of refetching comment query
+      update: (cache) => {
+        console.log("comment cache--->", cache);
+        const prevData = cache.readQuery({ query: GET_COMMENTS });
+        console.log("prevData--->", prevData);
+        const newData = prevData.getComments.filter(
+          (item) => item.id !== comment.id
+        );
+        console.log("newData--->", newData);
+        // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
+        cache.writeQuery({
+          query: GET_COMMENTS,
+          data: { getComments: newData },
+        });
+      },
+    });
+    return deletedComment;
+  };
+
   console.log("data----> comment----->", data);
   return (
     <>
+      {console.log("component did render first time")}{" "}
       <Card sx={{ margin: 5 }}>
         {/* Card Header */}
         <CardHeader
@@ -190,9 +236,15 @@ const Post = ({ post }) => {
               <button className="pa2 f4 bg-green">Add Todo</button>
             </form>
             {data &&
-              post.comments.map((item) => (
-                <Comments commentData={item} key={item.id} />
-              ))}
+              data.getComments
+                .map((item) => (
+                  <Comments
+                    {...item}
+                    key={item.id}
+                    handleCommentDelete={() => handleCommentDelete(item)}
+                  />
+                ))
+                .reverse()}
           </CardContent>
         </Collapse>
       </Card>

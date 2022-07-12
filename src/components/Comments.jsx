@@ -37,13 +37,15 @@ const StyledDeleteEditBox = styled(Box)({
   justifyContent: "flex-end",
 });
 
-const Comments = ({ commentData }) => {
-  const { user } = React.useContext(UserContext);
-  // const isCurrentUser = currentUser.user === user;
-  // add comment to mutation
-
+const Comments = ({ id, comment, user, handleCommentDelete }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
+  const currentUser = React.useContext(UserContext);
+  console.log("currentUser", currentUser);
+  // get current loggedIn user
+  const isCurrentUser = currentUser.user.username === user;
+
+  console.log("Comment -->", id, comment, user);
   return (
     <div style={{ border: "2px solid red" }}>
       {/* form for adding new comment */}
@@ -55,10 +57,16 @@ const Comments = ({ commentData }) => {
               <Avatar alt="Remy Sharp" src={""} />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth>
-              <h4 style={{ margin: 0, textAlign: "left" }}>
-                User: {user.username}
+              <h4
+                style={{
+                  margin: 0,
+                  textAlign: "left",
+                  color: isCurrentUser ? "green" : "",
+                }}
+              >
+                User: {user}
               </h4>
-              <p style={{ textAlign: "left" }}>{commentData.comment}</p>
+              <p style={{ textAlign: "left" }}>{comment}</p>
               <p
                 style={{ textAlign: "left", color: "gray", marginTop: "20px" }}
               >
@@ -77,23 +85,33 @@ const Comments = ({ commentData }) => {
                 color="greenLike"
               />
             </Box>
+
             {/* container for edit and delete buttons */}
             <StyledDeleteEditBox
               sx={{ border: "1px solid green", width: "70%" }}
             >
-              {/* Edit comment button */}
-              <Fab
-                color="primary"
-                aria-label="edit"
-                size="small"
-                sx={{ marginRight: "5px", marginTop: 1 }}
-              >
-                <EditIcon />
-              </Fab>
-              {/* Delete comment button */}
-              <IconButton aria-label="delete" size="large" color="secondary">
-                <DeleteIcon fontSize="inherit" />
-              </IconButton>
+              {/* Edit comment button, only show if the current logged in user made the comment*/}
+              {isCurrentUser && (
+                <>
+                  <Fab
+                    color="primary"
+                    aria-label="edit"
+                    size="small"
+                    sx={{ marginRight: "5px", marginTop: "7px" }}
+                  >
+                    <EditIcon />
+                  </Fab>
+                  {/* Delete comment button */}
+                  <IconButton
+                    aria-label="delete"
+                    size="large"
+                    color="secondary"
+                    onClick={() => handleCommentDelete(id)}
+                  >
+                    <DeleteIcon fontSize="inherit" />
+                  </IconButton>
+                </>
+              )}
             </StyledDeleteEditBox>
           </StyledBox>
         </Paper>
