@@ -28,6 +28,7 @@ const GET_COMMENTS = gql`
       id
       comment
       liked
+      count
       user
       post_id
     }
@@ -41,6 +42,7 @@ const DELETE_COMMENT = gql`
       id
       comment
       liked
+      count
       post_id
     }
   }
@@ -70,17 +72,18 @@ const ADD_COMMENT = gql`
       id
       comment
       user
+      count
       post_id
     }
   }
 `;
 
 const UPDATE_COMMENT = gql`
-  mutation updateCommentID($id: Int!, $liked: Boolean) {
-    updateCommentID(id: $id, liked: $liked) {
+  mutation updateCommentID($id: Int!, $liked: Boolean, $count: Int) {
+    updateCommentID(id: $id, liked: $liked, count: $count) {
       id
-
       liked
+      count
     }
   }
 `;
@@ -177,17 +180,23 @@ const Post = ({ post }) => {
 
   // handle update comment and like
   const handleCommentUpdate = (comment) => {
+    console.log("comment on handleCommentUpdate--->", comment);
     updateCommentID({
       variables: {
         id: comment.id,
         liked: !comment.liked,
+        // if liked is false, add count + 1, if liked is true, subtract count - 1
+        count:
+          comment.liked !== comment.user
+            ? comment.count + 1
+            : comment.count - 1,
       },
     });
-    // add liked to a count value and add them
-    // to the likes array in the post object
   };
 
   console.log("data----> comment----->", data);
+
+  console.log("user on POST COMMENT ---->", user);
   return (
     <>
       {console.log("component did render first time")}{" "}

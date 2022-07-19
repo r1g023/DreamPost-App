@@ -41,6 +41,7 @@ const Comments = ({
   id,
   comment,
   liked,
+  count,
   user,
   handleCommentDelete,
   handleCommentLike,
@@ -51,10 +52,10 @@ const Comments = ({
   console.log("currentUser", currentUser);
   // get current loggedIn user
   const isCurrentUser = currentUser.user.username === user;
-  const [count, setCount] = React.useState(liked);
-  const [counter, setCounter] = React.useState(0);
+  const [counter, setCounter] = React.useState(count);
+  let likedComment = liked === false;
 
-  console.log("Comment -->", id, comment, user);
+  console.log("Comment user-->", id, liked, count, user);
   return (
     <div style={{ border: "2px solid red" }}>
       {/* form for adding new comment */}
@@ -90,27 +91,34 @@ const Comments = ({
               onClick={() => {
                 handleCommentLike(id);
                 // add likes to count
-                setCounter(counter + 1);
+                // setCounter(() => {
+                //   // prevent user from like the comment if the like is already liked
+                //   if (user === currentUser.user.username) {
+                //     return counter;
+                //   }
+                //   return counter + 1;
+                // });
               }}
               sx={{ border: "1px solid red", width: "30%" }}
             >
-              {liked === true ? (
-                <Checkbox
-                  {...label}
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
-                  color="greenLike"
-                />
-              ) : (
+              {liked === false ? (
                 <Checkbox
                   {...label}
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
                   color="default"
                 />
+              ) : (
+                <Checkbox
+                  {...label}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                  color="greenLike"
+                />
               )}
-              {/* add total number of likes and add them to count */}
-              {user && <p>{Number(liked)}</p>}
+              {/* add total number greenLike likes and add them to count */}
+
+              <h3>Count: {count}</h3>
             </Box>
 
             {/* container for edit and delete buttons */}
@@ -118,7 +126,7 @@ const Comments = ({
               sx={{ border: "1px solid green", width: "70%" }}
             >
               {/* Edit comment button, only show if the current logged in user made the comment*/}
-              {isCurrentUser && (
+              {isCurrentUser === user && (
                 <>
                   <Fab
                     color="primary"
