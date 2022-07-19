@@ -22,8 +22,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, ThumbUpAlt } from "@mui/icons-material";
 import { UserContext } from "../App";
+import SvgIcon from "@mui/material/SvgIcon";
 
 //container for like and edit/delete buttons
 const StyledBox = styled(Box)({
@@ -37,6 +38,14 @@ const StyledDeleteEditBox = styled(Box)({
   justifyContent: "flex-end",
 });
 
+function HomeIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+}
+
 const Comments = ({
   id,
   comment,
@@ -45,17 +54,19 @@ const Comments = ({
   user,
   handleCommentDelete,
   handleCommentLike,
+  handleCommentEdit,
 }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   const currentUser = React.useContext(UserContext);
-  console.log("currentUser", currentUser);
   // get current loggedIn user
   const isCurrentUser = currentUser.user.username === user;
   const [counter, setCounter] = React.useState(count);
-  let likedComment = liked === false;
 
   console.log("Comment user-->", id, liked, count, user);
+  console.log("IS current user-->", isCurrentUser);
+
+  // React.useEffect(() => {}, []);
   return (
     <div style={{ border: "2px solid red" }}>
       {/* form for adding new comment */}
@@ -87,38 +98,38 @@ const Comments = ({
           <Divider variant="fullWidth" style={{ margin: "10px 0" }} />
           {/* container for the like and edit/delete buttons */}
           <StyledBox>
-            <Box
-              onClick={() => {
-                handleCommentLike(id);
-                // add likes to count
-                // setCounter(() => {
-                //   // prevent user from like the comment if the like is already liked
-                //   if (user === currentUser.user.username) {
-                //     return counter;
-                //   }
-                //   return counter + 1;
-                // });
-              }}
-              sx={{ border: "1px solid red", width: "30%" }}
-            >
-              {liked === false ? (
+            <Box sx={{ border: "1px solid red", width: "30%" }}>
+              {/* {isCurrentUser && (
                 <Checkbox
                   {...label}
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
-                  color="default"
-                />
-              ) : (
-                <Checkbox
-                  {...label}
+                  onClick={() => handleCommentLike(id)}
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
                   color="greenLike"
                 />
-              )}
+              )} */}
               {/* add total number greenLike likes and add them to count */}
+              {/* like the comment if user has not liked the comment */}
+              {!liked && (
+                <span
+                  class="material-icons"
+                  onClick={() => handleCommentLike(id)}
+                >
+                  thumb_up_alt
+                </span>
+              )}
+              {/* unlike the comment if user has liked the comment */}
+              {liked && (
+                <span
+                  class="material-icons"
+                  style={{ color: "green" }}
+                  onClick={() => handleCommentLike(id)}
+                >
+                  thumb_up_alt
+                </span>
+              )}
 
-              <h3>Count: {count}</h3>
+              <h5>{count} Likes</h5>
             </Box>
 
             {/* container for edit and delete buttons */}
@@ -126,13 +137,14 @@ const Comments = ({
               sx={{ border: "1px solid green", width: "70%" }}
             >
               {/* Edit comment button, only show if the current logged in user made the comment*/}
-              {isCurrentUser === user && (
+              {isCurrentUser && (
                 <>
                   <Fab
                     color="primary"
                     aria-label="edit"
                     size="small"
                     sx={{ marginRight: "5px", marginTop: "7px" }}
+                    onClick={() => handleCommentEdit(id)}
                   >
                     <EditIcon />
                   </Fab>

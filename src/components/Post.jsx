@@ -79,9 +79,15 @@ const ADD_COMMENT = gql`
 `;
 
 const UPDATE_COMMENT = gql`
-  mutation updateCommentID($id: Int!, $liked: Boolean, $count: Int) {
-    updateCommentID(id: $id, liked: $liked, count: $count) {
+  mutation updateCommentID(
+    $id: Int!
+    $comment: String
+    $liked: Boolean
+    $count: Int
+  ) {
+    updateCommentID(id: $id, comment: $comment, liked: $liked, count: $count) {
       id
+      comment
       liked
       count
     }
@@ -127,6 +133,8 @@ const Post = ({ post }) => {
   const [comment, setComment] = React.useState({
     comment: "",
     user: "",
+    liked: false,
+    count: 0,
     post_id: "",
   });
 
@@ -186,10 +194,18 @@ const Post = ({ post }) => {
         id: comment.id,
         liked: !comment.liked,
         // if liked is false, add count + 1, if liked is true, subtract count - 1
-        count:
-          comment.liked !== comment.user
-            ? comment.count + 1
-            : comment.count - 1,
+        count: comment.count + 1 * (comment.liked === true ? -1 : 1),
+      },
+    });
+  };
+
+  // handle comment edit and update
+  const handleCommentEdit = (comment) => {
+    console.log("comment on handleCommentEdit--->", comment);
+    updateCommentID({
+      variables: {
+        id: comment.id,
+        comment: comment.comment,
       },
     });
   };
@@ -276,6 +292,7 @@ const Post = ({ post }) => {
                     key={item.id}
                     handleCommentDelete={() => handleCommentDelete(item)}
                     handleCommentLike={() => handleCommentUpdate(item)}
+                    handleCommentEdit={() => handleCommentEdit(item)}
                   />
                 ))
                 .reverse()}
