@@ -194,7 +194,10 @@ const Post = ({ post }) => {
         id: comment.id,
         liked: !comment.liked,
         // if liked is false, add count + 1, if liked is true, subtract count - 1
-        count: comment.count + 1 * (comment.liked === true ? -1 : 1),
+        count:
+          comment.count +
+          1 *
+            (user.username === comment.user && comment.liked === true ? -1 : 1),
       },
     });
   };
@@ -286,15 +289,19 @@ const Post = ({ post }) => {
             </form>
             {data &&
               data.getComments
-                .map((item) => (
-                  <Comments
-                    {...item}
-                    key={item.id}
-                    handleCommentDelete={() => handleCommentDelete(item)}
-                    handleCommentLike={() => handleCommentUpdate(item)}
-                    handleCommentEdit={() => handleCommentEdit(item)}
-                  />
-                ))
+                .map((item) => {
+                  console.log("item in post for comments---->", item);
+                  return (
+                    <Comments
+                      {...item}
+                      key={item.id}
+                      handleCommentDelete={() => handleCommentDelete(item)}
+                      handleCommentLike={() => handleCommentUpdate(item)}
+                      handleCommentEdit={() => handleCommentEdit(item)}
+                      commentData={data.getComments}
+                    />
+                  );
+                })
                 .reverse()}
           </CardContent>
         </Collapse>

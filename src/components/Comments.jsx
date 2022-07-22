@@ -55,6 +55,7 @@ const Comments = ({
   handleCommentDelete,
   handleCommentLike,
   handleCommentEdit,
+  commentData,
 }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -63,8 +64,13 @@ const Comments = ({
   const isCurrentUser = currentUser.user.username === user;
   const [counter, setCounter] = React.useState(count);
 
+  React.useEffect(() => {
+    // keep track of commentData
+  }, [commentData]);
+
   console.log("Comment user-->", id, liked, count, user);
-  console.log("IS current user-->", isCurrentUser);
+  console.log("COMMENT ----> currentUser -->", currentUser);
+  console.log("commentData -->", commentData);
 
   // React.useEffect(() => {}, []);
   return (
@@ -99,18 +105,8 @@ const Comments = ({
           {/* container for the like and edit/delete buttons */}
           <StyledBox>
             <Box sx={{ border: "1px solid red", width: "30%" }}>
-              {/* {isCurrentUser && (
-                <Checkbox
-                  {...label}
-                  onClick={() => handleCommentLike(id)}
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
-                  color="greenLike"
-                />
-              )} */}
-              {/* add total number greenLike likes and add them to count */}
               {/* like the comment if user has not liked the comment */}
-              {!liked && (
+              {!liked && user && (
                 <span
                   class="material-icons"
                   onClick={() => handleCommentLike(id)}
@@ -129,6 +125,8 @@ const Comments = ({
                 </span>
               )}
 
+              {/* show number of likes */}
+
               <h5>{count} Likes</h5>
             </Box>
 
@@ -139,15 +137,11 @@ const Comments = ({
               {/* Edit comment button, only show if the current logged in user made the comment*/}
               {isCurrentUser && (
                 <>
-                  <Fab
-                    color="primary"
-                    aria-label="edit"
-                    size="small"
-                    sx={{ marginRight: "5px", marginTop: "7px" }}
+                  <i
+                    className="fa fa-edit"
+                    style={{ color: "red" }}
                     onClick={() => handleCommentEdit(id)}
-                  >
-                    <EditIcon />
-                  </Fab>
+                  ></i>
                   {/* Delete comment button */}
                   <IconButton
                     aria-label="delete"

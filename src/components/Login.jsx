@@ -48,6 +48,14 @@ const LOGIN_USER = gql`
           updated_at
         }
       }
+      comments {
+        id
+        comment
+        liked
+        count
+        user
+        post_id
+      }
     }
   }
 `;
@@ -77,6 +85,7 @@ function Login({ setUser }) {
       },
       onCompleted: ({ loginUser }) => {
         localStorage.setItem(AUTH_TOKEN, loginUser.token);
+
         localStorage.setItem("user", JSON.stringify(loginUser));
       },
       context: { clientName: "authLink" },
