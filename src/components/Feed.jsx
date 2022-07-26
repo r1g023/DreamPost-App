@@ -14,12 +14,12 @@ const GET_POSTS = gql`
       liked
       user
       user_id
-      comments {
-        id
-        comment
-        user
-        post_id
-      }
+      # comments {
+      #   id
+      #   comment
+      #   user
+      #   post_id
+      # }
     }
   }
 `;
@@ -46,6 +46,3 @@ const Feed = () => {
 };
 
 export default Feed;
-
-
-

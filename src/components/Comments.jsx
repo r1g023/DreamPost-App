@@ -52,6 +52,7 @@ const Comments = ({
   liked,
   count,
   user,
+  post_id,
   handleCommentDelete,
   handleCommentLike,
   handleCommentEdit,
@@ -68,7 +69,7 @@ const Comments = ({
     // keep track of commentData
   }, [commentData]);
 
-  console.log("Comment user-->", id, liked, count, user);
+  console.log("Comment user-->", id, liked, post_id, count, user);
   console.log("COMMENT ----> currentUser -->", currentUser);
   console.log("commentData -->", commentData);
 
@@ -93,6 +94,7 @@ const Comments = ({
               >
                 User: {user}
               </h4>
+              <h5>Post id: {post_id}</h5>
               <p style={{ textAlign: "left" }}>{comment}</p>
               <p
                 style={{ textAlign: "left", color: "gray", marginTop: "20px" }}
@@ -104,6 +106,7 @@ const Comments = ({
           <Divider variant="fullWidth" style={{ margin: "10px 0" }} />
           {/* container for the like and edit/delete buttons */}
           <StyledBox>
+            <h4>POST ID: {post_id}</h4>
             <Box sx={{ border: "1px solid red", width: "30%" }}>
               {/* like the comment if user has not liked the comment */}
               {!liked && user && (

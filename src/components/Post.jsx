@@ -197,7 +197,7 @@ const Post = ({ post }) => {
         count:
           comment.count +
           1 *
-            (user.username === comment.user && comment.liked === true ? -1 : 1),
+            (user.username !== comment.user && comment.liked === true ? -1 : 1),
       },
     });
   };
@@ -236,7 +236,9 @@ const Post = ({ post }) => {
           subheader={post.date}
         />
         <h4>User: {post.user} </h4>
-        <h3>Post_id: {post.user_id}</h3>
+        <h2>USER_ID: {post.user_id}</h2>
+        <h3>Post_id: {post.id}</h3>
+
         {/* Card Photo */}
 
         <CardMedia component="img" height="20%" image={post.image} />
@@ -291,16 +293,18 @@ const Post = ({ post }) => {
               data.getComments
                 .map((item) => {
                   console.log("item in post for comments---->", item);
-                  return (
-                    <Comments
-                      {...item}
-                      key={item.id}
-                      handleCommentDelete={() => handleCommentDelete(item)}
-                      handleCommentLike={() => handleCommentUpdate(item)}
-                      handleCommentEdit={() => handleCommentEdit(item)}
-                      commentData={data.getComments}
-                    />
-                  );
+
+                  if (item.post_id === post.id) {
+                    return (
+                      <Comments
+                        {...item}
+                        key={item.id}
+                        handleCommentDelete={() => handleCommentDelete(item)}
+                        handleCommentLike={() => handleCommentUpdate(item)}
+                        handleCommentEdit={() => handleCommentEdit(item)}
+                      />
+                    );
+                  }
                 })
                 .reverse()}
           </CardContent>
