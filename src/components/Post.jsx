@@ -20,6 +20,7 @@ import { gql, useQuery, useMutation } from "@apollo/client";
 import { UserContext } from "../App";
 
 import Comments from "./Comments";
+import Modal from "./Modal";
 
 // get GET COMMENTS option from the database
 const GET_COMMENTS = gql`
@@ -109,6 +110,8 @@ const ExpandMore = styled((props) => {
 // Post Card for the Post List on the Feed component
 const Post = ({ post }) => {
   console.log("Post data on Post component---->", post);
+  // const [toggleModal, setToggleModal] = React.useState(false);
+  const [editComment, setEditComment] = React.useState("");
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -131,6 +134,7 @@ const Post = ({ post }) => {
 
   // add comment post object
   const [comment, setComment] = React.useState({
+    id: "",
     comment: "",
     user: "",
     liked: false,
@@ -187,17 +191,13 @@ const Post = ({ post }) => {
   };
 
   // handle update comment and like
-  const handleCommentUpdate = (comment) => {
-    console.log("comment on handleCommentUpdate--->", comment);
+  const handleCommentLike = (comment) => {
+    console.log("comment on handleCommentLike--->", comment);
     updateCommentID({
       variables: {
         id: comment.id,
         liked: !comment.liked,
-        // if liked is false, add count + 1, if liked is true, subtract count - 1
-        count:
-          comment.count +
-          1 *
-            (user.username !== comment.user && comment.liked === true ? -1 : 1),
+        count: !comment.liked ? comment.count + 1 : comment.count - 1,
       },
     });
   };
@@ -205,12 +205,18 @@ const Post = ({ post }) => {
   // handle comment edit and update
   const handleCommentEdit = (comment) => {
     console.log("comment on handleCommentEdit--->", comment);
+    // e.preventDefault();
     updateCommentID({
       variables: {
         id: comment.id,
-        comment: comment.comment,
+        comment: editComment,
       },
     });
+  };
+
+  // handle comment edit and update
+  const handleCommentUpdate = (e) => {
+    setEditComment(e.target.value);
   };
 
   console.log("data----> comment----->", data);
@@ -289,6 +295,24 @@ const Post = ({ post }) => {
 
               <button className="pa2 f4 bg-green">Add Todo</button>
             </form>
+            {/* form for updating a comment, open modal*/}
+            {/* {!toggleModal ? (
+              <Modal onCancel={() => setToggleModal(!toggleModal)}>
+                <input
+                  type="text"
+                  className="pa2 f4 b--dashed"
+                  name="editComment"
+                  value={editComment}
+                  placeholder="Edit a comment..."
+                  onChange={(e) => setEditComment(e.target.value)}
+                />
+              </Modal>
+            ) : null} */}
+
+            <>
+              <p>Comment Edit: {editComment}</p>
+            </>
+
             {data &&
               data.getComments
                 .map((item) => {
@@ -300,8 +324,10 @@ const Post = ({ post }) => {
                         {...item}
                         key={item.id}
                         handleCommentDelete={() => handleCommentDelete(item)}
-                        handleCommentLike={() => handleCommentUpdate(item)}
+                        handleCommentLike={() => handleCommentLike(item)}
                         handleCommentEdit={() => handleCommentEdit(item)}
+                        setEditComment={handleCommentUpdate}
+                        editComment={editComment}
                       />
                     );
                   }
