@@ -99,8 +99,6 @@ const CreatePost = () => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
-  // use useRef
-  const ref = React.useRef();
   const toggleModal = () => {
     setOpen(!open);
   };
@@ -110,18 +108,15 @@ const CreatePost = () => {
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [togglePhoto, setTogglePhoto] = React.useState(false);
-  const [postDate, setPostDate] = React.useState(
-    moment().subtract(10, "days").calendar()
-  );
+  const [startDate, setStartDate] = React.useState(moment().calendar());
+
   const [addPost, setAddPost] = React.useState({
     title: "",
-    date: null,
+    date: "",
     image: null,
     user: "",
     post: "",
   });
-
-  console.log("DATE ------>", postDate);
 
   console.log("user on create post----->", user);
 
@@ -175,7 +170,7 @@ const CreatePost = () => {
     const newPost = await createPost({
       variables: {
         title: addPost.title,
-        date: postDate,
+        date: startDate,
         image: uploadPhoto,
         post: addPost.post,
         user: user.username,
@@ -261,12 +256,6 @@ const CreatePost = () => {
                       name="title"
                       onChange={handleChange}
                     />
-                    {/* <TextField
-                      id="demo-helper-text-aligned"
-                      label="date"
-                      name="date"
-                      onChange={handleChange}
-                    /> */}
                     <TextField
                       id="demo-helper-text-aligned"
                       label="post"
@@ -281,18 +270,27 @@ const CreatePost = () => {
                     >
                       Add Post
                     </Button>{" "}
-                    <h2>Need to add Photo?</h2>
-                    <button onClick={() => setTogglePhoto(!togglePhoto)}>
+                    {/* <h2>Photo upload is required</h2> */}
+                    <Button
+                      variant="outlined"
+                      onClick={() => setTogglePhoto(!togglePhoto)}
+                      color="otherColor"
+                    >
                       Upload Photo
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   <>
                     <label htmlFor="icon-button-file">
+                      <label htmlFor="image" style={{ display: "block" }}>
+                        Click the camera icon to select a Photo
+                      </label>
+                      {/*camera Icon */}
                       <Input
                         accept="image/*"
                         id="icon-button-file"
                         type="file"
+                        sx={{ color: "red" }}
                         onChange={(e) => {
                           console.log("e.target.files", e.target.files);
                           setSelectedImages(e.target.files[0]);
@@ -306,26 +304,25 @@ const CreatePost = () => {
                         <PhotoCamera />
                       </IconButton>
                     </label>
-                    <Image
-                      cloudName="dcvh93esc"
-                      publicId={`${uploadPhoto}`}
-                      height="100"
-                      width="100"
-                      className={`displayNone`}
-                      ref={ref}
-                    />
+                    <Image cloudName="dcvh93esc" publicId={`${uploadPhoto}`} />
                     {/* button to upload image to Cloud */}
-                    <button
+                    <Button
+                      variant="contained"
+                      component="label"
+                      color="success"
                       onClick={() => {
                         setTimeout(() => {
                           setTogglePhoto(!togglePhoto);
-                        }, 4000);
+                        }, 5000);
                         uploadImage();
                       }}
                     >
                       Upload Image
-                    </button>
-                    <p>Post date: {postDate}</p>
+                    </Button>
+                    <p style={{ color: "gray" }}>
+                      Click upload image to upload new Photo after selecting
+                      one!
+                    </p>
                   </>
                 )}
               </FormControl>

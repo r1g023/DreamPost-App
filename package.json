@@ -52,6 +52,6 @@
     "eslint": "^8.17.0",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-react": "^7.30.0",
-    "moment": "^2.29.3"
+    "moment": "^2.29.4"
   }
 }

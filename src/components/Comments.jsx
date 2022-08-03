@@ -26,6 +26,7 @@ import { Favorite, FavoriteBorder, ThumbUpAlt } from "@mui/icons-material";
 import { UserContext } from "../App";
 import SvgIcon from "@mui/material/SvgIcon";
 import Modal from "./Modal";
+import moment from "moment";
 
 //container for like and edit/delete buttons
 const StyledBox = styled(Box)({
@@ -60,9 +61,12 @@ const Comments = ({
   commentData,
   setEditComment,
   editComment,
+  toggleModal,
+  setToggleModal,
+  date,
 }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const [toggleModal, setToggleModal] = React.useState(false);
+
   const currentUser = React.useContext(UserContext);
 
   // get current loggedIn user
@@ -79,11 +83,11 @@ const Comments = ({
 
   // React.useEffect(() => {}, []);
   return (
-    <div style={{ border: "2px solid red" }}>
+    <div className="commentContainer">
       {/* form for adding new comment */}
 
       <div style={{ padding: 14 }} className="App">
-        <Paper style={{ padding: "10px 20px", border: "1px solid green" }}>
+        <Paper style={{ padding: "10px 20px" }}>
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <Avatar alt="Remy Sharp" src={""} />
@@ -96,40 +100,64 @@ const Comments = ({
                   color: isCurrentUser ? "green" : "",
                 }}
               >
-                User: {user}
+                {user}
               </h4>
-              <h5>Post id: {post_id}</h5>
 
-              {toggleModal ? (
+              {isCurrentUser && toggleModal ? (
                 <Modal onCancel={() => setToggleModal(false)}>
-                  <input
-                    type="text"
-                    className="pa2 f4 b--dashed"
+                  <textarea
+                    style={{ display: "block", width: 253, maxWidth: 253 }}
                     name="editComment"
-                    placeholder="Edit a comment..."
+                    placeholder="Edit comment..."
+                    value={editComment}
                     onChange={setEditComment}
                   />
-                  <button onClick={() => handleCommentEdit(id)}>Edit</button>
+
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ padding: "5px", marginTop: "5px" }}
+                    onClick={() => handleCommentEdit(id)}
+                  >
+                    Update
+                  </Button>
                 </Modal>
               ) : (
-                <p style={{ textAlign: "left" }}>Comment:{comment}</p>
+                <p
+                  style={{
+                    textAlign: "left",
+                    color: isCurrentUser ? "gray" : "",
+                    marginTop: "20px",
+                    padding: "10px",
+                    width: "250px",
+                    maxWidth: "250px",
+                    overflow: "hidden",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {comment}
+                </p>
               )}
 
               <p
-                style={{ textAlign: "left", color: "gray", marginTop: "20px" }}
+                style={{
+                  textAlign: "left",
+                  color: "gray",
+                  marginTop: "20px",
+                  borderTop: "1px dashed gray",
+                }}
               >
-                posted 1 minute ago..
+                posted {date}
               </p>
             </Grid>
           </Grid>
           <Divider variant="fullWidth" style={{ margin: "10px 0" }} />
           {/* container for the like and edit/delete buttons */}
           <StyledBox>
-            <Box sx={{ border: "1px solid red", width: "30%" }}>
+            <Box sx={{ width: "30%" }}>
               {/* if current user has not liked the comment, then show like button,
               else show unlike button
               */}
-
               <span
                 className="material-icons"
                 onClick={() => handleCommentLike(id)}
@@ -148,12 +176,8 @@ const Comments = ({
               <h4>Likes: {count}</h4>
             </Box>
 
-            {/* show number of likes */}
-
             {/* container for edit and delete buttons */}
-            <StyledDeleteEditBox
-              sx={{ border: "1px solid green", width: "70%" }}
-            >
+            <StyledDeleteEditBox sx={{ width: "70%" }}>
               {/* Edit comment button, only show if the current logged in user made the comment*/}
               {isCurrentUser && (
                 <>
@@ -166,16 +190,6 @@ const Comments = ({
                     }}
                     onClick={() => setToggleModal(!toggleModal)}
                   ></i>
-
-                  {/* <i
-                    className="fa fa-edit"
-                    style={{
-                      color: "gray",
-                      fontSize: "30px",
-                      marginTop: "10px",
-                    }}
-                    onClick={() => setToggleModal(!toggleModal)}
-                  ></i> */}
 
                   {/* Delete comment button */}
                   <IconButton
@@ -197,21 +211,3 @@ const Comments = ({
 };
 
 export default Comments;
-
-// {!liked (
-//   <span
-//     class="material-icons"
-//     onClick={() => handleCommentLike(id)}
-//   >
-//     thumb_up_alt
-//   </span>
-// )}
-// {/* unlike the comment if user has liked the comment */}
-// {liked && (
-//   <span
-//     class="material-icons"
-//     style={{ color: "green" }}
-//     onClick={() => handleCommentLike(id)}
-//   >
-//     thumb_up_alt
-//   </span>

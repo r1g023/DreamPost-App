@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -9,18 +10,26 @@ import {
   Checkbox,
   Collapse,
   IconButton,
+  Menu,
+  MenuItem,
   Typography,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import {
+  AddCommentOutlined,
+  Favorite,
+  FavoriteBorder,
+} from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { UserContext } from "../App";
 
 import Comments from "./Comments";
-import Modal from "./Modal";
+import moment from "moment";
+
+const options = ["delete"];
 
 // get GET COMMENTS option from the database
 const GET_COMMENTS = gql`
@@ -32,6 +41,7 @@ const GET_COMMENTS = gql`
       count
       user
       post_id
+      date
     }
   }
 `;
@@ -68,13 +78,19 @@ const GET_POSTS = gql`
 `;
 
 const ADD_COMMENT = gql`
-  mutation addComment($comment: String!, $user: String!, $post_id: Int!) {
-    addComment(comment: $comment, user: $user, post_id: $post_id) {
+  mutation addComment(
+    $comment: String!
+    $user: String!
+    $post_id: Int!
+    $date: String
+  ) {
+    addComment(comment: $comment, user: $user, post_id: $post_id, date: $date) {
       id
       comment
       user
       count
       post_id
+      date
     }
   }
 `;
@@ -108,29 +124,40 @@ const ExpandMore = styled((props) => {
 }));
 
 // Post Card for the Post List on the Feed component
-const Post = ({ post }) => {
+const Post = ({ post, handlePostDelete }) => {
   console.log("Post data on Post component---->", post);
-  // const [toggleModal, setToggleModal] = React.useState(false);
+  const [toggleModal, setToggleModal] = React.useState(false);
   const [editComment, setEditComment] = React.useState("");
+
+  const [startDate, setStartDate] = React.useState(moment().calendar());
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  // for post delete
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
+  React.useEffect(() => {
+    console.log("comment data on Post.jsx USE EFFECT---->", data);
+    //reload comments after submitting
+  }, [data]);
   // get mutation for delete comment
   const [deleteCommentID] = useMutation(DELETE_COMMENT);
   const [updateCommentID] = useMutation(UPDATE_COMMENT);
-
-  React.useEffect(() => {
-    console.log("comment data on Post.jsx USE EFFECT---->", data);
-  }, [data]);
-
+  const [addComment] = useMutation(ADD_COMMENT);
   const { user } = React.useContext(UserContext);
   // add comment to mutation
-  const [addComment] = useMutation(ADD_COMMENT);
 
   // add comment post object
   const [comment, setComment] = React.useState({
@@ -140,6 +167,7 @@ const Post = ({ post }) => {
     liked: false,
     count: 0,
     post_id: "",
+    date: "",
   });
 
   // Add new comment to comment list
@@ -150,6 +178,7 @@ const Post = ({ post }) => {
         comment: comment.comment,
         user: user.username,
         post_id: post.id,
+        date: startDate,
       },
       refetchQueries: [{ query: GET_COMMENTS }],
     });
@@ -157,9 +186,8 @@ const Post = ({ post }) => {
       comment: "",
       user: "",
       post_id: "",
+      date: "",
     });
-    console.log("newComment", newComment);
-    return newComment;
   };
 
   //handle change for add comment
@@ -169,25 +197,30 @@ const Post = ({ post }) => {
 
   // handle delete comment
   const handleCommentDelete = async (comment) => {
-    let deletedComment = await deleteCommentID({
-      variables: { id: comment.id },
-      //get from cache and update upon delete instead of refetching comment query
-      update: (cache) => {
-        console.log("comment cache--->", cache);
-        const prevData = cache.readQuery({ query: GET_COMMENTS });
-        console.log("prevData--->", prevData);
-        const newData = prevData.getComments.filter(
-          (item) => item.id !== comment.id
-        );
-        console.log("newData--->", newData);
-        // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
-        cache.writeQuery({
-          query: GET_COMMENTS,
-          data: { getComments: newData },
-        });
-      },
-    });
-    return deletedComment;
+    let confirmDelete = window.confirm(
+      "Are you sure you want to delete this todo?"
+    );
+    if (confirmDelete) {
+      let deletedComment = await deleteCommentID({
+        variables: { id: comment.id },
+        //get from cache and update upon delete instead of refetching comment query
+        update: (cache) => {
+          console.log("comment cache--->", cache);
+          const prevData = cache.readQuery({ query: GET_COMMENTS });
+          console.log("prevData--->", prevData);
+          const newData = prevData.getComments.filter(
+            (item) => item.id !== comment.id
+          );
+          console.log("newData--->", newData);
+          // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
+          cache.writeQuery({
+            query: GET_COMMENTS,
+            data: { getComments: newData },
+          });
+        },
+      });
+      return deletedComment;
+    }
   };
 
   // handle update comment and like
@@ -212,6 +245,7 @@ const Post = ({ post }) => {
         comment: editComment,
       },
     });
+    setToggleModal(false);
   };
 
   // handle comment edit and update
@@ -224,7 +258,6 @@ const Post = ({ post }) => {
   console.log("user on POST COMMENT ---->", user);
   return (
     <>
-      {console.log("component did render first time")}{" "}
       <Card sx={{ margin: 5 }}>
         {/* Card Header */}
         <CardHeader
@@ -234,19 +267,51 @@ const Post = ({ post }) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            <IconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={open ? "long-menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
               <MoreVertIcon />
             </IconButton>
+            // menu otions for delete
           }
           title={post.title}
           subheader={post.date}
         />
-        <h4>User: {post.user} </h4>
-        <h2>USER_ID: {post.user_id}</h2>
-        <h3>Post_id: {post.id}</h3>
+        <h3 style={{ padding: "5px" }}>{post.user}</h3>
+        <>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              "aria-labelledby": "long-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: 40 * 4.5,
+                width: "20ch",
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem
+                key={option}
+                selected={option === "Pyxis"}
+                onClick={() => handlePostDelete(post.id)}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
 
         {/* Card Photo */}
-
         <CardMedia component="img" height="20%" image={post.image} />
 
         {/* Card Content */}
@@ -281,37 +346,25 @@ const Post = ({ post }) => {
         {/* ------Card Expand Content------ */}
         <Collapse in={expanded} timeout={1000} unmountOnExit>
           <CardContent>
-            <Typography paragraph>Comments:</Typography>
+            <h3>Comments</h3>
             {/* Add Comment Form */}
             <form onSubmit={handleSubmit} className="mb3">
-              <input
-                type="text"
-                className="pa2 f4 b--dashed"
+              <textarea
+                style={{ display: "block", width: 253, maxWidth: 253 }}
                 name="comment"
-                value={comment.comment}
                 placeholder="Add a comment..."
+                value={comment.comment}
                 onChange={handleChange}
               />
 
-              <button className="pa2 f4 bg-green">Add Todo</button>
+              <Button
+                variant="outlined"
+                sx={{ padding: "3px", marginTop: "10px", color: "#002A53" }}
+                type="submit"
+              >
+                Add Comment
+              </Button>
             </form>
-            {/* form for updating a comment, open modal*/}
-            {/* {!toggleModal ? (
-              <Modal onCancel={() => setToggleModal(!toggleModal)}>
-                <input
-                  type="text"
-                  className="pa2 f4 b--dashed"
-                  name="editComment"
-                  value={editComment}
-                  placeholder="Edit a comment..."
-                  onChange={(e) => setEditComment(e.target.value)}
-                />
-              </Modal>
-            ) : null} */}
-
-            <>
-              <p>Comment Edit: {editComment}</p>
-            </>
 
             {data &&
               data.getComments
@@ -328,6 +381,8 @@ const Post = ({ post }) => {
                         handleCommentEdit={() => handleCommentEdit(item)}
                         setEditComment={handleCommentUpdate}
                         editComment={editComment}
+                        setToggleModal={setToggleModal}
+                        toggleModal={toggleModal}
                       />
                     );
                   }
