@@ -249,7 +249,7 @@ const CreatePost = () => {
                       src="https://i.pravatar.cc/300"
                       sx={{ border: "1px solid red", margin: "0 auto" }}
                     />
-                    <Typography variant="h6">{user.username}</Typography>
+                    <Typography variant="h6">@{user.username}</Typography>
                     <TextField
                       id="demo-helper-text-aligned"
                       label="title"
@@ -261,6 +261,7 @@ const CreatePost = () => {
                       label="post"
                       name="post"
                       onChange={handleChange}
+                      sx={{ marginTop: "0.5rem" }}
                     />
                     <Button
                       variant="contained"
@@ -271,6 +272,9 @@ const CreatePost = () => {
                       Add Post
                     </Button>{" "}
                     {/* <h2>Photo upload is required</h2> */}
+                    <span style={{ fontSize: "12px" }}>
+                      Don't forget to upload a photo
+                    </span>
                     <Button
                       variant="outlined"
                       onClick={() => setTogglePhoto(!togglePhoto)}

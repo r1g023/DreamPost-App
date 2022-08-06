@@ -32,7 +32,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       {/* console log req.decodedToken from backend API */}
       <Box>
-        <Navbar user={user.username} setUser={setUser} />
+        <Navbar setUser={setUser} />
         <Routes>
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />

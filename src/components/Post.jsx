@@ -24,6 +24,8 @@ import {
 } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import PostsModal from "../pages/PostsModal";
+import PostShareButtons from "../pages/PostShareButtons";
 import { UserContext } from "../App";
 
 import Comments from "./Comments";
@@ -198,7 +200,7 @@ const Post = ({ post, handlePostDelete }) => {
   // handle delete comment
   const handleCommentDelete = async (comment) => {
     let confirmDelete = window.confirm(
-      "Are you sure you want to delete this todo?"
+      "Are you sure you want to delete this comment?"
     );
     if (confirmDelete) {
       let deletedComment = await deleteCommentID({
@@ -230,7 +232,10 @@ const Post = ({ post, handlePostDelete }) => {
       variables: {
         id: comment.id,
         liked: !comment.liked,
-        count: !comment.liked ? comment.count + 1 : comment.count - 1,
+        count:
+          comment.count +
+          1 *
+            (user.username === comment.user && comment.liked === true ? -1 : 1),
       },
     });
   };
@@ -256,9 +261,15 @@ const Post = ({ post, handlePostDelete }) => {
   console.log("data----> comment----->", data);
 
   console.log("user on POST COMMENT ---->", user);
+
+  const isCurrentUser = user.username === post.user;
   return (
     <>
-      <Card sx={{ margin: 5 }}>
+      <Card
+        sx={{
+          margin: 5,
+        }}
+      >
         {/* Card Header */}
         <CardHeader
           avatar={
@@ -270,20 +281,34 @@ const Post = ({ post, handlePostDelete }) => {
             <IconButton
               aria-label="more"
               id="long-button"
-              aria-controls={open ? "long-menu" : undefined}
-              aria-expanded={open ? "true" : undefined}
+              aria-controls={open ? "long-menu" : null}
+              aria-expanded={open ? "true" : null}
               aria-haspopup="true"
               onClick={handleClick}
             >
               <MoreVertIcon />
             </IconButton>
-            // menu otions for delete
           }
           title={post.title}
           subheader={post.date}
         />
-        <h3 style={{ padding: "5px" }}>{post.user}</h3>
-        <>
+        <h4
+          style={{
+            padding: isCurrentUser ? "2px" : "2px",
+            background: isCurrentUser ? "green" : "#002A53",
+            color: isCurrentUser ? "white" : "white",
+            width: isCurrentUser ? "20%" : "20%",
+            textAlign: isCurrentUser ? "center" : "center",
+            borderRadius: isCurrentUser ? "10px" : "10px",
+            margin: "5px",
+          }}
+        >
+          @{post.user}
+        </h4>
+
+        {/* Menu to delete post */}
+
+        {isCurrentUser && (
           <Menu
             id="long-menu"
             MenuListProps={{
@@ -294,22 +319,18 @@ const Post = ({ post, handlePostDelete }) => {
             onClose={handleClose}
             PaperProps={{
               style: {
-                maxHeight: 40 * 4.5,
-                width: "20ch",
+                maxHeight: 15 * 4.5,
+                width: "9ch",
               },
             }}
           >
             {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === "Pyxis"}
-                onClick={() => handlePostDelete(post.id)}
-              >
+              <MenuItem key={option} onClick={() => handlePostDelete(post.id)}>
                 {option}
               </MenuItem>
             ))}
           </Menu>
-        </>
+        )}
 
         {/* Card Photo */}
         <CardMedia component="img" height="20%" image={post.image} />
@@ -317,7 +338,7 @@ const Post = ({ post, handlePostDelete }) => {
         {/* Card Content */}
         <CardContent>
           <Typography variant="body2" color="customColor.main">
-            Post: {post.post}
+            {post.post}
           </Typography>
         </CardContent>
 
@@ -329,7 +350,10 @@ const Post = ({ post, handlePostDelete }) => {
               checkedIcon={<Favorite color="secondary" />}
             />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton
+            aria-label="share"
+            onClick={() => setToggleModal(!toggleModal)}
+          >
             <ShareIcon />
           </IconButton>
           {/* Card Expand Button */}
@@ -341,7 +365,15 @@ const Post = ({ post, handlePostDelete }) => {
           >
             <ExpandMoreIcon />
           </ExpandMore>
+          <span style={{ fontSize: "13px" }}>Comments</span>
         </CardActions>
+
+        {/* {toggleModal && ( */}
+        {toggleModal && (
+          <PostsModal onCancel={() => setToggleModal(false)}>
+            <PostShareButtons />
+          </PostsModal>
+        )}
 
         {/* ------Card Expand Content------ */}
         <Collapse in={expanded} timeout={1000} unmountOnExit>

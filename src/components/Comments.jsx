@@ -158,20 +158,24 @@ const Comments = ({
               {/* if current user has not liked the comment, then show like button,
               else show unlike button
               */}
-              <span
-                className="material-icons"
-                onClick={() => handleCommentLike(id)}
-              >
-                {!liked ? " thumb_up_alt" : ""}
-              </span>
+              {!liked && (
+                <span
+                  className="material-icons"
+                  onClick={() => handleCommentLike(id)}
+                >
+                  {" thumb_up_alt"}
+                </span>
+              )}
 
-              <span
-                className="material-icons"
-                style={{ color: "green" }}
-                onClick={() => handleCommentLike(id)}
-              >
-                {liked ? " thumb_up_alt" : ""}
-              </span>
+              {liked && (
+                <span
+                  className="material-icons"
+                  style={{ color: "green" }}
+                  onClick={() => handleCommentLike(id)}
+                >
+                  {" thumb_up_alt"}
+                </span>
+              )}
 
               <h4>Likes: {count}</h4>
             </Box>

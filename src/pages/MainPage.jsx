@@ -9,7 +9,7 @@ const MainPage = () => {
   return (
     <>
       {/* <Navbar /> */}
-      <Stack direction="row" spacing={2} justifyContent="space-around">
+      <Stack direction="row" spacing={0} justifyContent="space-around">
         <Sidebar />
         <Feed />
         <Rightbar />

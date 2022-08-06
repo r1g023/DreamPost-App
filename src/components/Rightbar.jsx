@@ -3,16 +3,40 @@ import {
   Avatar,
   AvatarGroup,
   Box,
+  CircularProgress,
   ImageList,
   ImageListItem,
+  Stack,
   Typography,
 } from "@mui/material";
 import { friends, itemData } from "../online-users";
 import RightBarConversations from "./RightBarConversations";
+import { useQuery, gql } from "@apollo/client";
+
+const GET_POSTS = gql`
+  query getPosts {
+    getPosts {
+      id
+      image
+    }
+  }
+`;
 
 const Rightbar = () => {
+  const { loading, error, data } = useQuery(GET_POSTS);
+  React.useEffect(() => {
+    console.log("useEffect post data image Righbar-->", data);
+  }, [data]);
+
+  console.log("data---->", data);
+
+  if (error) return <p>Error: {error.message}</p>;
   return (
-    <Box flex={3} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box
+      flex={3}
+      p={2}
+      sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+    >
       {/* container for the rightbar */}
       <Box position="fixed" p={2}>
         <Typography variant="h4">Online Friends</Typography>
@@ -28,9 +52,52 @@ const Rightbar = () => {
           Latest Photos
         </Typography>
 
+        {/* </ImageList> */}
+
         {/* container for the latest posts */}
         <ImageList cols={3} rowHeight={100} gap={10}>
-          {itemData.map((item) => (
+          {loading ? (
+            <>
+              <Stack
+                sx={{
+                  width: "100%",
+                  color: "grey.500",
+                }}
+                spacing={2}
+              >
+                <CircularProgress
+                  color="otherColor"
+                  sx={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "30%",
+                  }}
+                  size={60}
+                />
+              </Stack>
+            </>
+          ) : (
+            <>
+              {data &&
+                data.getPosts.map((item) => (
+                  <ImageListItem key={item.id}>
+                    <img
+                      src={item.image}
+                      srcSet={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </ImageListItem>
+                ))}
+            </>
+          )}
+          {/*Mock data for the latest posts */}
+          {/* {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img
                 src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
@@ -39,8 +106,9 @@ const Rightbar = () => {
                 loading="lazy"
               />
             </ImageListItem>
-          ))}
+          ))} */}
         </ImageList>
+        {/* container for the latest comment conversations */}
         <Typography variant="h5" fontWeight={400} mt={4} mb={2}>
           Latest Conversations
         </Typography>

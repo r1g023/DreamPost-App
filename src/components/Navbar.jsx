@@ -17,6 +17,7 @@ import { Notifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 //import DreamPost.png from "../assets/DreamPost.png";
 import DreamPost from "../assets/DreamPost.png";
+import NavBarSearch from "../pages/NavBarSearch";
 
 import { UserContext } from "../App";
 
@@ -50,9 +51,9 @@ const StyledUserBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+const Navbar = ({ setUser }) => {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user } = React.useContext(UserContext);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
 
@@ -93,13 +94,8 @@ const Navbar = () => {
             <MenuIcon
               sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
             />
-            {user.username ? (
-              <Search>
-                <InputBase placeholder="Search..." error={true} />
-              </Search>
-            ) : (
-              setUser("")
-            )}
+            {user.username ? <NavBarSearch /> : setUser("")}
+
             {/* Mail and notification icons + avatar - remove if display is mobile */}
             <StyledIcons>
               <Badge badgeContent={2} color="secondary">
@@ -116,6 +112,7 @@ const Navbar = () => {
                 onClick={() => setOpen(!open)}
               />
             </StyledIcons>
+
             {/* User avatar and name for smaller screens - display if mobile */}
             <StyledUserBox onClick={() => setOpen(!open)}>
               <Avatar
@@ -123,7 +120,9 @@ const Navbar = () => {
                 alt="Github Avatar"
                 src="https://avatars.githubusercontent.com/u/57161327?v=4"
               />
-              <Typography variant="span">{user.username}</Typography>
+              <Typography variant="span" sx={{ marginRight: "5px" }}>
+                {user.username}
+              </Typography>
               {/*Link to books */}
             </StyledUserBox>
           </StyledToolbar>
@@ -153,9 +152,9 @@ const Navbar = () => {
             onClick={() => {
               window.localStorage.removeItem("auth-token");
               window.localStorage.removeItem("user");
-              setUser("");
               navigate("/login");
-              setOpen(!open);
+              // remove user upon logout
+              setUser("");
             }}
           >
             Logout

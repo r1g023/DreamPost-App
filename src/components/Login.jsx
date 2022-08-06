@@ -151,7 +151,7 @@ function Login({ setUser }) {
             disabled={buttonDisabled}
             type="submit"
             loading={loading}
-            loadingPosition={"start"}
+            // loadingPosition={"start"}
             loadingIndicator={<CircularProgress color="primary" size={20} />}
           >
             Login
