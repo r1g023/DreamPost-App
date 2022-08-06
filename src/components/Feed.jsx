@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import Post from "./Post";
 import { useQuery, useMutation, gql } from "@apollo/client";
+import { useState } from "react";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -55,7 +56,9 @@ const Feed = () => {
   const [searchValue, setSearchValue] = React.useState("");
   const { loading, error, data } = useQuery(GET_POSTS);
   const [deletePost] = useMutation(DELETE_POST);
-
+  const [postData, setPostData] = useState();
+  console.log("postData++++++++++++++++++++++++++++++++++++++++++", postData);
+  console.log("data____++++++++++++++++++++++++++++++++++++++++++", data);
   // handle delete post
   const handlePostDelete = async (post) => {
     let confirmDelete = window.confirm(
@@ -86,7 +89,8 @@ const Feed = () => {
 
   React.useEffect(() => {
     console.log("Post data on Feed USE EFFECT---->", data);
-  }, [data]);
+    setPostData(data);
+  }, [data, postData]);
 
   if (loading)
     return (
@@ -118,7 +122,7 @@ const Feed = () => {
     e.preventDefault();
 
     // add data to search.posts array
-    let postData = data.getPosts.filter((item) => {
+    let postDatas = postData.getPosts.filter((item) => {
       console.log("item search", item);
       // if no search input or empty then return error and save to errors in state
 
@@ -131,7 +135,7 @@ const Feed = () => {
       return item;
     });
 
-    return postData;
+    setPostData(postDatas);
   };
 
   if (error) return <p>Error: {error.message}</p>;
@@ -141,20 +145,21 @@ const Feed = () => {
       <input
         type="text"
         name="search"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearchValue(e.target.value)}
       />
       <button onClick={handleSubmit}>Search posts</button>
-      {data.getPosts
-        .map((item) => {
-          return (
-            <Post
-              post={item}
-              key={item.id}
-              handlePostDelete={() => handlePostDelete(item)}
-            />
-          );
-        })
-        .reverse()}
+      {postData &&
+        postData.getPosts
+          .map((item) => {
+            return (
+              <Post
+                post={item}
+                key={item.id}
+                handlePostDelete={() => handlePostDelete(item)}
+              />
+            );
+          })
+          .reverse()}
     </Box>
   );
 };
