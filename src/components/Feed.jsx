@@ -43,22 +43,17 @@ const DELETE_POST = gql`
 `;
 
 const Feed = () => {
-  const [post, setPost] = React.useState({
-    id: "",
-    title: "",
-    date: "",
-    image: "",
-    post: "",
-    liked: false,
-    user: "",
-    user_id: "",
-  });
   const [searchValue, setSearchValue] = React.useState("");
   const { loading, error, data } = useQuery(GET_POSTS);
+
   const [deletePost] = useMutation(DELETE_POST);
-  const [postData, setPostData] = useState();
-  console.log("postData++++++++++++++++++++++++++++++++++++++++++", postData);
-  console.log("data____++++++++++++++++++++++++++++++++++++++++++", data);
+  const [postData, setPostData] = useState(data);
+
+  //useEffect
+  React.useEffect(() => {
+    console.log("Post data on Feed USE EFFECT---************->", postData);
+  }, [data, postData]);
+
   // handle delete post
   const handlePostDelete = async (post) => {
     let confirmDelete = window.confirm(
@@ -87,10 +82,19 @@ const Feed = () => {
     }
   };
 
-  React.useEffect(() => {
-    console.log("Post data on Feed USE EFFECT---->", data);
-    setPostData(data);
-  }, [data, postData]);
+  // handle submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // add data to search.posts array
+    let result = data.getPosts.filter((item) => {
+      console.log("item search", item);
+
+      if (item.title.match(new RegExp(searchValue, "i"))) return item;
+      if (item.post.match(new RegExp(searchValue, "i"))) return item;
+    });
+    console.log("result", result);
+    setPostData(result);
+  };
 
   if (loading)
     return (
@@ -117,39 +121,32 @@ const Feed = () => {
       </Stack>
     );
 
-  // handle submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // add data to search.posts array
-    let postDatas = postData.getPosts.filter((item) => {
-      console.log("item search", item);
-      // if no search input or empty then return error and save to errors in state
-
-      if (item.title.match(new RegExp(searchValue, "i"))) return item;
-      // // get info from GET_POSTS query
-      // if (item.date.includes(search.toLowerCase())) return item;
-      // if (item.post.includes(search.toLowerCase())) return item;
-      // if (item.user.includes(search.toLowerCase())) return item;
-      // if (item.image.includes(search.toLowerCase())) return item;
-      return item;
-    });
-
-    setPostData(postDatas);
-  };
-
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Box flex={6} p={3}>
       <input
         type="text"
-        name="search"
+        name="searchValue"
         onChange={(e) => setSearchValue(e.target.value)}
+        value={searchValue}
       />
       <button onClick={handleSubmit}>Search posts</button>
+      <p>Search: {searchValue} </p>
+
       {postData &&
-        postData.getPosts
+        postData.map((item) => {
+          return (
+            <Post
+              post={item}
+              key={item.id}
+              handlePostDelete={() => handlePostDelete(item)}
+            />
+          );
+        })}
+      {!postData &&
+        data &&
+        data.getPosts
           .map((item) => {
             return (
               <Post
@@ -165,3 +162,13 @@ const Feed = () => {
 };
 
 export default Feed;
+// {postData &&
+//   postData.map((item) => {
+//     return (
+//       <Post
+//         post={item}
+//         key={item.id}
+//         handlePostDelete={() => handlePostDelete(item)}
+//       />
+//     );
+//   })}

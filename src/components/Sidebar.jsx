@@ -45,36 +45,6 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem>
 
-          {/* Pages */}
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#pages">
-              <ListItemIcon>
-                <Article />
-              </ListItemIcon>
-              <ListItemText primary="Pages" />
-            </ListItemButton>
-          </ListItem>
-
-          {/* Group */}
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#group">
-              <ListItemIcon>
-                <Group />
-              </ListItemIcon>
-              <ListItemText primary="Groups" />
-            </ListItemButton>
-          </ListItem>
-
-          {/* MarketPlace */}
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#market-place">
-              <ListItemIcon>
-                <Storefront />
-              </ListItemIcon>
-              <ListItemText primary="Marketplace" />
-            </ListItemButton>
-          </ListItem>
-
           {/* Friends */}
           <ListItem disablePadding>
             <ListItemButton component="a" href="#friends">
