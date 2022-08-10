@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   CircularProgress,
@@ -7,8 +7,9 @@ import {
   styled,
 } from "@mui/material";
 import Post from "./Post";
+import NavBarSearch from "../pages/NavBarSearch";
 import { useQuery, useMutation, gql } from "@apollo/client";
-import { useState } from "react";
+import Modal from "./Modal";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -48,11 +49,13 @@ const Feed = () => {
 
   const [deletePost] = useMutation(DELETE_POST);
   const [postData, setPostData] = useState(data);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [toggleModal, setToggleModal] = useState(false);
 
   //useEffect
   React.useEffect(() => {
-    console.log("Post data on Feed USE EFFECT---************->", postData);
-  }, [data, postData]);
+    console.log("Post data on Feed USE EFFECT---************->", postData.data);
+  }, [postData]);
 
   // handle delete post
   const handlePostDelete = async (post) => {
@@ -93,6 +96,11 @@ const Feed = () => {
       if (item.post.match(new RegExp(searchValue, "i"))) return item;
     });
     console.log("result", result);
+    // save no result to errors
+    result.length === 0
+      ? setErrorMessage("No results found for " + searchValue)
+      : setErrorMessage("");
+
     setPostData(result);
   };
 
@@ -124,40 +132,51 @@ const Feed = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box flex={6} p={3}>
-      <input
-        type="text"
-        name="searchValue"
-        onChange={(e) => setSearchValue(e.target.value)}
-        value={searchValue}
-      />
-      <button onClick={handleSubmit}>Search posts</button>
-      <p>Search: {searchValue} </p>
+    <>
+      <Box flex={6} p={3}>
+        <button onClick={() => setToggleModal(!toggleModal)}>
+          Search Posts
+        </button>
+        <p>Search: {searchValue} </p>
 
-      {postData &&
-        postData.map((item) => {
-          return (
-            <Post
-              post={item}
-              key={item.id}
-              handlePostDelete={() => handlePostDelete(item)}
+        {/* {!toggleModal ? (
+          <Modal
+            setToggleModal={setToggleModal}
+            onCancel={() => setToggleModal(true)}
+          >
+            <NavBarSearch
+              handleSubmit={handleSubmit}
+              setSearchValue={(e) => setSearchValue(e.target.value)}
+              searchValue={searchValue}
             />
-          );
-        })}
-      {!postData &&
-        data &&
-        data.getPosts
-          .map((item) => {
-            return (
-              <Post
-                post={item}
-                key={item.id}
-                handlePostDelete={() => handlePostDelete(item)}
-              />
-            );
-          })
-          .reverse()}
-    </Box>
+            {postData &&
+              postData.map((item) => {
+                return (
+                  <Post
+                    post={item}
+                    key={item.id}
+                    handlePostDelete={() => handlePostDelete(item)}
+                  />
+                );
+              })}
+          </Modal>
+        ) : null} */}
+        {postData &&
+          postData.getPosts
+            .map((item) => {
+              return (
+                <Post
+                  post={item}
+                  key={item.id}
+                  handlePostDelete={() => handlePostDelete(item)}
+                />
+              );
+            })
+            .reverse()}
+      </Box>
+
+      {/* modal */}
+    </>
   );
 };
 

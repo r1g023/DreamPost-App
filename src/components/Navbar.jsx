@@ -26,13 +26,6 @@ const StyledToolbar = styled(Toolbar)({
   justifyContent: "space-between",
 });
 
-const Search = styled("div")(({ theme }) => ({
-  background: "white",
-  padding: "0 10px",
-  borderRadius: theme.shape.borderRadius,
-  width: theme.shape.width,
-}));
-
 const StyledIcons = styled(Box)(({ theme }) => ({
   display: "none", //
   gap: "20px", // gap between icons
@@ -94,7 +87,7 @@ const Navbar = ({ setUser }) => {
             <MenuIcon
               sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
             />
-            {user.username ? <NavBarSearch /> : setUser("")}
+            {/* {user.username ? <NavBarSearch /> : setUser("")} */}
 
             {/* Mail and notification icons + avatar - remove if display is mobile */}
             <StyledIcons>
