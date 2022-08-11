@@ -54,8 +54,9 @@ const Feed = () => {
 
   //useEffect
   React.useEffect(() => {
-    console.log("Post data on Feed USE EFFECT---************->", postData.data);
-  }, [postData]);
+    // console.log("Post data on Feed USE EFFECT---************->", postData);
+    // console.log("data on Feed USE EFFECT________________________->", data);
+  }, [data, postData]);
 
   // handle delete post
   const handlePostDelete = async (post) => {
@@ -67,13 +68,13 @@ const Feed = () => {
         variables: { id: post.id },
         //get from cache and update upon delete instead of refetching post query
         update: (cache) => {
-          console.log("post cache--->", cache);
+          // console.log("post cache--->", cache);
           const prevData = cache.readQuery({ query: GET_POSTS });
-          console.log("prevData--->", prevData);
+          // console.log("prevData--->", prevData);
           const newData = prevData.getPosts.filter(
             (item) => item.id !== post.id
           );
-          console.log("newData--->", newData);
+          // console.log("newData--->", newData);
           // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
           cache.writeQuery({
             query: GET_POSTS,
@@ -90,12 +91,12 @@ const Feed = () => {
     e.preventDefault();
     // add data to search.posts array
     let result = data.getPosts.filter((item) => {
-      console.log("item search", item);
+      // console.log("item search", item);
 
       if (item.title.match(new RegExp(searchValue, "i"))) return item;
       if (item.post.match(new RegExp(searchValue, "i"))) return item;
     });
-    console.log("result", result);
+    // console.log("result", result);
     // save no result to errors
     result.length === 0
       ? setErrorMessage("No results found for " + searchValue)
@@ -103,6 +104,14 @@ const Feed = () => {
 
     setPostData(result);
   };
+
+  // clear results
+  function clearResults() {
+    setSearchValue("");
+    let results = data.getPosts.map((item) => item);
+    setPostData(results);
+    setErrorMessage("");
+  }
 
   if (loading)
     return (
@@ -132,62 +141,50 @@ const Feed = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <>
-      <Box flex={6} p={3}>
-        <button onClick={() => setToggleModal(!toggleModal)}>
-          Search Posts
-        </button>
-        <p>Search: {searchValue} </p>
+    <Box flex={6} p={3}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <NavBarSearch
+          sx={{ margin: "0 auto" }}
+          setSearchValue={(e) => setSearchValue(e.target.value)}
+          searchValue={searchValue}
+          handleSubmit={handleSubmit}
+          clearResults={clearResults}
+        />
+      </div>
 
-        {/* {!toggleModal ? (
-          <Modal
-            setToggleModal={setToggleModal}
-            onCancel={() => setToggleModal(true)}
-          >
-            <NavBarSearch
-              handleSubmit={handleSubmit}
-              setSearchValue={(e) => setSearchValue(e.target.value)}
-              searchValue={searchValue}
-            />
-            {postData &&
-              postData.map((item) => {
-                return (
-                  <Post
-                    post={item}
-                    key={item.id}
-                    handlePostDelete={() => handlePostDelete(item)}
-                  />
-                );
-              })}
-          </Modal>
-        ) : null} */}
-        {postData &&
-          postData.getPosts
-            .map((item) => {
-              return (
-                <Post
-                  post={item}
-                  key={item.id}
-                  handlePostDelete={() => handlePostDelete(item)}
-                />
-              );
-            })
-            .reverse()}
-      </Box>
-
-      {/* modal */}
-    </>
+      <h2 style={{ color: "red", marginLeft: "105px" }}>{errorMessage}</h2>
+      {postData &&
+        postData
+          .map((item) => {
+            return (
+              <Post
+                post={item}
+                key={item.id}
+                handlePostDelete={() => handlePostDelete(item)}
+              />
+            );
+          })
+          .reverse()}
+      {!postData &&
+        data &&
+        data.getPosts
+          .map((item) => {
+            return (
+              <Post
+                post={item}
+                key={item.id}
+                handlePostDelete={() => handlePostDelete(item)}
+              />
+            );
+          })
+          .reverse()}
+    </Box>
   );
 };
 
 export default Feed;
-// {postData &&
-//   postData.map((item) => {
-//     return (
-//       <Post
-//         post={item}
-//         key={item.id}
-//         handlePostDelete={() => handlePostDelete(item)}
-//       />
-//     );
-//   })}

@@ -77,9 +77,9 @@ const Comments = ({
     // keep track of commentData
   }, [commentData]);
 
-  console.log("Comment user-->", id, liked, post_id, count, user);
-  console.log("COMMENT ----> currentUser -->", currentUser);
-  console.log("commentData -->", commentData);
+  // console.log("Comment user-->", id, liked, post_id, count, user);
+  // console.log("COMMENT ----> currentUser -->", currentUser);
+  // console.log("commentData -->", commentData);
 
   // React.useEffect(() => {}, []);
   return (

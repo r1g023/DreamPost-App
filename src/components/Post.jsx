@@ -17,11 +17,7 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  AddCommentOutlined,
-  Favorite,
-  FavoriteBorder,
-} from "@mui/icons-material";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import PostsModal from "../pages/PostsModal";
@@ -61,23 +57,23 @@ const DELETE_COMMENT = gql`
   }
 `;
 
-// GET POSTS option from the database
-const GET_POSTS = gql`
-  query getPosts {
-    getPosts {
-      id
-      post
-      user
-      post_id
-      comments {
-        id
-        comment
-        user
-        post_id
-      }
-    }
-  }
-`;
+// // GET POSTS option from the database
+// const GET_POSTS = gql`
+//   query getPosts {
+//     getPosts {
+//       id
+//       post
+//       user
+//       post_id
+//       comments {
+//         id
+//         comment
+//         user
+//         post_id
+//       }
+//     }
+//   }
+// `;
 
 const ADD_COMMENT = gql`
   mutation addComment(
@@ -127,7 +123,7 @@ const ExpandMore = styled((props) => {
 
 // Post Card for the Post List on the Feed component
 const Post = ({ post, handlePostDelete }) => {
-  console.log("Post data on Post component---->", post);
+  // console.log("Post data on Post component---->", post);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [editComment, setEditComment] = React.useState("");
 
@@ -151,7 +147,7 @@ const Post = ({ post, handlePostDelete }) => {
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
   React.useEffect(() => {
-    console.log("comment data on Post.jsx USE EFFECT---->", data);
+    // console.log("comment data on Post.jsx USE EFFECT---->", data);
     //reload comments after submitting
   }, [data]);
   // get mutation for delete comment
@@ -207,13 +203,13 @@ const Post = ({ post, handlePostDelete }) => {
         variables: { id: comment.id },
         //get from cache and update upon delete instead of refetching comment query
         update: (cache) => {
-          console.log("comment cache--->", cache);
+          // console.log("comment cache--->", cache);
           const prevData = cache.readQuery({ query: GET_COMMENTS });
-          console.log("prevData--->", prevData);
+          // console.log("prevData--->", prevData);
           const newData = prevData.getComments.filter(
             (item) => item.id !== comment.id
           );
-          console.log("newData--->", newData);
+          // console.log("newData--->", newData);
           // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
           cache.writeQuery({
             query: GET_COMMENTS,
@@ -227,7 +223,7 @@ const Post = ({ post, handlePostDelete }) => {
 
   // handle update comment and like
   const handleCommentLike = (comment) => {
-    console.log("comment on handleCommentLike--->", comment);
+    // console.log("comment on handleCommentLike--->", comment);
     updateCommentID({
       variables: {
         id: comment.id,
@@ -242,7 +238,7 @@ const Post = ({ post, handlePostDelete }) => {
 
   // handle comment edit and update
   const handleCommentEdit = (comment) => {
-    console.log("comment on handleCommentEdit--->", comment);
+    // console.log("comment on handleCommentEdit--->", comment);
     // e.preventDefault();
     updateCommentID({
       variables: {
@@ -258,9 +254,9 @@ const Post = ({ post, handlePostDelete }) => {
     setEditComment(e.target.value);
   };
 
-  console.log("data----> comment----->", data);
+  // console.log("data----> comment----->", data);
 
-  console.log("user on POST COMMENT ---->", user);
+  // console.log("user on POST COMMENT ---->", user);
 
   const isCurrentUser = user.username === post.user;
   return (
@@ -401,8 +397,6 @@ const Post = ({ post, handlePostDelete }) => {
             {data &&
               data.getComments
                 .map((item) => {
-                  console.log("item in post for comments---->", item);
-
                   if (item.post_id === post.id) {
                     return (
                       <Comments

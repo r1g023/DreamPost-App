@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/system";
 import { IconButton, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const Search = styled(Paper)(({ theme }) => ({
   background: "white",
@@ -12,7 +13,12 @@ const Search = styled(Paper)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
 }));
 
-const NavBarSearch = ({ setSearchValue, handleSubmit, searchValue }) => {
+const NavBarSearch = ({
+  setSearchValue,
+  handleSubmit,
+  searchValue,
+  clearResults,
+}) => {
   return (
     <Search>
       <InputBase
@@ -31,6 +37,17 @@ const NavBarSearch = ({ setSearchValue, handleSubmit, searchValue }) => {
       >
         <SearchIcon />
       </IconButton>
+
+      {searchValue && (
+        <span title="clear search results and go back to posts">
+          <ClearIcon
+            sx={{ cursor: "pointer" }}
+            color="error"
+            title="clear search results"
+            onClick={clearResults}
+          />
+        </span>
+      )}
     </Search>
   );
 };

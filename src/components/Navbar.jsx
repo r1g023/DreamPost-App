@@ -4,7 +4,6 @@ import {
   AppBar,
   Avatar,
   Box,
-  InputBase,
   Menu,
   MenuItem,
   Toolbar,
@@ -15,10 +14,7 @@ import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import { Notifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
-//import DreamPost.png from "../assets/DreamPost.png";
 import DreamPost from "../assets/DreamPost.png";
-import NavBarSearch from "../pages/NavBarSearch";
-
 import { UserContext } from "../App";
 
 const StyledToolbar = styled(Toolbar)({

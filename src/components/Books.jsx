@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 // import userContext from App.js
 import { UserContext } from "../App";
 
@@ -15,11 +15,11 @@ const GET_BOOKS = gql`
 
 const Books = () => {
   const { userId } = React.useContext(UserContext);
-  console.log("user on Books----->", userId);
-  const navigate = useNavigate();
+  // console.log("user on Books----->", userId);
+
   const { data, error, loading } = useQuery(GET_BOOKS);
   React.useEffect(() => {
-    console.log("books array on USE EFFECT---->", data);
+    // console.log("books array on USE EFFECT---->", data);
   }, [data]);
 
   if (loading) return <h1>Loading...</h1>;
@@ -40,7 +40,9 @@ const Books = () => {
           <p>{book.name}</p>
         </div>
       ))}
-      <Link to="/">Home</Link>
+      <Link to={"/"} reloadDocument={true}>
+        Home
+      </Link>
     </div>
   );
 };

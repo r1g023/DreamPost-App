@@ -118,9 +118,9 @@ const CreatePost = () => {
     post: "",
   });
 
-  console.log("user on create post----->", user);
+  // console.log("user on create post----->", user);
 
-  console.log("addPost on create post----->", data);
+  // console.log("addPost on create post----->", data);
 
   //on post submit, scroll to top function call
   const scrollToTop = () => {
@@ -189,21 +189,21 @@ const CreatePost = () => {
     toggleModal();
     setUploadPhoto(null);
     scrollToTop();
-    console.log("new post---------------------", newPost);
+    // console.log("new post---------------------", newPost);
 
     return newPost;
   }
 
   if (loading) return <h1>Loading....</h1>;
   // if (error) return <h1>Error: Error....</h1>;
-  console.log("error----->", error);
-  console.log("myImage-----THIS ONE?>", uploadPhoto);
+  // console.log("error----->", error);
+  // console.log("myImage-----THIS ONE?>", uploadPhoto);
 
   return (
     <>
       <Tooltip
         onClick={toggleModal}
-        title="Delete"
+        title="Create Post"
         sx={{
           position: "fixed",
           bottom: 20,

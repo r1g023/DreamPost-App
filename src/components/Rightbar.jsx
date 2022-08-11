@@ -25,7 +25,7 @@ const GET_POSTS = gql`
 const Rightbar = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
   React.useEffect(() => {
-    console.log("useEffect post data image Righbar-->", data);
+    // console.log("useEffect post data image Righbar-->", data);
   }, [data]);
 
   console.log("data---->", data);
