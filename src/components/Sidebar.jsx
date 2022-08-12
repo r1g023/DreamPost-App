@@ -12,7 +12,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { AccountBox, ModeNight, Person, Settings } from "@mui/icons-material";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { UserContext } from "../App";
-
+import "./post.css";
 //add toggle DARK_MODE to user.dark_mode option
 const DARK_MODE = gql`
   mutation updateUserID($id: Int!, $dark_mode: Boolean) {
@@ -29,42 +29,55 @@ const Sidebar = () => {
 
   console.log("user sidebar logged in*********----->", user);
   console.log("userID and dark_mode Sidebar########", user.id, user.dark_mode);
-  const [mode, setMode] = React.useState(false);
+  const [mode, setMode] = React.useState();
+  console.log("mode", mode);
+  React.useEffect(() => {
+    // setMode(!mode);
+  }, []);
 
   // toggle handle user on checkbox input
-  const handleChange = () => {
+  const handleChange = (e) => {
     let result = updateUser({
       variables: {
         id: user.id,
-        dark_mode: !user.dark_mode,
+        dark_mode: e.target.checked,
       },
     }).then((res) => {
       console.log("result", res);
+      setMode(res.data.updateUser.dark_mode);
     });
     console.log("result outer--->", result);
-    setMode(result);
+    return result;
   };
 
   return (
-    <Box
-      flex={2}
-      p={2}
-      sx={{
-        display: {
-          xs: "none",
-          sm: "block",
-        },
-      }}
-    >
-      <Box sx={{ position: "fixed" }}>
-        {/* Lists of items */}
-        <List>
-          {/* <input type="checkbox" onChange={handleChange} /> */}
-          <button onClick={handleChange}>Dark Mode test</button>
-          <p>{mode ? "true" : "false"}</p>
+    <>
+      <p className={mode ? "sidebar" : ""}>Hello</p>
+      <Box
+        flex={2}
+        p={2}
+        sx={{
+          display: {
+            xs: "none",
+            sm: "block",
+          },
+        }}
+      >
+        <Box sx={{ position: "fixed" }}>
+          {/* Lists of items */}
+          <List>
+            {/* <input type="checkbox" onChange={handleChange} /> */}
+            {/* <button onClick={handleChange}>Dark Mode test</button> */}
+            <input
+              type="checkbox"
+              name="mode"
+              checked={mode || ""}
+              onChange={handleChange}
+            />
+            <p className={mode ? "sidebar" : ""}>{mode ? "true" : "false"}</p>
 
-          {/* Home page */}
-          {/* <ListItem disablePadding>
+            {/* Home page */}
+            {/* <ListItem disablePadding>
             <ListItemButton component="a" href="#home">
               <ListItemIcon>
                 <HomeIcon />
@@ -73,8 +86,8 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem> */}
 
-          {/* Friends */}
-          {/* <ListItem disablePadding>
+            {/* Friends */}
+            {/* <ListItem disablePadding>
             <ListItemButton component="a" href="#friends">
               <ListItemIcon>
                 <Person />
@@ -83,8 +96,8 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem> */}
 
-          {/* Settings */}
-          {/* <ListItem disablePadding>
+            {/* Settings */}
+            {/* <ListItem disablePadding>
             <ListItemButton component="a" href="#settings">
               <ListItemIcon>
                 <Settings />
@@ -93,8 +106,8 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem> */}
 
-          {/* profile */}
-          {/* <ListItem disablePadding>
+            {/* profile */}
+            {/* <ListItem disablePadding>
             <ListItemButton component="a" href="#profile">
               <ListItemIcon>
                 <AccountBox />
@@ -103,8 +116,8 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem> */}
 
-          {/* ------------ Night Mode ------------- */}
-          {/* <ListItem disablePadding>
+            {/* ------------ Night Mode ------------- */}
+            {/* <ListItem disablePadding>
             <ListItemButton component="a" href="#night-mode">
               <ListItemIcon>
                 <ModeNight />
@@ -114,9 +127,10 @@ const Sidebar = () => {
               />
             </ListItemButton>
           </ListItem> */}
-        </List>
+          </List>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 
