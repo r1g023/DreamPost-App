@@ -50,7 +50,6 @@ const Feed = ({ mode }) => {
   const [deletePost] = useMutation(DELETE_POST);
   const [postData, setPostData] = useState(data);
   const [errorMessage, setErrorMessage] = useState("");
-  const [toggleModal, setToggleModal] = useState(false);
 
   //useEffect
   React.useEffect(() => {
@@ -141,7 +140,7 @@ const Feed = ({ mode }) => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box flex={6} p={3}>
+    <Box flex={6} p={3} sx={{ height: "100%" }}>
       <div
         style={{
           display: "flex",
@@ -158,20 +157,22 @@ const Feed = ({ mode }) => {
       </div>
 
       <h2 style={{ color: "red", marginLeft: "105px" }}>{errorMessage}</h2>
-      <div style={{ height: "100vh" }}>
-        {postData &&
-          postData
-            .map((item) => {
-              return (
-                <Post
-                  post={item}
-                  key={item.id}
-                  handlePostDelete={() => handlePostDelete(item)}
-                />
-              );
-            })
-            .reverse()}
-      </div>
+
+      {postData &&
+        postData
+          .map((item) => {
+            return (
+              <Post
+                post={item}
+                key={item.id}
+                handlePostDelete={() => handlePostDelete(item)}
+                mode={mode}
+                postData={postData}
+              />
+            );
+          })
+          .reverse()}
+
       {!postData &&
         data &&
         data.getPosts
@@ -182,6 +183,7 @@ const Feed = ({ mode }) => {
                 key={item.id}
                 handlePostDelete={() => handlePostDelete(item)}
                 mode={mode}
+                postData={postData}
               />
             );
           })
