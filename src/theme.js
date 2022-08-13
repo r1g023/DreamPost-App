@@ -22,6 +22,12 @@ export const theme = createTheme({
     limeGreen: {
       main: "#00ff00",
     },
+    magentaThemeColor: {
+      main: "#ff00ff",
+    },
+    whiteColor: {
+      main: "#ffffff",
+    },
   },
   shape: {
     borderRadius: 10,

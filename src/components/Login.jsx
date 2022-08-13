@@ -21,6 +21,8 @@ const LOGIN_USER = gql`
     loginUser(username: $username, password: $password) {
       id
       username
+      first_name
+      last_name
       email
       token
       dob

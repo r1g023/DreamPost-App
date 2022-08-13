@@ -43,7 +43,7 @@ const DELETE_POST = gql`
   }
 `;
 
-const Feed = () => {
+const Feed = ({ mode }) => {
   const [searchValue, setSearchValue] = React.useState("");
   const { loading, error, data } = useQuery(GET_POSTS);
 
@@ -158,18 +158,20 @@ const Feed = () => {
       </div>
 
       <h2 style={{ color: "red", marginLeft: "105px" }}>{errorMessage}</h2>
-      {postData &&
-        postData
-          .map((item) => {
-            return (
-              <Post
-                post={item}
-                key={item.id}
-                handlePostDelete={() => handlePostDelete(item)}
-              />
-            );
-          })
-          .reverse()}
+      <div style={{ height: "100vh" }}>
+        {postData &&
+          postData
+            .map((item) => {
+              return (
+                <Post
+                  post={item}
+                  key={item.id}
+                  handlePostDelete={() => handlePostDelete(item)}
+                />
+              );
+            })
+            .reverse()}
+      </div>
       {!postData &&
         data &&
         data.getPosts
@@ -179,6 +181,7 @@ const Feed = () => {
                 post={item}
                 key={item.id}
                 handlePostDelete={() => handlePostDelete(item)}
+                mode={mode}
               />
             );
           })

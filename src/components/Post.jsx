@@ -122,7 +122,7 @@ const ExpandMore = styled((props) => {
 }));
 
 // Post Card for the Post List on the Feed component
-const Post = ({ post, handlePostDelete }) => {
+const Post = ({ post, handlePostDelete, mode }) => {
   // console.log("Post data on Post component---->", post);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [editComment, setEditComment] = React.useState("");
@@ -264,6 +264,8 @@ const Post = ({ post, handlePostDelete }) => {
       <Card
         sx={{
           margin: 5,
+          background: mode ? "#51557E" : "white",
+          color: mode ? "white" : "black",
         }}
       >
         {/* Card Header */}
@@ -292,7 +294,7 @@ const Post = ({ post, handlePostDelete }) => {
           style={{
             padding: isCurrentUser ? "2px" : "2px",
             background: isCurrentUser ? "green" : "#002A53",
-            color: isCurrentUser ? "white" : "white",
+            color: "white",
             width: isCurrentUser ? "20%" : "20%",
             textAlign: isCurrentUser ? "center" : "center",
             borderRadius: isCurrentUser ? "10px" : "10px",
@@ -333,7 +335,7 @@ const Post = ({ post, handlePostDelete }) => {
 
         {/* Card Content */}
         <CardContent>
-          <Typography variant="body2" color="customColor.main">
+          <Typography variant="body2" color={mode ? "whiteColor" : ""}>
             {post.post}
           </Typography>
         </CardContent>
