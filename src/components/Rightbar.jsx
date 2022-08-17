@@ -11,18 +11,22 @@ import {
 } from "@mui/material";
 import { friends, itemData } from "../online-users";
 import RightBarConversations from "./RightBarConversations";
+import RightBarPosts from "./RightBarPosts";
 import { useQuery, gql } from "@apollo/client";
 
 const GET_POSTS = gql`
   query getPosts {
     getPosts {
       id
+      user
+      title
+      post
       image
     }
   }
 `;
 
-const Rightbar = () => {
+const Rightbar = ({ mode }) => {
   const { loading, error, data } = useQuery(GET_POSTS);
   React.useEffect(() => {
     // console.log("useEffect post data image Righbar-->", data);
@@ -35,7 +39,13 @@ const Rightbar = () => {
     <Box
       flex={3}
       p={2}
-      sx={{ display: { xs: "none", sm: "none", md: "block" } }}
+      sx={{
+        display: {
+          xs: "none",
+          sm: "none",
+          md: "block",
+        },
+      }}
     >
       {/* container for the rightbar */}
       <Box position="fixed" p={2}>
@@ -115,9 +125,20 @@ const Rightbar = () => {
         </Typography>
 
         {/* latest conversations by each user */}
-        {friends.map((item, index) => {
-          return <RightBarConversations key={item.id} data={item} />;
-        })}
+        <Box sx={{ overflowY: "scroll", height: "700px" }}>
+          {friends.map((item, index) => {
+            return (
+              <RightBarConversations key={item.id} data={item} mode={mode} />
+            );
+          })}
+
+          {data &&
+            data.getPosts
+              .map((item, index) => {
+                return <RightBarPosts key={item.id} data={item} mode={mode} />;
+              })
+              .reverse()}
+        </Box>
       </Box>
     </Box>
   );

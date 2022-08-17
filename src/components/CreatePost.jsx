@@ -95,7 +95,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const CreatePost = () => {
+const CreatePost = ({ mode }) => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
@@ -108,7 +108,12 @@ const CreatePost = () => {
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [togglePhoto, setTogglePhoto] = React.useState(false);
-  const [startDate, setStartDate] = React.useState(moment().calendar());
+  const [startDate, setStartDate] = React.useState(
+    // moment get current hour and minute
+    moment().format("MMM Do YY")
+  );
+
+  React.useEffect(() => {}, [startDate]);
 
   const [addPost, setAddPost] = React.useState({
     title: "",
@@ -210,7 +215,7 @@ const CreatePost = () => {
           left: { xs: "calc(50% - 25px)", md: 30 },
         }}
       >
-        <Fab color="primary" aria-label="add">
+        <Fab color={mode ? "" : "primary"} aria-label="add">
           <AddIcon />
         </Fab>
       </Tooltip>

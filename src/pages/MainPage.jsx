@@ -33,9 +33,9 @@ const MainPage = () => {
       >
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
         <Feed mode={mode} />
-        <Rightbar />
+        <Rightbar mode={mode} />
       </Stack>
-      <CreatePost />
+      <CreatePost mode={mode} />
     </>
   );
 };

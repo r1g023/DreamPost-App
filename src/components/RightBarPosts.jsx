@@ -16,7 +16,7 @@ import {
 //     "https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027366_1280.png",
 //   comment: "Wish I could come, but I'm out of town this…",
 
-const RightBarConversations = ({ data, mode }) => {
+const RightBarPosts = ({ data, mode }) => {
   return (
     <List
       sx={{
@@ -40,25 +40,25 @@ const RightBarConversations = ({ data, mode }) => {
                 color="text.primary"
                 fontWeight="fontWeightBold"
               >
-                <span style={{ color: mode ? "white" : "" }}>
-                  {data.subject}
-                </span>
+                <span style={{ color: mode ? "white" : "" }}>{data.title}</span>
               </Typography>
             </React.Fragment>
           }
-          // secondary comment and username
+          // secondary post and user
           secondary={
             <React.Fragment>
               <Typography
                 sx={{ display: "inline" }}
                 component="span"
+                fontWeight="fontWeightBold"
                 variant="body2"
                 color="text.primary"
-                fontWeight="fontWeightBold"
               >
-                <span style={{ color: mode ? "white" : "" }}>@{data.name}</span>
+                <span style={{ color: mode ? "white" : "" }}>
+                  @{data.user} -
+                </span>
               </Typography>
-              <span style={{ color: mode ? "white" : "" }}>{data.comment}</span>
+              <span style={{ color: mode ? "white" : "" }}>{data.post}</span>
             </React.Fragment>
           }
         />
@@ -68,4 +68,4 @@ const RightBarConversations = ({ data, mode }) => {
   );
 };
 
-export default RightBarConversations;
+export default RightBarPosts;

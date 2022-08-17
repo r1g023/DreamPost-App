@@ -12,6 +12,7 @@ import MainPage from "./pages/MainPage";
 import { postList } from "./postList";
 import Navbar from "./components/Navbar";
 import NoMatch from "./pages/NoMatch";
+import Profile from "./components/Profile";
 export const UserContext = createContext();
 
 function App() {
@@ -56,8 +57,17 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          {/*profile page */}
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
         </Routes>
-        {/* add MainPage to private route */}
       </Box>
     </UserContext.Provider>
   );

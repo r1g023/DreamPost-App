@@ -154,6 +154,7 @@ const Post = ({ post, handlePostDelete, mode }) => {
   const [deleteCommentID] = useMutation(DELETE_COMMENT);
   const [updateCommentID] = useMutation(UPDATE_COMMENT);
   const [addComment] = useMutation(ADD_COMMENT);
+  const [commentUpdateToggle, setCommentUpdateToggle] = React.useState(false);
   const { user } = React.useContext(UserContext);
   // add comment to mutation
 
@@ -246,11 +247,12 @@ const Post = ({ post, handlePostDelete, mode }) => {
         comment: editComment,
       },
     });
-    setToggleModal(false);
+    setCommentUpdateToggle(false);
   };
 
   // handle comment edit and update
   const handleCommentUpdate = (e) => {
+    // only edit the selected comment
     setEditComment(e.target.value);
   };
 
@@ -264,7 +266,7 @@ const Post = ({ post, handlePostDelete, mode }) => {
       <Card
         sx={{
           margin: 5,
-          background: mode ? "#51557E" : "white",
+          background: mode ? "#2C394B" : "white",
           color: mode ? "white" : "black",
         }}
       >
@@ -283,13 +285,28 @@ const Post = ({ post, handlePostDelete, mode }) => {
               aria-expanded={open ? "true" : null}
               aria-haspopup="true"
               onClick={handleClick}
+              sx={{ color: mode ? "white" : "black" }}
             >
               <MoreVertIcon />
             </IconButton>
           }
           title={post.title}
-          subheader={post.date}
+          subheader={
+            <React.Fragment>
+              <Typography
+                component="span"
+                fontWeight="fontWeightBold"
+                variant="body2"
+                color="text.primary"
+              >
+                <span style={{ color: mode ? "white" : "" }}>
+                  @{post.date} -
+                </span>
+              </Typography>
+            </React.Fragment>
+          }
         />
+
         <h4
           style={{
             padding: isCurrentUser ? "2px" : "2px",
@@ -342,31 +359,34 @@ const Post = ({ post, handlePostDelete, mode }) => {
 
         {/* Card Like Icon, share button and expand button */}
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+          <IconButton aria-label="add to favorites" sx={{ color: "white" }}>
             <Checkbox
-              icon={<FavoriteBorder />}
+              icon={<FavoriteBorder sx={{ color: mode ? "white" : "" }} />}
               checkedIcon={<Favorite color="secondary" />}
             />
           </IconButton>
           <IconButton
             aria-label="share"
+            sx={{ color: mode ? "white" : "" }}
             onClick={() => setToggleModal(!toggleModal)}
           >
             <ShareIcon />
           </IconButton>
+
           {/* Card Expand Button */}
           <ExpandMore
             expand={expanded} // false
             onClick={handleExpandClick} // toggle true || false
             aria-expanded={expanded}
             aria-label="show more"
+            sx={{ color: mode ? "white" : "" }}
           >
             <ExpandMoreIcon />
           </ExpandMore>
           <span style={{ fontSize: "13px" }}>Comments</span>
         </CardActions>
 
-        {/* {toggleModal && ( */}
+        {/* {toggleModal */}
         {toggleModal && (
           <PostsModal onCancel={() => setToggleModal(false)}>
             <PostShareButtons />
@@ -389,7 +409,12 @@ const Post = ({ post, handlePostDelete, mode }) => {
 
               <Button
                 variant="outlined"
-                sx={{ padding: "3px", marginTop: "10px", color: "#002A53" }}
+                sx={{
+                  padding: "3px",
+                  marginTop: "10px",
+                  color: mode ? "white" : "002A53",
+                  borderColor: mode ? "white" : "002A53",
+                }}
                 type="submit"
               >
                 Add Comment
@@ -409,8 +434,10 @@ const Post = ({ post, handlePostDelete, mode }) => {
                         handleCommentEdit={() => handleCommentEdit(item)}
                         setEditComment={handleCommentUpdate}
                         editComment={editComment}
-                        setToggleModal={setToggleModal}
-                        toggleModal={toggleModal}
+                        setCommentUpdateToggle={setCommentUpdateToggle}
+                        commentUpdateToggle={commentUpdateToggle}
+                        commentData={item}
+                        mode={mode}
                       />
                     );
                   }

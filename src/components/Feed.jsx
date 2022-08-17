@@ -156,7 +156,17 @@ const Feed = ({ mode }) => {
         />
       </div>
 
-      <h2 style={{ color: "red", marginLeft: "105px" }}>{errorMessage}</h2>
+      {errorMessage && (
+        <h2
+          style={{
+            color: "red",
+            marginLeft: "105px",
+            paddingBottom: "100vh",
+          }}
+        >
+          {errorMessage}
+        </h2>
+      )}
 
       {postData &&
         postData

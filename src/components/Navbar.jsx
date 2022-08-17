@@ -70,9 +70,17 @@ const Navbar = ({ setUser }) => {
               {user.username ? (
                 <p>
                   <img
+                    onClick={() => {
+                      navigate("/");
+                      window.location.reload(false);
+                    }}
                     src={DreamPost}
                     alt="DreamPost logo"
-                    style={{ height: "50px", width: "200px" }}
+                    style={{
+                      height: "50px",
+                      width: "200px",
+                      cursor: "pointer",
+                    }}
                   />
                 </p>
               ) : (
@@ -135,8 +143,17 @@ const Navbar = ({ setUser }) => {
             horizontal: "right",
           }}
         >
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>My account</MenuItem>
+          {/* Profile page */}
+          <MenuItem>
+            <Link to="/profile">Profile</Link>
+          </MenuItem>
+
+          {/*Book page */}
+          <MenuItem>
+            <Link to="/books">Books</Link>
+          </MenuItem>
+
+          {/* Logout */}
           <MenuItem
             onClick={() => {
               window.localStorage.removeItem("auth-token");
@@ -147,10 +164,6 @@ const Navbar = ({ setUser }) => {
             }}
           >
             Logout
-          </MenuItem>
-
-          <MenuItem>
-            <Link to="/books">Books</Link>
           </MenuItem>
         </Menu>
       </AppBar>

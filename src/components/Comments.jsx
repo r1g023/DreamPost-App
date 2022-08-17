@@ -54,31 +54,30 @@ const Comments = ({
   liked,
   count,
   user,
-  post_id,
+
   handleCommentDelete,
   handleCommentLike,
   handleCommentEdit,
-  commentData,
+  // commentData,
   setEditComment,
   editComment,
-  toggleModal,
-  setToggleModal,
+  setCommentUpdateToggle,
+  commentUpdateToggle,
   date,
+  mode,
 }) => {
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
   const currentUser = React.useContext(UserContext);
 
   // get current loggedIn user
 
   const isCurrentUser = currentUser.user.username === user;
 
-  React.useEffect(() => {
-    // keep track of commentData
-  }, [commentData]);
+  // React.useEffect(() => {
+  //   // keep track of commentData
+  // }, [commentData]);
 
-  // console.log("Comment user-->", id, liked, post_id, count, user);
-  // console.log("COMMENT ----> currentUser -->", currentUser);
+  // console.log("Comment user-->", id, liked, count, user);
+  // // console.log("COMMENT ----> currentUser -->", currentUser);
   // console.log("commentData -->", commentData);
 
   // React.useEffect(() => {}, []);
@@ -86,8 +85,14 @@ const Comments = ({
     <div className="commentContainer">
       {/* form for adding new comment */}
 
-      <div style={{ padding: 14 }} className="App">
-        <Paper style={{ padding: "10px 20px" }}>
+      <div style={{ padding: 14 }}>
+        <Paper
+          style={{
+            padding: "10px 20px",
+            background: mode ? "#30475E" : "",
+            color: mode ? "white" : "",
+          }}
+        >
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <Avatar alt="Remy Sharp" src={""} />
@@ -103,8 +108,8 @@ const Comments = ({
                 {user}
               </h4>
 
-              {isCurrentUser && toggleModal ? (
-                <Modal onCancel={() => setToggleModal(false)}>
+              {isCurrentUser && commentUpdateToggle ? (
+                <Modal onCancel={() => setCommentUpdateToggle(false)}>
                   <textarea
                     style={{ display: "block", width: 253, maxWidth: 253 }}
                     name="editComment"
@@ -126,7 +131,7 @@ const Comments = ({
                 <p
                   style={{
                     textAlign: "left",
-                    color: isCurrentUser ? "gray" : "",
+                    color: mode ? "white" : "",
                     marginTop: "20px",
                     padding: "10px",
                     width: "250px",
@@ -142,7 +147,7 @@ const Comments = ({
               <p
                 style={{
                   textAlign: "left",
-                  color: "gray",
+                  color: mode ? "white" : "gray",
                   marginTop: "20px",
                   borderTop: "1px dashed gray",
                 }}
@@ -161,6 +166,7 @@ const Comments = ({
               {!liked && (
                 <span
                   className="material-icons"
+                  style={{ cursor: "pointer" }}
                   onClick={() => handleCommentLike(id)}
                 >
                   {" thumb_up_alt"}
@@ -170,7 +176,7 @@ const Comments = ({
               {liked && (
                 <span
                   className="material-icons"
-                  style={{ color: "green" }}
+                  style={{ color: "green", cursor: "pointer" }}
                   onClick={() => handleCommentLike(id)}
                 >
                   {" thumb_up_alt"}
@@ -188,11 +194,14 @@ const Comments = ({
                   <i
                     className="fa fa-edit"
                     style={{
-                      color: "gray",
+                      color: mode ? "white" : "gray",
                       fontSize: "30px",
                       marginTop: "10px",
+                      cursor: "pointer",
                     }}
-                    onClick={() => setToggleModal(!toggleModal)}
+                    onClick={() => {
+                      setCommentUpdateToggle(!commentUpdateToggle);
+                    }}
                   ></i>
 
                   {/* Delete comment button */}
