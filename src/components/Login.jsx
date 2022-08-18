@@ -29,6 +29,7 @@ const LOGIN_USER = gql`
       avatar
       dark_mode
       about_you
+      role
       created_at
       updated_at
       posts {

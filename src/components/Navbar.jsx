@@ -145,12 +145,22 @@ const Navbar = ({ setUser }) => {
         >
           {/* Profile page */}
           <MenuItem>
-            <Link to="/profile">Profile</Link>
+            <Link
+              to="/profile"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Profile
+            </Link>
           </MenuItem>
 
           {/*Book page */}
           <MenuItem>
-            <Link to="/books">Books</Link>
+            <Link
+              to="/books"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Books
+            </Link>
           </MenuItem>
 
           {/* Logout */}

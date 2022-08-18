@@ -41,8 +41,11 @@ const Books = () => {
         </div>
       ))}
       <Link to={"/"} reloadDocument={true}>
-        Home
+        Home --
       </Link>
+      <p>
+        <Link to="/profile">Profile</Link>
+      </p>
     </div>
   );
 };

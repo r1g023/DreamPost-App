@@ -11,6 +11,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import { AccountBox, ModeNight, Person, Settings } from "@mui/icons-material";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 //add toggle DARK_MODE to user.dark_mode option
 const DARK_MODE = gql`
@@ -114,8 +115,9 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
           {/* Lists of items */}
           <List>
             {/* Home page */}
+
             <ListItem disablePadding>
-              <ListItemButton component="a" href="#home">
+              <ListItemButton component="a" href="/">
                 <ListItemIcon>
                   <HomeIcon color={mode ? "whiteColor" : ""} />
                 </ListItemIcon>
@@ -124,34 +126,39 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
             </ListItem>
 
             {/* Friends */}
-            <ListItem disablePadding>
+            {/* <ListItem disablePadding>
               <ListItemButton component="a" href="#friends">
                 <ListItemIcon>
                   <Person color={mode ? "whiteColor" : ""} />
                 </ListItemIcon>
                 <ListItemText primary="Friends" />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
 
             {/* Settings */}
-            <ListItem disablePadding>
+            {/* <ListItem disablePadding>
               <ListItemButton component="a" href="#settings">
                 <ListItemIcon>
                   <Settings color={mode ? "whiteColor" : ""} />
                 </ListItemIcon>
                 <ListItemText primary="Settings" />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
 
             {/* profile */}
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="#profile">
-                <ListItemIcon>
-                  <AccountBox color={mode ? "whiteColor" : ""} />
-                </ListItemIcon>
-                <ListItemText primary="Profile" />
-              </ListItemButton>
-            </ListItem>
+            <Link
+              to="/profile"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AccountBox color={mode ? "whiteColor" : ""} />
+                  </ListItemIcon>
+                  <ListItemText primary="Profile" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
 
             {/* ------------ Night Mode ------------- */}
             <ListItem disablePadding>

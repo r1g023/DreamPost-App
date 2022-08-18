@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import imagerror from "../assets/imagerror.jpg";
+import { UserContext } from "../App";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -13,10 +14,18 @@ const StyledContainer = styled.div`
 `;
 
 const NoMatch = () => {
+  const { user } = React.useContext(UserContext);
   return (
     <StyledContainer>
-      <h2>This page doesn't exist</h2>
+      <h1>This page doesn't exist</h1>
 
+      <h3>
+        Or You don't have permission to access this page because your role is{" "}
+        <br />
+        not allowed, please make sure your role is set to 'admin' on your user
+        profile
+      </h3>
+      <h2 style={{ color: "red" }}>Current Role: {user.role}</h2>
       <img src={imagerror} alt="404" width="500px" />
       <Button variant="contained">
         <Link to="/" style={{ textDecoration: "none", color: "white" }}>
