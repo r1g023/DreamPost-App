@@ -26,6 +26,7 @@ import { UserContext } from "../App";
 
 import Comments from "./Comments";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const options = ["delete"];
 
@@ -261,6 +262,7 @@ const Post = ({ post, handlePostDelete, mode }) => {
   // console.log("user on POST COMMENT ---->", user);
 
   const isCurrentUser = user.username === post.user;
+
   return (
     <>
       <Card

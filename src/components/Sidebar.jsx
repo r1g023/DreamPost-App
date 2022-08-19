@@ -11,7 +11,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import { AccountBox, ModeNight, Person, Settings } from "@mui/icons-material";
 import { gql, useQuery, useMutation } from "@apollo/client";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //add toggle DARK_MODE to user.dark_mode option
 const DARK_MODE = gql`
@@ -62,7 +62,7 @@ const DARK_MODE = gql`
 
 const Sidebar = ({ mode, setMode, user, setUser }) => {
   // const { user, setUser } = React.useContext(UserContext);
-  const [updateUser, { data }] = useMutation(DARK_MODE);
+  const [updateUser, { data, error }] = useMutation(DARK_MODE);
   // const [mode, setMode] = React.useState(user.dark_mode);
 
   React.useEffect(() => {
@@ -98,6 +98,8 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
 
     return result;
   };
+
+  const navigate = useNavigate();
 
   return (
     <>

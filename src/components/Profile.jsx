@@ -36,7 +36,6 @@ const Profile = () => {
     console.log("data on Profile", data);
   }, [data, user]);
 
-  if (error && user.role === "user") navigate("*");
   return (
     <div>
       <h1>Profile</h1>

@@ -43,10 +43,11 @@ const StyledUserBox = styled(Box)(({ theme }) => ({
 const Navbar = ({ setUser }) => {
   const navigate = useNavigate();
   const { user } = React.useContext(UserContext);
+  const [open, setOpen] = React.useState(false);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
+  React.useEffect(() => {}, [user, user.username]);
 
-  const [open, setOpen] = React.useState(false);
   return (
     <>
       <AppBar position="sticky" style={{ paddingTop: "9px" }}>
