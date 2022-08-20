@@ -99,8 +99,6 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
     return result;
   };
 
-  const navigate = useNavigate();
-
   return (
     <>
       <Box
@@ -117,7 +115,6 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
           {/* Lists of items */}
           <List>
             {/* Home page */}
-
             <ListItem disablePadding>
               <ListItemButton component="a" href="/">
                 <ListItemIcon>
@@ -126,26 +123,6 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
                 <ListItemText primary="Homepage" />
               </ListItemButton>
             </ListItem>
-
-            {/* Friends */}
-            {/* <ListItem disablePadding>
-              <ListItemButton component="a" href="#friends">
-                <ListItemIcon>
-                  <Person color={mode ? "whiteColor" : ""} />
-                </ListItemIcon>
-                <ListItemText primary="Friends" />
-              </ListItemButton>
-            </ListItem> */}
-
-            {/* Settings */}
-            {/* <ListItem disablePadding>
-              <ListItemButton component="a" href="#settings">
-                <ListItemIcon>
-                  <Settings color={mode ? "whiteColor" : ""} />
-                </ListItemIcon>
-                <ListItemText primary="Settings" />
-              </ListItemButton>
-            </ListItem> */}
 
             {/* profile */}
             <Link
