@@ -21,13 +21,17 @@ const Books = () => {
   const { data, error, loading } = useQuery(GET_BOOKS);
   React.useEffect(() => {
     // console.log("books array on USE EFFECT---->", data);
-  }, [data, user]);
+    if (user.role === "user") {
+      navigate("*");
+    }
+  }, [data, user.role, navigate]);
 
   if (loading) return <h1>Loading...</h1>;
+  console.log("user on books----->", user);
 
   return (
     <>
-      {user.role === "admin" ? (
+      {user.role === "admin" && (
         <div>
           <h1>Books</h1>
           {data.getBooks.map((book) => (
@@ -42,8 +46,6 @@ const Books = () => {
             <Link to="/profile">Profile</Link>
           </p>
         </div>
-      ) : (
-        navigate("*")
       )}
     </>
   );

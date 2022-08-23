@@ -47,20 +47,48 @@ const UPDATE_USER = gql`
       username
       first_name
       last_name
-      dob
       email
-      role
+      token
+      dob
       avatar
       dark_mode
       about_you
+      role
       created_at
       updated_at
+      posts {
+        id
+        title
+        date
+        image
+        post
+        liked
+        user_id
+        created_at
+        updated_at
+        comments {
+          id
+          comment
+          liked
+          post_id
+          created_at
+          updated_at
+        }
+      }
+      comments {
+        id
+        comment
+        liked
+        count
+        user
+        post_id
+      }
     }
   }
 `;
 
 const Profile = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   console.log("user on Profile****", user);
   const navigate = useNavigate();
   // form for updating user profile
@@ -69,7 +97,7 @@ const Profile = () => {
     first_name: "",
     last_name: "",
     dob: null,
-    email: "",
+
     role: "",
     avatar: "",
     about_you: "",
@@ -82,7 +110,7 @@ const Profile = () => {
 
   React.useEffect(() => {
     console.log("data on Profile", data);
-  }, [data, user]);
+  }, [data, user.role]);
 
   // handle changes to the form
   const handleChanges = (e) => {
@@ -99,7 +127,7 @@ const Profile = () => {
         first_name: updateUserID.first_name,
         last_name: updateUserID.last_name,
         dob: updateUserID.dob,
-        email: updateUserID.email,
+
         role: updateUserID.role,
         avatar: updateUserID.avatar,
         about_you: updateUserID.about_you,
@@ -132,12 +160,7 @@ const Profile = () => {
           placeholder="dob"
           onChange={handleChanges}
         />
-        <input
-          type="text"
-          name="email"
-          placeholder="email"
-          onChange={handleChanges}
-        />
+
         <input
           type="text"
           name="role"
@@ -161,9 +184,12 @@ const Profile = () => {
       </form>
 
       <h2>
-        Books <Link to="/books">Books</Link>
+        Books{" "}
+        <Link to="/books" reloadDocument={user.role === "admin" ? true : ""}>
+          Books
+        </Link>
       </h2>
-      {data && user.role === "user" && (
+      {data && (
         <div>
           <h2>First_Name: {data.getUserById.first_name}</h2>
           <h2>Last_Name: {data.getUserById.last_name}</h2>

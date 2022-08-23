@@ -46,7 +46,7 @@ const Navbar = ({ setUser }) => {
   const [open, setOpen] = React.useState(false);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
-  React.useEffect(() => {}, [user, user.username]);
+  React.useEffect(() => {}, [user, user.username, user.role]);
 
   return (
     <>
@@ -159,6 +159,8 @@ const Navbar = ({ setUser }) => {
             <Link
               to="/books"
               style={{ textDecoration: "none", color: "black" }}
+              // reloads the page when you click on the link
+              // reloadDocument={user.role === "admin" ? true : false}
             >
               Books
             </Link>

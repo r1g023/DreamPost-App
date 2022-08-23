@@ -17,7 +17,6 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = React.useState("");
-  const navigate = useNavigate();
 
   console.log("user on app---->", user);
 
@@ -60,7 +59,14 @@ function App() {
           />
 
           {/*profile page */}
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Box>
     </UserContext.Provider>
