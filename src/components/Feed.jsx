@@ -43,7 +43,7 @@ const DELETE_POST = gql`
   }
 `;
 
-const Feed = ({ mode }) => {
+const Feed = ({ mode, userList }) => {
   const [searchValue, setSearchValue] = React.useState("");
   const { loading, error, data } = useQuery(GET_POSTS);
 
@@ -178,6 +178,7 @@ const Feed = ({ mode }) => {
                 handlePostDelete={() => handlePostDelete(item)}
                 mode={mode}
                 postData={postData}
+                userList={userList}
               />
             );
           })
@@ -194,6 +195,7 @@ const Feed = ({ mode }) => {
                 handlePostDelete={() => handlePostDelete(item)}
                 mode={mode}
                 postData={postData}
+                userList={userList}
               />
             );
           })

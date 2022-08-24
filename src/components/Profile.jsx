@@ -2,6 +2,19 @@ import React, { useContext } from "react";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import { UserContext } from "../App";
 import { Link, useNavigate } from "react-router-dom";
+import { Image } from "cloudinary-react";
+import axios from "axios";
+import {
+  Avatar,
+  Button,
+  FormControl,
+  IconButton,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
+import { PhotoCamera } from "@mui/icons-material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const GET_USER = gql`
   query getUserById($id: Int!) {
@@ -87,9 +100,17 @@ const UPDATE_USER = gql`
   }
 `;
 
+// Remove image upload button from the form
+const Input = styled("input")({
+  display: "none",
+});
+
 const Profile = () => {
   const { user, setUser } = useContext(UserContext);
   console.log("user on Profile****", user);
+  const [selectedImages, setSelectedImages] = React.useState([]);
+  const [uploadPhoto, setUploadPhoto] = React.useState(null);
+  const [togglePhoto, setTogglePhoto] = React.useState(false);
   const navigate = useNavigate();
   // form for updating user profile
   const [updateUserID, setUpdateUserID] = React.useState({
@@ -102,7 +123,6 @@ const Profile = () => {
     avatar: "",
     about_you: "",
   });
-
   const { error, data } = useQuery(GET_USER, {
     variables: { id: user.id },
   });
@@ -110,7 +130,30 @@ const Profile = () => {
 
   React.useEffect(() => {
     console.log("data on Profile", data);
-  }, [data, user.role]);
+    localStorage.getItem("user");
+  }, [data, user]);
+
+  //upload image to Cloud
+  function uploadImage(e) {
+    const formData = new FormData();
+    formData.append("file", selectedImages);
+    formData.append("upload_preset", "xhfk3bp5_u");
+
+    const postImage = async () => {
+      try {
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
+          formData
+        );
+        console.log("response", response);
+        // add response to my addPost image form
+        setUploadPhoto(response.data.secure_url);
+      } catch {
+        console.log("error uploading image");
+      }
+    };
+    postImage();
+  }
 
   // handle changes to the form
   const handleChanges = (e) => {
@@ -129,59 +172,187 @@ const Profile = () => {
         dob: updateUserID.dob,
 
         role: updateUserID.role,
-        avatar: updateUserID.avatar,
+
         about_you: updateUserID.about_you,
       },
-    });
+    })
+      // add it to set user on local storage
+      .then((res) => {
+        console.log("res on Profile", res);
+        // setUser(res.data.updateUser);
+        setUser({
+          ...user,
+          role: localStorage.setItem(
+            "user",
+            JSON.stringify(res.data.updateUser)
+          ),
+        });
+        setUploadPhoto(null);
+        window.location.reload();
+      });
   };
 
+  // handle PHOTO form submission
+  function handlePhotoSubmit() {
+    console.log("updateUserID", updateUserID);
+    updateUser({
+      variables: {
+        id: user.id,
+        avatar: uploadPhoto,
+      },
+    })
+      // add it to set user on local storage
+      .then((res) => {
+        console.log("res on Profile", res);
+        // setUser(res.data.updateUser);
+        setUser({
+          ...user,
+          avatar: localStorage.setItem(
+            "user",
+            JSON.stringify(res.data.updateUser)
+          ),
+        });
+
+        setUploadPhoto(null);
+        window.location.reload();
+      });
+  }
+
   return (
-    <div>
+    <div
+      style={{ margin: "0 auto", border: "1px solid red", textAlign: "center" }}
+    >
       {/* form to update user */}
 
-      <h1>Profile</h1>
-      <form onClick={handleSubmit}>
-        <input
-          type="text"
-          name="first_name"
-          placeholder="first_name"
-          onChange={handleChanges}
-        />
-        {/* generate inputs for remaining fields */}
-        <input
-          type="text"
-          name="last_name"
-          placeholder="last_name"
-          onChange={handleChanges}
-        />
-        <input
-          type="text"
-          name="dob"
-          placeholder="dob"
-          onChange={handleChanges}
-        />
+      <h1>Profile Settings</h1>
 
-        <input
-          type="text"
-          name="role"
-          placeholder="role"
-          onChange={handleChanges}
-        />
-        <input
-          type="text"
-          name="avatar"
-          placeholder="avatar"
-          onChange={handleChanges}
-        />
-        <input
-          type="text"
-          name="about_you"
-          placeholder="about_you"
-          onChange={handleChanges}
-        />
-
-        <button>Update</button>
-      </form>
+      <FormControl
+        style={{
+          background: "white",
+          padding: "1rem",
+          borderRadius: "0.7rem",
+          gap: "0.2rem",
+          border: "1px solid #e0e0e0",
+        }}
+      >
+        <>
+          <label htmlFor="icon-button-file">
+            <label htmlFor="image" style={{ display: "block" }}>
+              Click profile image to select new image
+              <br /> and then click cloud upload
+            </label>
+            <Typography variant="h6">
+              <span style={{ color: "green" }}>@{user.username}</span>
+            </Typography>
+            {/*camera Icon */}
+            <Input
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              sx={{ color: "red" }}
+              name="avatar"
+              onChange={(e) => {
+                console.log("e.target.files", e.target.files);
+                setSelectedImages(e.target.files[0]);
+                uploadImage(e);
+              }}
+            />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+            >
+              <Avatar
+                src={user.avatar}
+                // src="https://i.pravatar.cc/300"
+                sx={{ border: "1px solid red", margin: "0 auto" }}
+              />
+            </IconButton>
+          </label>
+          {uploadPhoto && (
+            <Image
+              cloudName="dcvh93esc"
+              publicId={`${uploadPhoto}`}
+              height="120px"
+              width="120px"
+              margin="0 auto"
+              display="block"
+            />
+          )}
+          {/* button to upload image to Cloud */}
+          <CloudUploadIcon
+            color="otherColor"
+            sx={{ fontSize: 50, cursor: "pointer" }}
+            onClick={() => {
+              uploadImage();
+            }}
+          />
+          <button onClick={() => handlePhotoSubmit()}>SUBMIT PHOTO</button>
+          {/* button to upload image to Cloud */}
+          {/* <Button
+            variant="contained"
+            component="label"
+            color="success"
+            onClick={() => {
+              uploadImage();
+              // setTimeout(() => {
+              //   handlePhotoSubmit();
+              // }, 2000);
+            }}
+          >
+            Upload Photo
+          </Button> */}
+          <p style={{ color: "gray" }}>
+            Click upload image to upload new Photo after selecting one!
+          </p>
+          <TextField
+            id="demo-helper-text-aligned"
+            label="first_name"
+            name="first_name"
+            onChange={handleChanges}
+          />
+          <TextField
+            id="demo-helper-text-aligned"
+            label="last_name"
+            name="last_name"
+            onChange={handleChanges}
+            sx={{ marginTop: "0.5rem" }}
+          />
+          <TextField
+            id="demo-helper-text-aligned"
+            label="dob"
+            name="dob"
+            onChange={handleChanges}
+            sx={{ marginTop: "0.5rem" }}
+          />
+          <TextField
+            id="demo-helper-text-aligned"
+            label="role"
+            name="role"
+            onChange={handleChanges}
+            sx={{ marginTop: "0.5rem" }}
+          />
+          <TextField
+            id="demo-helper-text-aligned"
+            label="about_you"
+            name="about_you"
+            onChange={handleChanges}
+            sx={{ marginTop: "0.5rem" }}
+          />
+          <Button
+            variant="contained"
+            color="success"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Add Post
+          </Button>{" "}
+          {/* <h2>Photo upload is required</h2> */}
+          <span style={{ fontSize: "12px" }}>
+            Don't forget to upload a photo
+          </span>
+        </>
+      </FormControl>
 
       <h2>
         Books{" "}
@@ -189,17 +360,19 @@ const Profile = () => {
           Books
         </Link>
       </h2>
-      {data && (
+
+      {user && (
         <div>
-          <h2>First_Name: {data.getUserById.first_name}</h2>
-          <h2>Last_Name: {data.getUserById.last_name}</h2>
-          <h2>DOB: {data.getUserById.dob}</h2>
-          <h2>Email: {data.getUserById.email}</h2>
-          <h2>Username: {data.getUserById.username}</h2>
-          <h2>Role: {data.getUserById.role}</h2>
-          <h2>Dark_Mode: {data.getUserById.dark_mode ? "true" : "false"}</h2>
-          <h2>About_You: {data.getUserById.about_you}</h2>
-          <img src={data.getUserById.avatar} alt="avatar" height="100px" />
+          <h2>First_Name: {user.first_name}</h2>
+          <h2>Last_Name: {user.last_name}</h2>
+          <h2>DOB: {user.dob}</h2>
+          <h2>Email: {user.email}</h2>
+          <h2>Username: {user.username}</h2>
+          <h2>Role: {user.role}</h2>
+          <h2>Dark_Mode: {user.dark_mode ? "true" : "false"}</h2>
+          <h2>About_You: {user.about_you}</h2>
+          Avatar{" "}
+          {user.avatar && <img src={uploadPhoto} alt="avatar" height="100px" />}
         </div>
       )}
     </div>

@@ -106,7 +106,7 @@ const Navbar = ({ setUser }) => {
               <Avatar
                 sx={{ height: 30, width: 30 }}
                 alt="Github Avatar"
-                src="https://avatars.githubusercontent.com/u/57161327?v=4"
+                src={user.avatar}
                 onClick={() => setOpen(!open)}
               />
             </StyledIcons>

@@ -76,6 +76,45 @@ const DELETE_COMMENT = gql`
 //   }
 // `;
 
+// const GET_USERS = gql`
+//   query getUsers {
+//     getUsers {
+//       id
+//       first_name
+//       last_name
+//       dob
+//       email
+//       username
+//       role
+//       avatar
+//       dark_mode
+//       about_you
+//       created_at
+//       updated_at
+//       posts {
+//         id
+//         title
+//         date
+//         image
+//         comments {
+//           id
+//           comment
+//           user
+//           post_id
+//         }
+//       }
+//       comments {
+//         id
+//         comment
+//         liked
+//         count
+//         user
+//         post_id
+//       }
+//     }
+//   }
+// `;
+
 const ADD_COMMENT = gql`
   mutation addComment(
     $comment: String!
@@ -123,7 +162,7 @@ const ExpandMore = styled((props) => {
 }));
 
 // Post Card for the Post List on the Feed component
-const Post = ({ post, handlePostDelete, mode }) => {
+const Post = ({ post, handlePostDelete, mode, userList }) => {
   // console.log("Post data on Post component---->", post);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [editComment, setEditComment] = React.useState("");
@@ -147,10 +186,13 @@ const Post = ({ post, handlePostDelete, mode }) => {
 
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
+  // GET users from query
+
   React.useEffect(() => {
     // console.log("comment data on Post.jsx USE EFFECT---->", data);
     //reload comments after submitting
   }, [data]);
+
   // get mutation for delete comment
   const [deleteCommentID] = useMutation(DELETE_COMMENT);
   const [updateCommentID] = useMutation(UPDATE_COMMENT);
@@ -275,8 +317,18 @@ const Post = ({ post, handlePostDelete, mode }) => {
         {/* Card Header */}
         <CardHeader
           avatar={
-            <Avatar sx={{ background: "navy" }} aria-label="recipe">
-              {post.user.charAt(0)}
+            <Avatar
+              sx={{ background: "navy" }}
+              aria-label="recipe"
+              src={
+                //iterate over userListData and find the user with the username that matches the post.user
+
+                userList &&
+                userList.getUsers.find((user) => user.username === post.user)
+                  .avatar
+              }
+            >
+              {/* iterate over userListData.data.getUsers to get the user's avatar */}
             </Avatar>
           }
           action={
