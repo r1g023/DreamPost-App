@@ -130,6 +130,7 @@ function Login({ setUser }) {
           {/*password */}
           <span style={{ color: "blue", fontWeight: "900" }}>Password</span>
           <TextField
+            type="password"
             id="demo-helper-text-aligned"
             label="password"
             name="password"
