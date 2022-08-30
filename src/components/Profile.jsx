@@ -144,28 +144,30 @@ const Profile = () => {
   });
 
   const [editName, setEditName] = React.useState({
-    id: "",
+    id: user.id,
     first_name: user.first_name,
     last_name: user.last_name,
     dob: user.dob,
-    role: "",
+    role: user.role,
     avatar: user.avatar,
     about_you: user.about_you,
   });
 
+  const [reload, setReload] = React.useState(false);
+
   React.useEffect(() => {
     console.log("data on Profile", data);
     localStorage.getItem("user");
-  }, [
-    data,
-    user,
-    user.first_name,
-    user.last_name,
-    user.dob,
-    user.role,
-    user.about_you,
-    editName,
-  ]);
+    const editNameData = localStorage.getItem("editName");
+    if (editNameData) {
+      setEditName(JSON.parse(editNameData));
+    }
+  }, [data, user, reload, setUser]);
+
+  // set localStorage to editName
+  React.useEffect(() => {
+    localStorage.setItem("editName", JSON.stringify(editName));
+  }, [editName]);
 
   //upload image to Cloud
   function uploadImage(e) {
@@ -229,16 +231,6 @@ const Profile = () => {
         setUploadPhoto(null);
         window.location.reload();
       });
-    setEditName({
-      ...editName,
-      id: "",
-      first_name: user.first_name,
-      last_name: user.last_name,
-      dob: user.dob,
-      role: "",
-      avatar: user.avatar,
-      about_you: user.about_you,
-    });
   };
 
   // handle PHOTO form submission
@@ -275,8 +267,10 @@ const Profile = () => {
     });
   };
 
+  console.log("PROFILE did mount");
   return (
     <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
+      {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
         <h1 style={{ color: "white" }}>Profile Settings</h1>
@@ -317,25 +311,26 @@ const Profile = () => {
             <TextField
               id="demo-helper-text-aligned"
               name="first_name"
+              label="First Name"
               onChange={handleChange}
-              //get value from editName or select value from user but enable user to change it
-              value={user.first_name && editName.first_name}
+              value={editName.first_name || ""}
             />
             <TextField
               id="demo-helper-text-aligned"
               name="last_name"
+              label="Last Name"
               onChange={handleChange}
               // get current user value on values
-              value={editName.last_name}
+              value={editName.last_name || ""}
               sx={{ marginTop: "0.5rem" }}
             />
+            {/* DOB */}
             <TextField
               id="demo-helper-text-aligned"
-              label="dob"
               name="dob"
               onChange={handleChange}
               sx={{ marginTop: "0.5rem" }}
-              value={editName.dob}
+              value={editName.dob || ""}
             />
             {/* form data for user role */}
             <FormControl fullWidth sx={{ marginTop: "10px" }}>
@@ -345,8 +340,9 @@ const Profile = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 name="role"
+                label="Role"
                 onChange={handleChange}
-                value={editName.role}
+                value={editName.role || ""}
               >
                 <MenuItem value="">
                   <em>Must Select One</em>
@@ -355,13 +351,18 @@ const Profile = () => {
                 <MenuItem value={"user"}>user</MenuItem>
               </Select>
             </FormControl>
+            {/* about you */}
             <TextField
-              id="demo-helper-text-aligned"
+              id="standard-multiline-static"
               label="about_you"
               name="about_you"
+              multiline
+              rows={4}
               onChange={handleChange}
               sx={{ marginTop: "0.5rem" }}
-              value={editName.about_you}
+              value={editName.about_you || ""}
+              variant="standard"
+              color="otherColor"
             />
             <Button
               variant="contained"
@@ -373,30 +374,65 @@ const Profile = () => {
             </Button>{" "}
           </>
         </form>
-        <p>Name: {updateUserID.first_name}</p>
-
+        <Link to="/profile"> Profile </Link>
         <h2>
-          Books{" "}
-          <Link to="/books" reloadDocument={user.role === "admin" ? true : ""}>
-            Books
-          </Link>
+          Books <Link to="/books">Bookss</Link>
         </h2>
 
-        {user && (
-          <div style={{ color: "white" }}>
-            <h2>First_Name: {user.first_name}</h2>
-            <h2>Last_Name: {user.last_name}</h2>
-            <h2>DOB: {user.dob}</h2>
-            <h2>Email: {user.email}</h2>
-            <h2>Username: {user.username}</h2>
-            <h2>Role: {user.role}</h2>
-            <h2>Dark_Mode: {user.dark_mode ? "true" : "false"}</h2>
-            <h2>About_You: {user.about_you}</h2>
-            Avatar{" "}
-            {user.avatar && (
-              <img src={uploadPhoto} alt="avatar" height="100px" />
-            )}
-          </div>
+        {user && editName && (
+          <Box
+            style={{
+              color: "white",
+              padding: "15px",
+
+              width: "65%",
+            }}
+          >
+            <h3 className="profile">
+              First_Name:
+              <span className="profile-info"> {editName.first_name}</span>
+            </h3>
+            <h3 className="profile">
+              Last_Name:
+              <span className="profile-info"> {editName.last_name}</span>
+            </h3>
+            <h3 className="profile">
+              DOB: <span className="profile-info">{editName.dob}</span>
+            </h3>
+            <h3 className="profile">
+              Email: <span className="profile-info">{user.email}</span>
+            </h3>
+            <h3 className="profile">
+              Username:
+              <span className="profile-info"> {user.username}</span>
+            </h3>
+            <h3 className="profile">
+              Role: <span className="profile-info">{editName.role}</span>
+            </h3>
+            <h3 className="profile">
+              Dark_Mode:
+              <span className="profile-info">
+                {" "}
+                {user.dark_mode ? "true" : "false"}
+              </span>
+            </h3>
+            <h3 className="profile">
+              About_You:
+              <span className="profile-info"> {editName.about_you}</span>
+            </h3>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "1rem",
+              }}
+            >
+              {user.avatar && (
+                <img src={user.avatar} alt="avatar" height="100px" />
+              )}
+            </Box>
+          </Box>
         )}
       </StyledBox>
     </div>

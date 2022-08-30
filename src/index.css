@@ -210,3 +210,14 @@ background-color: #FF6600
 .sidebar {
   background: "red"
 }
+
+.profile {
+  width: 100%;
+  border: 1px solid green;
+  word-wrap: break-word;
+}
+
+.profile-info {
+  color: orange;
+  font-size: 15px;
+}

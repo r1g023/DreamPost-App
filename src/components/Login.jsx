@@ -122,6 +122,7 @@ function Login({ setUser }) {
             name="username"
             onChange={handleChanges}
             value={value.username}
+            autoComplete="username"
           />
           {errors.username ? (
             <p style={{ color: "red", fontSize: "11px" }}>{errors.username}</p>
@@ -131,11 +132,11 @@ function Login({ setUser }) {
           <span style={{ color: "blue", fontWeight: "900" }}>Password</span>
           <TextField
             type="password"
-            id="demo-helper-text-aligned"
             label="password"
             name="password"
             onChange={handleChanges}
             value={value.password}
+            autoComplete="current-password"
           />
           {errors.password ? (
             <p style={{ color: "red", fontSize: "11px" }}>{errors.password}</p>

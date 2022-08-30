@@ -4,7 +4,10 @@ import { Navigate } from "react-router-dom";
 function PrivateRoute({ children }) {
   const token = window.localStorage.getItem("auth-token");
   if (!token) {
-    return <Navigate to="/login" replace />;
+    localStorage.removeItem("editName");
+    localStorage.removeItem("user");
+    localStorage.removeItem("auth-token");
+    return <Navigate to="/login" />;
   }
 
   return children;

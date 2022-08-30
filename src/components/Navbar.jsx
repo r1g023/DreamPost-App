@@ -171,6 +171,10 @@ const Navbar = ({ setUser }) => {
             onClick={() => {
               window.localStorage.removeItem("auth-token");
               window.localStorage.removeItem("user");
+              window.localStorage.removeItem("editName");
+              // remove localstore ab.storage.device and ab.storage.server
+              window.localStorage.removeItem("ab.storage");
+
               navigate("/login");
               // remove user upon logout
               setUser("");
