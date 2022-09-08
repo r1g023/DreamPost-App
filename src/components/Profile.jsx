@@ -19,6 +19,14 @@ import {
 } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import dayjs from "dayjs";
+
+import Stack from "@mui/material/Stack";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
 const GET_USER = gql`
   query getUserById($id: Int!) {
@@ -126,6 +134,7 @@ const Profile = () => {
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [togglePhoto, setTogglePhoto] = React.useState(false);
   const navigate = useNavigate();
+  const [value, setValue] = React.useState(dayjs());
 
   const { error, data } = useQuery(GET_USER, {
     variables: { id: user.id },
@@ -211,9 +220,7 @@ const Profile = () => {
         first_name: editName.first_name,
         last_name: editName.last_name,
         dob: editName.dob,
-
         role: editName.role,
-
         about_you: editName.about_you,
       },
     })
@@ -325,13 +332,28 @@ const Profile = () => {
               sx={{ marginTop: "0.5rem" }}
             />
             {/* DOB */}
-            <TextField
+            {/* <TextField
               id="demo-helper-text-aligned"
               name="dob"
               onChange={handleChange}
               sx={{ marginTop: "0.5rem" }}
               value={editName.dob || ""}
-            />
+            /> */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <MobileDatePicker
+                label="dob"
+                name="dob"
+                value={editName.dob || ""}
+                onChange={(newValue) => {
+                  console.log("newValue", newValue);
+                  setEditName({
+                    ...editName,
+                    dob: newValue,
+                  });
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
             {/* form data for user role */}
             <FormControl fullWidth sx={{ marginTop: "10px" }}>
               <InputLabel id="demo-simple-select-helper-label">Role</InputLabel>
@@ -397,7 +419,7 @@ const Profile = () => {
               <span className="profile-info"> {editName.last_name}</span>
             </h3>
             <h3 className="profile">
-              DOB: <span className="profile-info">{editName.dob}</span>
+              DOB: <span className="profile-info">{user.dob}</span>
             </h3>
             <h3 className="profile">
               Email: <span className="profile-info">{user.email}</span>
