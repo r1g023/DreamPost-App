@@ -27,6 +27,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import moment from "moment";
 
 const GET_USER = gql`
   query getUserById($id: Int!) {
@@ -172,6 +173,9 @@ const Profile = () => {
       setEditName(JSON.parse(editNameData));
     }
   }, [data, user, reload, setUser]);
+
+  var dateToFormat = "2018-05-16 12:57:13"; //TIMESTAMP
+  moment(dateToFormat).format("DD/MM/YYYY"); // you get "16/05/2018"
 
   // set localStorage to editName
   React.useEffect(() => {
@@ -343,7 +347,7 @@ const Profile = () => {
               <MobileDatePicker
                 label="dob"
                 name="dob"
-                value={editName.dob || ""}
+                value={editName.dob}
                 onChange={(newValue) => {
                   console.log("newValue", newValue);
                   setEditName({
@@ -419,7 +423,10 @@ const Profile = () => {
               <span className="profile-info"> {editName.last_name}</span>
             </h3>
             <h3 className="profile">
-              DOB: <span className="profile-info">{user.dob}</span>
+              DOB:{" "}
+              <span className="profile-info">
+                {moment(user.dob).format("MM/DD/YYYY")}
+              </span>
             </h3>
             <h3 className="profile">
               Email: <span className="profile-info">{user.email}</span>

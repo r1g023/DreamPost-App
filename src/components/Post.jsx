@@ -353,8 +353,8 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                 variant="body2"
                 color="text.primary"
               >
-                <span style={{ color: mode ? "white" : "" }}>
-                  @{post.date} -
+                <span style={{ color: mode ? "white" : "", fontSize: "10px" }}>
+                  posted on {post.date}
                 </span>
               </Typography>
             </React.Fragment>

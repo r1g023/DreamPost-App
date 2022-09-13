@@ -109,8 +109,8 @@ const CreatePost = ({ mode }) => {
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [togglePhoto, setTogglePhoto] = React.useState(false);
   const [startDate, setStartDate] = React.useState(
-    // moment get current hour and minute
-    moment().format("MMM Do YY")
+    // moment get current hour in PM or AM format
+    moment().endOf("day").format("MM/DD/YYYY").toLocaleString("en-US")
   );
 
   React.useEffect(() => {}, [startDate]);
