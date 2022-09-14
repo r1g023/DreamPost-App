@@ -285,6 +285,9 @@ const Profile = () => {
       {/* form to update user */}
       <StyledBox>
         <h1 style={{ color: "white" }}>Profile Settings</h1>
+        <h2 style={{ color: "white" }}>Upload Profile Photo</h2>
+        <button>Upload Avatar</button>
+
         <IconButton
           color="primary"
           aria-label="upload picture"
@@ -345,7 +348,7 @@ const Profile = () => {
             /> */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
-                label="dob"
+                label="Date Of Birth"
                 name="dob"
                 value={editName.dob}
                 onChange={(newValue) => {
@@ -400,7 +403,7 @@ const Profile = () => {
             </Button>{" "}
           </>
         </form>
-        <Link to="/profile"> Profile </Link>
+
         <h2>
           Books <Link to="/books">Bookss</Link>
         </h2>
