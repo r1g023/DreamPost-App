@@ -28,6 +28,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import moment from "moment";
+import Modal from "./Modal";
 
 const GET_USER = gql`
   query getUserById($id: Int!) {
@@ -133,9 +134,12 @@ const Profile = () => {
   console.log("user on Profile****", user);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
-  const [togglePhoto, setTogglePhoto] = React.useState(false);
+  const [toggleModal, setToggleModal] = React.useState(false);
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(dayjs());
+
+  function toggleModalUpload() {
+    setToggleModal(!toggleModal);
+  }
 
   const { error, data } = useQuery(GET_USER, {
     variables: { id: user.id },
@@ -286,7 +290,100 @@ const Profile = () => {
       <StyledBox>
         <h1 style={{ color: "white" }}>Profile Settings</h1>
         <h2 style={{ color: "white" }}>Upload Profile Photo</h2>
-        <button>Upload Avatar</button>
+        <button onClick={(prev) => setToggleModal(!toggleModal)}>
+          Upload Avatar
+        </button>
+        {toggleModal ? (
+          <Modal onCancel={toggleModalUpload}>
+            <label
+              htmlFor="icon-button-file"
+              style={{
+                border: "2px solid red",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <label
+                htmlFor="image"
+                style={{ display: "block", color: "white" }}
+              >
+                Click profile image to select new image and then click cloud
+                upload
+              </label>
+              <Typography
+                variant="h6"
+                sx={{
+                  display: "block",
+                  border: "1px solid green",
+                  textAlign: "center",
+                }}
+              >
+                <span style={{ color: "green" }}>@{user.username}</span>
+              </Typography>
+              {/* Current Avatar Icon */}
+              <Input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                sx={{ color: "red" }}
+                name="avatar"
+                onChange={(e) => {
+                  console.log("e.target.files", e.target.files);
+                  setSelectedImages(e.target.files[0]);
+                }}
+              />
+              {/*upload to cloud icon */}
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+              >
+                <Avatar
+                  src={user.avatar}
+                  // src="https://i.pravatar.cc/300"
+                  sx={{ border: "1px solid red", margin: "0 auto" }}
+                />
+              </IconButton>
+
+              {/* only need to show this if a photo is uploaded */}
+
+              <div
+                style={{
+                  border: "1px solid green",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {uploadPhoto && (
+                  <Image
+                    cloudName="dcvh93esc"
+                    publicId={`${uploadPhoto}`}
+                    height="120px"
+                    width="120px"
+                  />
+                )}
+                {/* button to upload image to Cloud */}
+              </div>
+            </label>
+
+            <div
+              className="uploadPhoto"
+              style={{ border: "2px solid green", textAlign: "center" }}
+            >
+              {!uploadPhoto && (
+                <CloudUploadIcon
+                  color="otherColor"
+                  sx={{ fontSize: 50, cursor: "pointer", margin: "0 auto" }}
+                  onClick={() => {
+                    uploadImage();
+                  }}
+                />
+              )}
+            </div>
+            <button onClick={handlePhotoSubmit}>Submit Photo</button>
+          </Modal>
+        ) : null}
 
         <IconButton
           color="primary"
@@ -299,7 +396,6 @@ const Profile = () => {
             sx={{ border: "1px solid red", margin: "0 auto" }}
           />
         </IconButton>
-
         <Typography
           variant="h6"
           sx={{
@@ -310,6 +406,7 @@ const Profile = () => {
         >
           <span style={{ color: "green" }}>@{user.username}</span>
         </Typography>
+        {/* ----------------------------------------------------------------------------------------------------------------FORM STARTS HERE--------------------------------------------------------*/}
         <form
           style={{
             background: "white",
@@ -322,6 +419,7 @@ const Profile = () => {
           }}
         >
           <>
+            {/* first_name */}
             <TextField
               id="demo-helper-text-aligned"
               name="first_name"
@@ -329,6 +427,7 @@ const Profile = () => {
               onChange={handleChange}
               value={editName.first_name || ""}
             />
+            {/* last name */}
             <TextField
               id="demo-helper-text-aligned"
               name="last_name"
@@ -338,14 +437,7 @@ const Profile = () => {
               value={editName.last_name || ""}
               sx={{ marginTop: "0.5rem" }}
             />
-            {/* DOB */}
-            {/* <TextField
-              id="demo-helper-text-aligned"
-              name="dob"
-              onChange={handleChange}
-              sx={{ marginTop: "0.5rem" }}
-              value={editName.dob || ""}
-            /> */}
+            {/*DOB*/}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
                 label="Date Of Birth"
@@ -403,11 +495,9 @@ const Profile = () => {
             </Button>{" "}
           </>
         </form>
-
         <h2>
           Books <Link to="/books">Bookss</Link>
         </h2>
-
         {user && editName && (
           <Box
             style={{
