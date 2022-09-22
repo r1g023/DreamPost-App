@@ -28,7 +28,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import moment from "moment";
-import Modal from "./Modal";
+import ProfileModal from "../pages/ProfileModal";
 
 const GET_USER = gql`
   query getUserById($id: Int!) {
@@ -117,6 +117,11 @@ const UPDATE_USER = gql`
 // Remove image upload button from the form
 const Input = styled("input")({
   display: "none",
+  border: "1px solid red",
+  // add hover
+  active: {
+    display: "none",
+  },
 });
 
 // container for profile page
@@ -289,16 +294,21 @@ const Profile = () => {
       {/* form to update user */}
       <StyledBox>
         <h1 style={{ color: "white" }}>Profile Settings</h1>
-        <h2 style={{ color: "white" }}>Upload Profile Photo</h2>
-        <button onClick={(prev) => setToggleModal(!toggleModal)}>
-          Upload Avatar
-        </button>
+
+        <Button
+          onClick={(prev) => setToggleModal(!toggleModal)}
+          variant="outlined"
+          color="otherColor"
+        >
+          Change Avatar
+        </Button>
+
+        {/* Profile Modal opens up if toggleModal is true */}
         {toggleModal ? (
-          <Modal onCancel={toggleModalUpload}>
+          <ProfileModal onCancel={toggleModalUpload}>
             <label
               htmlFor="icon-button-file"
               style={{
-                border: "2px solid red",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -306,16 +316,20 @@ const Profile = () => {
             >
               <label
                 htmlFor="image"
-                style={{ display: "block", color: "white" }}
+                style={{
+                  display: "block",
+                  color: "white",
+                  textAlign: "center",
+                  fontSize: "1rem",
+                }}
               >
-                Click profile image to select new image and then click cloud
-                upload
+                Click avatar to select new image and click upload button
               </label>
               <Typography
                 variant="h6"
                 sx={{
                   display: "block",
-                  border: "1px solid green",
+
                   textAlign: "center",
                 }}
               >
@@ -326,7 +340,6 @@ const Profile = () => {
                 accept="image/*"
                 id="icon-button-file"
                 type="file"
-                sx={{ color: "red" }}
                 name="avatar"
                 onChange={(e) => {
                   console.log("e.target.files", e.target.files);
@@ -342,15 +355,12 @@ const Profile = () => {
                 <Avatar
                   src={user.avatar}
                   // src="https://i.pravatar.cc/300"
-                  sx={{ border: "1px solid red", margin: "0 auto" }}
                 />
               </IconButton>
 
               {/* only need to show this if a photo is uploaded */}
-
               <div
                 style={{
-                  border: "1px solid green",
                   display: "flex",
                   justifyContent: "center",
                 }}
@@ -369,7 +379,12 @@ const Profile = () => {
 
             <div
               className="uploadPhoto"
-              style={{ border: "2px solid green", textAlign: "center" }}
+              style={{
+                textAlign: "center",
+
+                display: "flex",
+                flexDirection: "column",
+              }}
             >
               {!uploadPhoto && (
                 <CloudUploadIcon
@@ -380,11 +395,21 @@ const Profile = () => {
                   }}
                 />
               )}
+              {uploadPhoto && (
+                <Button
+                  onClick={handlePhotoSubmit}
+                  variant="contained"
+                  color="success"
+                  sx={{ marginTop: 5 }}
+                >
+                  Upload Photo
+                </Button>
+              )}
             </div>
-            <button onClick={handlePhotoSubmit}>Submit Photo</button>
-          </Modal>
+          </ProfileModal>
         ) : null}
 
+        {/* this shows the current avatar and username*/}
         <IconButton
           color="primary"
           aria-label="upload picture"

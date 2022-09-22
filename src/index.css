@@ -221,3 +221,37 @@ background-color: #FF6600
   color: orange;
   font-size: 15px;
 }
+
+
+/* styling for ProfileModal */
+.modal-container {
+  background-color: rgba(14, 11, 11, 0.5);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-delay: 10s;
+  z-index: 100;
+}
+
+.modal-content {
+  background-color: rgba(14, 11, 11, 0.9);
+  padding: 30px;
+  max-width: 400px;
+  width: 55%;
+  max-width: 660px;
+  position: absolute;
+  color: black;
+}
+
+.modal {
+  padding: 20px;
+}
+
+.footer {
+  margin-top: 20px;
+}

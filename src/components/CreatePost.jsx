@@ -24,6 +24,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
 import { UserContext } from "../App";
 import { PhotoCamera } from "@mui/icons-material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -313,25 +314,34 @@ const CreatePost = ({ mode }) => {
                         <PhotoCamera />
                       </IconButton>
                     </label>
-                    <Image cloudName="dcvh93esc" publicId={`${uploadPhoto}`} />
+                    {uploadPhoto && (
+                      <Image
+                        cloudName="dcvh93esc"
+                        publicId={`${uploadPhoto}`}
+                      />
+                    )}
                     {/* button to upload image to Cloud */}
-                    <Button
-                      variant="contained"
-                      component="label"
-                      color="success"
-                      onClick={() => {
-                        setTimeout(() => {
-                          setTogglePhoto(!togglePhoto);
-                        }, 5000);
-                        uploadImage();
-                      }}
-                    >
-                      Upload Image
-                    </Button>
-                    <p style={{ color: "gray" }}>
-                      Click upload image to upload new Photo after selecting
-                      one!
-                    </p>
+                    {!uploadPhoto && (
+                      <CloudUploadIcon
+                        color="otherColor"
+                        sx={{
+                          fontSize: 50,
+                          cursor: "pointer",
+                          margin: "0 auto",
+                        }}
+                        onClick={() => {
+                          setTimeout(() => {
+                            setTogglePhoto(!togglePhoto);
+                          }, 5000);
+                          uploadImage();
+                        }}
+                      />
+                    )}
+                    {!uploadPhoto && (
+                      <p style={{ color: "gray" }}>
+                        Click upload to add photo to post
+                      </p>
+                    )}
                   </>
                 )}
               </FormControl>
