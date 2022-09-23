@@ -289,7 +289,7 @@ const Profile = () => {
 
   console.log("PROFILE did mount");
   return (
-    <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
+    <div style={{ backgroundColor: "#002A53", opacity: 0.9, height: "100vh" }}>
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
@@ -389,7 +389,12 @@ const Profile = () => {
               {!uploadPhoto && (
                 <CloudUploadIcon
                   color="otherColor"
-                  sx={{ fontSize: 50, cursor: "pointer", margin: "0 auto" }}
+                  sx={{
+                    fontSize: 50,
+                    cursor: "pointer",
+                    margin: "0 auto",
+                    paddingTop: "50px",
+                  }}
                   onClick={() => {
                     uploadImage();
                   }}
@@ -425,7 +430,6 @@ const Profile = () => {
           variant="h6"
           sx={{
             display: "block",
-            border: "1px solid green",
             textAlign: "center",
           }}
         >
@@ -520,9 +524,7 @@ const Profile = () => {
             </Button>{" "}
           </>
         </form>
-        <h2>
-          Books <Link to="/books">Bookss</Link>
-        </h2>
+        {}
         {user && editName && (
           <Box
             style={{
@@ -575,10 +577,13 @@ const Profile = () => {
                 marginTop: "1rem",
               }}
             >
+              <p>Full Avatar</p>
+            </Box>
+            <div style={{ textAlign: "center", marginTop: "10px" }}>
               {user.avatar && (
                 <img src={user.avatar} alt="avatar" height="100px" />
               )}
-            </Box>
+            </div>
           </Box>
         )}
       </StyledBox>
