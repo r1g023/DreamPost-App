@@ -167,7 +167,9 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   const [toggleModal, setToggleModal] = React.useState(false);
   const [editComment, setEditComment] = React.useState("");
 
-  const [startDate, setStartDate] = React.useState(moment().calendar());
+  const [startDate, setStartDate] = React.useState(
+    moment().format("MM/DD/YYYY")
+  );
 
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {

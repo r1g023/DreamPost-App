@@ -4,16 +4,16 @@ import React from "react";
 function Modal({ children, onCancel }) {
   return (
     <div
-      className="modal-container"
+      className="modal-containers"
       style={{
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <div className="modal-content">
+      <div className="modal-contents">
         <div className="modal">{children}</div>
         <div
-          className="footer"
+          className="footers"
           style={{
             display: "flex",
             justifyContent: "right",

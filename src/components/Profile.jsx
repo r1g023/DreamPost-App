@@ -144,6 +144,7 @@ const Profile = () => {
 
   function toggleModalUpload() {
     setToggleModal(!toggleModal);
+    setUploadPhoto(null);
   }
 
   const { error, data } = useQuery(GET_USER, {
@@ -183,7 +184,7 @@ const Profile = () => {
     }
   }, [data, user, reload, setUser]);
 
-  var dateToFormat = "2018-05-16 12:57:13"; //TIMESTAMP
+  let dateToFormat = "2018-05-16 12:57:13"; //TIMESTAMP
   moment(dateToFormat).format("DD/MM/YYYY"); // you get "16/05/2018"
 
   // set localStorage to editName
@@ -212,15 +213,6 @@ const Profile = () => {
     };
     postImage();
   }
-
-  // handle changes to the form
-  // const handleChanges = (e) => {
-  //   // handle changes for updateUserID and also include the current user
-  //   setUpdateUserID({
-  //     ...updateUserID,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
 
   // handle form submission
   const handleSubmit = (e) => {

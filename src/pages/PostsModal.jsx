@@ -4,9 +4,9 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function PostsModal({ children, onCancel }) {
   return (
-    <div className="modal-container">
+    <div className="modal-containers">
       <div
-        className="modal-content"
+        className="modal-contents"
         style={{
           display: "flex",
           justifyContent: "center",
@@ -14,7 +14,7 @@ function PostsModal({ children, onCancel }) {
       >
         <div className="modal">{children}</div>
         <div
-          className="footer"
+          className="footers"
           style={{
             display: "flex",
             justifyContent: "right",
@@ -24,7 +24,7 @@ function PostsModal({ children, onCancel }) {
             onClick={onCancel}
             variant="outlined"
             color="error"
-            size="small"
+            fontSize="small"
             sx={{ padding: "1px", cursor: "pointer" }}
           ></CloseIcon>
         </div>

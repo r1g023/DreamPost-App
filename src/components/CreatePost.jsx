@@ -139,7 +139,7 @@ const CreatePost = ({ mode }) => {
 
   // handle changes for posts  input fields
   function handleChange(e) {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     setAddPost({
       ...addPost,
       [e.target.name]: e.target.value,
@@ -252,22 +252,36 @@ const CreatePost = ({ mode }) => {
                 {togglePhoto ? (
                   <>
                     <Avatar
-                      src="https://i.pravatar.cc/300"
+                      src={user.avatar}
+                      // src="https://i.pravatar.cc/300" //default random image
                       sx={{ border: "1px solid red", margin: "0 auto" }}
                     />
-                    <Typography variant="h6">@{user.username}</Typography>
+                    <Typography variant="h6" sx={{ color: "green" }}>
+                      @{user.username}
+                    </Typography>
                     <TextField
                       id="demo-helper-text-aligned"
-                      label="title"
+                      label="Post Title"
                       name="title"
                       onChange={handleChange}
                     />
-                    <TextField
+                    {/* <TextField
                       id="demo-helper-text-aligned"
                       label="post"
                       name="post"
                       onChange={handleChange}
                       sx={{ marginTop: "0.5rem" }}
+                    /> */}
+                    <TextField
+                      id="standard-multiline-static"
+                      label="What's on your mind?"
+                      name="post"
+                      multiline
+                      rows={4}
+                      onChange={handleChange}
+                      sx={{ marginTop: "0.5rem" }}
+                      variant="standard"
+                      color="otherColor"
                     />
                     <Button
                       variant="contained"
@@ -328,20 +342,42 @@ const CreatePost = ({ mode }) => {
                           fontSize: 50,
                           cursor: "pointer",
                           margin: "0 auto",
+                          marginTop: "3rem",
                         }}
                         onClick={() => {
-                          setTimeout(() => {
-                            setTogglePhoto(!togglePhoto);
-                          }, 5000);
+                          // setTimeout(() => {
+                          //   setTogglePhoto(!togglePhoto);
+                          // }, 5000);
                           uploadImage();
                         }}
                       />
                     )}
                     {!uploadPhoto && (
                       <p style={{ color: "gray" }}>
-                        Click upload to add photo to post
+                        Click Cloud upload to add photo
                       </p>
                     )}
+                    {uploadPhoto && (
+                      <Button
+                        variant="contained"
+                        color="success"
+                        sx={{ marginTop: 5 }}
+                        onClick={() => setTogglePhoto(!togglePhoto)}
+                      >
+                        Submit
+                      </Button>
+                    )}
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      sx={{ marginTop: "3rem" }}
+                      onClick={() => {
+                        setUploadPhoto(null);
+                        setTogglePhoto(!togglePhoto);
+                      }}
+                    >
+                      Cancel
+                    </Button>
                   </>
                 )}
               </FormControl>

@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 // import userContext from App.js
 import { UserContext } from "../App";
+import { Button, ButtonGroup } from "@mui/material";
 
 const GET_BOOKS = gql`
   query getBooks {
@@ -39,12 +40,39 @@ const Books = () => {
               <p>{book.name}</p>
             </div>
           ))}
-          <Link to={"/"} reloadDocument={true}>
-            Home --
-          </Link>
-          <p>
-            <Link to="/profile">Profile</Link>
-          </p>
+
+          <h2>Nothing to see here, just Harry Potter Books!</h2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginTop: "20px",
+            }}
+          >
+            <ButtonGroup
+              variant="contained"
+              aria-label="outlined primary button group"
+            >
+              <Button color="primary">
+                <Link
+                  to="/profile"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Profile
+                </Link>
+              </Button>
+              <Button sx={{ marginLeft: "1px" }}>
+                <Link
+                  to={"/"}
+                  reloadDocument={true}
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Home
+                </Link>
+              </Button>
+            </ButtonGroup>
+          </div>
         </div>
       )}
     </>

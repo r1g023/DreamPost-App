@@ -152,7 +152,7 @@ const Comments = ({
                   borderTop: "1px dashed gray",
                 }}
               >
-                posted {date}
+                posted on {date}
               </p>
             </Grid>
           </Grid>
