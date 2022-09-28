@@ -82,7 +82,10 @@ const Comments = ({
 
   // React.useEffect(() => {}, []);
   return (
-    <div className="commentContainer">
+    <div
+      className="commentContainer"
+      style={{ maxWidth: "390px", width: "100%" }}
+    >
       {/* form for adding new comment */}
 
       <div style={{ padding: 14 }}>

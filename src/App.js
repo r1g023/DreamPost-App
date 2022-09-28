@@ -32,7 +32,8 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {/* console log req.decodedToken from backend API */}
-      <Box>
+      {/* add styling to Box for small screens */}
+      <Box sx={{ overflow: "hidden" }}>
         <Navbar setUser={setUser} />
         <Routes>
           <Route path={"/login"} element={<Login setUser={setUser} />} />

@@ -96,10 +96,10 @@ const Navbar = ({ setUser }) => {
 
             {/* Mail and notification icons + avatar - remove if display is mobile */}
             <StyledIcons>
-              <Badge badgeContent={2} color="secondary">
+              <Badge badgeContent={1} color="secondary">
                 <MailIcon />
               </Badge>
-              <Badge badgeContent={2} color="secondary">
+              <Badge badgeContent={8} color="secondary">
                 <Notifications />
               </Badge>
 

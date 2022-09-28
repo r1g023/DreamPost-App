@@ -9,7 +9,8 @@ const Search = styled(Paper)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
-  width: "400px",
+  maxWidth: "400px",
+  width: "100%",
   borderRadius: theme.shape.borderRadius,
 }));
 

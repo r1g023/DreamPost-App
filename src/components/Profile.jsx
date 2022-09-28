@@ -118,7 +118,7 @@ const UPDATE_USER = gql`
 const Input = styled("input")({
   display: "none",
   border: "1px solid red",
-  // add hover
+
   active: {
     display: "none",
   },
@@ -130,8 +130,9 @@ const StyledBox = styled(Box)({
   justifyContent: "center",
   alignItems: "center",
   flexDirection: "column",
-  height: "100vh",
   gap: "1rem",
+  border: "1px solid red",
+  height: "130vh",
 });
 
 const Profile = () => {
@@ -281,7 +282,12 @@ const Profile = () => {
 
   console.log("PROFILE did mount");
   return (
-    <div style={{ backgroundColor: "#002A53", opacity: 0.9, height: "100vh" }}>
+    <div
+      style={{
+        backgroundColor: "#002A53",
+        opacity: 0.9,
+      }}
+    >
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
