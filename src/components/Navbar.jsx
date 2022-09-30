@@ -15,6 +15,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { Notifications } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import DreamPost from "../assets/DreamPost.png";
+import TemporaryDrawer from "../pages/TemporaryDrawer";
 import { UserContext } from "../App";
 
 const StyledToolbar = styled(Toolbar)({
@@ -50,7 +51,7 @@ const Navbar = ({ setUser }) => {
 
   return (
     <>
-      <AppBar position="sticky" style={{ paddingTop: "9px" }}>
+      <AppBar position="sticky" style={{ paddingTop: "9px", color: "red" }}>
         {/* If there's no user.username logged in, display logo */}
         {!user.username ? (
           <img
@@ -88,11 +89,15 @@ const Navbar = ({ setUser }) => {
                 setUser("")
               )}
             </Typography>
+            {/*----------------------------------------------------------------------------------------------------------------*/}
             {/* Search and show Icon when screen is XS */}
+            <TemporaryDrawer style={{ color: "white" }} />
             <MenuIcon
+              onClick={() => {
+                console.log("clicked");
+              }}
               sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
             />
-            {/* {user.username ? <NavBarSearch /> : setUser("")} */}
 
             {/* Mail and notification icons + avatar - remove if display is mobile */}
             <StyledIcons>

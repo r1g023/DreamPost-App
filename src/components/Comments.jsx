@@ -112,9 +112,18 @@ const Comments = ({
               </h4>
 
               {isCurrentUser && commentUpdateToggle ? (
-                <Modal onCancel={() => setCommentUpdateToggle(false)}>
+                <Modal
+                  onCancel={() => setCommentUpdateToggle(false)}
+                  style={{
+                    border: "5px solid purple",
+                    wordBreak: "break-word",
+                  }}
+                >
                   <textarea
-                    style={{ display: "block", width: 253, maxWidth: 253 }}
+                    style={{
+                      resize: "vertical",
+                      overflow: "auto",
+                    }}
                     name="editComment"
                     placeholder="Edit comment..."
                     value={editComment}
@@ -137,8 +146,6 @@ const Comments = ({
                     color: mode ? "white" : "",
                     marginTop: "20px",
                     padding: "10px",
-                    width: "250px",
-                    maxWidth: "250px",
                     overflow: "hidden",
                     wordWrap: "break-word",
                   }}
