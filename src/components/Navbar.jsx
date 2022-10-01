@@ -51,7 +51,7 @@ const Navbar = ({ setUser }) => {
 
   return (
     <>
-      <AppBar position="sticky" style={{ paddingTop: "9px", color: "red" }}>
+      <AppBar position="sticky" style={{ paddingTop: "9px" }}>
         {/* If there's no user.username logged in, display logo */}
         {!user.username ? (
           <img
@@ -91,13 +91,13 @@ const Navbar = ({ setUser }) => {
             </Typography>
             {/*----------------------------------------------------------------------------------------------------------------*/}
             {/* Search and show Icon when screen is XS */}
-            <TemporaryDrawer style={{ color: "white" }} />
-            <MenuIcon
+            <TemporaryDrawer />
+            {/* <MenuIcon
               onClick={() => {
                 console.log("clicked");
               }}
               sx={{ display: { xs: "block", sm: "none" }, fontSize: "50px" }}
-            />
+            /> */}
 
             {/* Mail and notification icons + avatar - remove if display is mobile */}
             <StyledIcons>
@@ -134,7 +134,6 @@ const Navbar = ({ setUser }) => {
         )}
 
         {/* Hidden Menu */}
-
         <Menu
           id="demo-positioned-menu"
           aria-labelledby="demo-positioned-button"

@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import React from "react";
+import React, { createContext } from "react";
 import CreatePost from "../components/CreatePost";
 import Feed from "../components/Feed";
 import Rightbar from "../components/Rightbar";
@@ -7,6 +7,7 @@ import Sidebar from "../components/Sidebar";
 import { UserContext } from "../App";
 import { useQuery, useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+export const ModeContext = createContext();
 
 const GET_USERS = gql`
   query getUsers {
@@ -65,9 +66,7 @@ const MainPage = () => {
   }, [user.dark_mode, navigate, user.role]);
 
   return (
-    <>
-      {/* <Navbar /> */}
-
+    <ModeContext.Provider value={{ mode, setMode }}>
       {user.role === "admin" && (
         <>
           <Stack
@@ -94,7 +93,7 @@ const MainPage = () => {
           <CreatePost mode={mode} />
         </>
       )}
-    </>
+    </ModeContext.Provider>
   );
 };
 
