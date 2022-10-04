@@ -66,7 +66,7 @@ const MainPage = () => {
   }, [user.dark_mode, navigate, user.role]);
 
   return (
-    <ModeContext.Provider value={{ mode, setMode }}>
+    <>
       {user.role === "admin" && (
         <>
           <Stack
@@ -93,7 +93,7 @@ const MainPage = () => {
           <CreatePost mode={mode} />
         </>
       )}
-    </ModeContext.Provider>
+    </>
   );
 };
 

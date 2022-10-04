@@ -15,17 +15,14 @@ import HomeIcon from "@mui/icons-material/Home";
 import { AccountBox, ModeNight } from "@mui/icons-material";
 import { Switch } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ModeContext } from "./MainPage";
+import { UserContext } from "../App";
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
-    top: false,
     left: false,
-    bottom: false,
-    right: false,
   });
-  // mode context from MainPage
-  const { mode } = useContext(ModeContext);
+
+  const { user } = React.useContext(UserContext);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -70,7 +67,7 @@ export default function TemporaryDrawer() {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          {/* <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button> */}
+          {/* hamburger menu icon  */}
           <MenuIcon
             onClick={toggleDrawer(anchor, true)}
             sx={{
@@ -80,21 +77,27 @@ export default function TemporaryDrawer() {
             }}
           />
 
+          {/* container for my side drawer with homepage, profile and dark_mode */}
           <Drawer
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
-            sx={{ color: "white" }}
+            sx={{}}
           >
-            <Divider />
-            <Box sx={{ position: "fixed" }}>
+            <Box
+              sx={{
+                backgroundColor: "primary.main",
+                height: "100%",
+                color: "white",
+              }}
+            >
               {/* Lists of items */}
-              <List>
+              <List sx={{ marginTop: "50%" }}>
                 {/* Home page */}
                 <ListItem disablePadding>
                   <ListItemButton component="a" href="/">
                     <ListItemIcon>
-                      <HomeIcon color={mode ? "whiteColor" : ""} />
+                      <HomeIcon color={user.dark_mode ? "whiteColor" : ""} />
                     </ListItemIcon>
                     <ListItemText primary="Homepage" />
                   </ListItemButton>
@@ -108,23 +111,31 @@ export default function TemporaryDrawer() {
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <AccountBox color={mode ? "whiteColor" : ""} />
+                        <AccountBox
+                          color={user.dark_mode ? "whiteColor" : ""}
+                        />
                       </ListItemIcon>
                       <ListItemText primary="Profile" />
                     </ListItemButton>
                   </ListItem>
                 </Link>
+                {/* <Divider
+                  sx={{
+                    boxShadow: "0px 10px 5px white",
+                    width: "100%",
+                  }}
+                /> */}
 
                 {/* ------------ Night Mode ------------- */}
                 <ListItem disablePadding>
-                  <ListItemButton component="a" href="#night-mode">
+                  <ListItemButton component="a" href="#night-''">
                     <ListItemIcon>
                       <ModeNight color="magentaThemeColor" />
                     </ListItemIcon>
                     <Switch
                       color="magentaThemeColor"
-                      checked={mode || false}
-                      value={mode || ""}
+                      checked={"" || false}
+                      value={"" || ""}
                       // onChange={handleChange}
                     />
                   </ListItemButton>
