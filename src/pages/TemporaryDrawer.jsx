@@ -16,13 +16,71 @@ import { AccountBox, ModeNight } from "@mui/icons-material";
 import { Switch } from "@mui/material";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
+import { gql, useQuery, useMutation } from "@apollo/client";
+
+//add toggle DARK_MODE to user.dark_mode option
+const DARK_MODE = gql`
+  mutation updateUserID($id: Int!, $dark_mode: Boolean) {
+    updateUser(id: $id, dark_mode: $dark_mode) {
+      id
+      username
+      first_name
+      last_name
+      email
+      token
+      dob
+      avatar
+      dark_mode
+      about_you
+      created_at
+      updated_at
+      posts {
+        id
+        title
+        date
+        image
+        post
+        liked
+        user_id
+        created_at
+        updated_at
+        comments {
+          id
+          comment
+          liked
+          post_id
+          created_at
+          updated_at
+        }
+      }
+      comments {
+        id
+        comment
+        liked
+        count
+        user
+        post_id
+      }
+    }
+  }
+`;
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     left: false,
   });
 
-  const { user } = React.useContext(UserContext);
+  const { user, setUser } = React.useContext(UserContext);
+  const [updateUser, { data, error }] = useMutation(DARK_MODE);
+
+  React.useEffect(() => {
+    const darkMode = localStorage.getItem("user.dark_mode");
+    if (darkMode === "true") {
+      setUser({ ...user, dark_mode: true });
+    } else {
+      setUser({ ...user, dark_mode: false });
+    }
+  }, [user.dark_mode, setUser, user]);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -35,33 +93,26 @@ export default function TemporaryDrawer() {
     setState({ ...state, [anchor]: open });
   };
 
-  // const list = (anchor) => (
-  //   <Box
-  //     sx={{
-  //       width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
-  //       display: { xs: "block", sm: "none" },
-  //     }}
-  //     role="presentation"
-  //     onClick={toggleDrawer(anchor, false)}
-  //     onKeyDown={toggleDrawer(anchor, false)}
-  //   >
-  //     <Divider />
+  // toggle handle user on checkbox input
+  const handleChange = (e) => {
+    let result = updateUser({
+      variables: {
+        id: user.id,
+        dark_mode: e.target.checked,
+      },
+    }).then((res) => {
+      console.log("result", res);
+      setUser({
+        ...user,
+        dark_mode: localStorage.setItem(
+          "user",
+          JSON.stringify(res.data.updateUser)
+        ),
+      });
+    });
 
-  //     <List sx={{ color: "white" }}>
-  //       {["Home", "Profile", "DarkMode"].map((text, index) => (
-  //         <ListItem key={text} disablePadding>
-  //           <ListItemButton>
-  //             <ListItemIcon>
-  //               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} />
-  //           </ListItemButton>
-  //           <h1>TEST</h1>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </Box>
-  // );
+    return result;
+  };
 
   return (
     <div>
@@ -134,9 +185,9 @@ export default function TemporaryDrawer() {
                     </ListItemIcon>
                     <Switch
                       color="magentaThemeColor"
-                      checked={"" || false}
-                      value={"" || ""}
-                      // onChange={handleChange}
+                      checked={user.dark_mode || false}
+                      value={user.dark_mode || ""}
+                      onChange={handleChange}
                     />
                   </ListItemButton>
                 </ListItem>
