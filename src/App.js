@@ -17,6 +17,7 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser] = React.useState("");
+  const [mode, setMode] = React.useState(user.dark_mode);
 
   console.log("user on app---->", user);
 
@@ -24,17 +25,22 @@ function App() {
     const data = localStorage.getItem("user");
     if (data) setUser(JSON.parse(data));
 
+    setMode(user.dark_mode);
+    // if (user.role === "user") {
+    //   navigate("*");
+    // }
+
     document.title = user.username
       ? `Welcome  ${user.username} `
       : "please login";
-  }, [user.username]);
+  }, [user.username, user.role, user.dark_mode]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, mode, setMode }}>
       {/* console log req.decodedToken from backend API */}
       {/* add styling to Box for small screens */}
       <Box sx={{ overflow: "hidden" }}>
-        <Navbar setUser={setUser} />
+        <Navbar setUser={setUser} mode={mode} />
         <Routes>
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />

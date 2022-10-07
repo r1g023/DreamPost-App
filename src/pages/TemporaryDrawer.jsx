@@ -65,22 +65,13 @@ const DARK_MODE = gql`
   }
 `;
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer({ mode }) {
   const [state, setState] = React.useState({
     left: false,
   });
 
   const { user, setUser } = React.useContext(UserContext);
   const [updateUser, { data, error }] = useMutation(DARK_MODE);
-
-  React.useEffect(() => {
-    const darkMode = localStorage.getItem("user.dark_mode");
-    if (darkMode === "true") {
-      setUser({ ...user, dark_mode: true });
-    } else {
-      setUser({ ...user, dark_mode: false });
-    }
-  }, [user.dark_mode, setUser, user]);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -185,8 +176,8 @@ export default function TemporaryDrawer() {
                     </ListItemIcon>
                     <Switch
                       color="magentaThemeColor"
-                      checked={user.dark_mode || false}
-                      value={user.dark_mode || ""}
+                      checked={mode || false}
+                      value={mode || ""}
                       onChange={handleChange}
                     />
                   </ListItemButton>
