@@ -27,6 +27,7 @@ const DARK_MODE = gql`
       first_name
       last_name
       email
+      role
       token
       dob
       avatar
@@ -65,12 +66,12 @@ const DARK_MODE = gql`
   }
 `;
 
-export default function TemporaryDrawer({ mode }) {
+export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     left: false,
   });
 
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, mode } = React.useContext(UserContext);
   const [updateUser, { data, error }] = useMutation(DARK_MODE);
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -139,7 +140,7 @@ export default function TemporaryDrawer({ mode }) {
                 <ListItem disablePadding>
                   <ListItemButton component="a" href="/">
                     <ListItemIcon>
-                      <HomeIcon color={user.dark_mode ? "whiteColor" : ""} />
+                      <HomeIcon color={mode ? "whiteColor" : "otherColor"} />
                     </ListItemIcon>
                     <ListItemText primary="Homepage" />
                   </ListItemButton>
@@ -154,7 +155,7 @@ export default function TemporaryDrawer({ mode }) {
                     <ListItemButton>
                       <ListItemIcon>
                         <AccountBox
-                          color={user.dark_mode ? "whiteColor" : ""}
+                          color={mode ? "whiteColor" : "otherColor"}
                         />
                       </ListItemIcon>
                       <ListItemText primary="Profile" />
@@ -172,7 +173,9 @@ export default function TemporaryDrawer({ mode }) {
                 <ListItem disablePadding>
                   <ListItemButton component="a" href="#night-''">
                     <ListItemIcon>
-                      <ModeNight color="magentaThemeColor" />
+                      <ModeNight
+                        color={mode ? "otherColor" : "magentaThemeColor"}
+                      />
                     </ListItemIcon>
                     <Switch
                       color="magentaThemeColor"

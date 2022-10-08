@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Books from "./components/Books";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 import MainPage from "./pages/MainPage";
 import { postList } from "./postList";
@@ -18,6 +18,7 @@ export const UserContext = createContext();
 function App() {
   const [user, setUser] = React.useState("");
   const [mode, setMode] = React.useState(user.dark_mode);
+  let navigate = useNavigate();
 
   console.log("user on app---->", user);
 
@@ -26,14 +27,11 @@ function App() {
     if (data) setUser(JSON.parse(data));
 
     setMode(user.dark_mode);
-    // if (user.role === "user") {
-    //   navigate("*");
-    // }
 
     document.title = user.username
       ? `Welcome  ${user.username} `
       : "please login";
-  }, [user.username, user.role, user.dark_mode]);
+  }, [user.username, user.dark_mode, navigate]);
 
   return (
     <UserContext.Provider value={{ user, setUser, mode, setMode }}>

@@ -306,6 +306,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   // console.log("user on POST COMMENT ---->", user);
 
   const isCurrentUser = user.username === post.user;
+  const loggedInUser = user.username === user;
 
   return (
     <>

@@ -49,8 +49,8 @@ const GET_USERS = gql`
 `;
 
 const MainPage = () => {
-  const { user, setUser } = React.useContext(UserContext);
-  const [mode, setMode] = React.useState(user.dark_mode);
+  const { user, setUser, mode, setMode } = React.useContext(UserContext);
+
   const navigate = useNavigate();
   // GET users from query
   const { data } = useQuery(GET_USERS);
@@ -63,36 +63,27 @@ const MainPage = () => {
     if (user.role === "user") {
       navigate("*");
     }
-  }, [user.dark_mode, navigate, user.role]);
+  }, [user.dark_mode, navigate, user.role, setMode, mode]);
 
   return (
     <>
-      {user.role === "admin" && (
-        <>
-          <Stack
-            direction="row"
-            spacing={0}
-            justifyContent="space-around"
-            height="100vh"
-            sx={{
-              background: mode ? "#1B2430" : "",
-              height: "100%",
-              opacity: "0.9",
-              color: mode ? "white" : "black",
-            }}
-          >
-            <Sidebar
-              mode={mode}
-              user={user}
-              setMode={setMode}
-              setUser={setUser}
-            />
-            <Feed mode={mode} userList={data} />
-            <Rightbar mode={mode} />
-          </Stack>
-          <CreatePost mode={mode} />
-        </>
-      )}
+      <Stack
+        direction="row"
+        spacing={0}
+        justifyContent="space-around"
+        height="100vh"
+        sx={{
+          background: mode ? "#1B2430" : "",
+          height: "100%",
+          opacity: "0.9",
+          color: mode ? "white" : "black",
+        }}
+      >
+        <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
+        <Feed mode={mode} userList={data} />
+        <Rightbar mode={mode} />
+      </Stack>
+      <CreatePost mode={mode} />
     </>
   );
 };

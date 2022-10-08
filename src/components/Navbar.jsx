@@ -41,7 +41,7 @@ const StyledUserBox = styled(Box)(({ theme }) => ({
   },
 }));
 
-const Navbar = ({ setUser, mode }) => {
+const Navbar = ({ setUser }) => {
   const navigate = useNavigate();
   const { user } = React.useContext(UserContext);
   const [open, setOpen] = React.useState(false);
@@ -91,7 +91,7 @@ const Navbar = ({ setUser, mode }) => {
             </Typography>
             {/*----------------------------------------------------------------------------------------------------------------*/}
             {/* Search and show Icon when screen is XS */}
-            <TemporaryDrawer mode={mode} />
+            <TemporaryDrawer />
             {/* <MenuIcon
               onClick={() => {
                 console.log("clicked");

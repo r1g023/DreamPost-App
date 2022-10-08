@@ -117,8 +117,6 @@ const UPDATE_USER = gql`
 // Remove image upload button from the form
 const Input = styled("input")({
   display: "none",
-  border: "1px solid red",
-
   active: {
     display: "none",
   },

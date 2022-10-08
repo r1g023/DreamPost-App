@@ -21,6 +21,7 @@ const DARK_MODE = gql`
       username
       first_name
       last_name
+      role
       email
       token
       dob
@@ -118,7 +119,7 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
             <ListItem disablePadding>
               <ListItemButton component="a" href="/">
                 <ListItemIcon>
-                  <HomeIcon color={mode ? "whiteColor" : ""} />
+                  <HomeIcon color={mode ? "whiteColor" : "otherColor"} />
                 </ListItemIcon>
                 <ListItemText primary="Homepage" />
               </ListItemButton>
@@ -127,12 +128,15 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
             {/* profile */}
             <Link
               to="/profile"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{
+                textDecoration: "none",
+                color: mode ? "white" : "black",
+              }}
             >
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <AccountBox color={mode ? "whiteColor" : ""} />
+                    <AccountBox color={mode ? "whiteColor" : "otherColor"} />
                   </ListItemIcon>
                   <ListItemText primary="Profile" />
                 </ListItemButton>
@@ -143,7 +147,9 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
             <ListItem disablePadding>
               <ListItemButton component="a" href="#night-mode">
                 <ListItemIcon>
-                  <ModeNight color="magentaThemeColor" />
+                  <ModeNight
+                    color={mode ? "otherColor" : "magentaThemeColor"}
+                  />
                 </ListItemIcon>
                 <Switch
                   color="magentaThemeColor"
