@@ -255,3 +255,9 @@ background-color: #FF6600
 .footer {
   margin-top: 20px;
 }
+
+
+/* styling for profile info */
+.profile{
+  color: "white";
+}

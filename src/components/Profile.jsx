@@ -129,12 +129,12 @@ const StyledBox = styled(Box)({
   alignItems: "center",
   flexDirection: "column",
   gap: "1rem",
-  border: "1px solid red",
+
   height: "130vh",
 });
 
 const Profile = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, mode, setMode } = useContext(UserContext);
   console.log("user on Profile****", user);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
@@ -282,14 +282,14 @@ const Profile = () => {
   return (
     <div
       style={{
-        backgroundColor: "#002A53",
+        backgroundColor: mode ? "#002A53" : "#E1D9D1",
         opacity: 0.9,
       }}
     >
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
-        <h1 style={{ color: "white" }}>Profile Settings</h1>
+        <h1 style={{ color: mode ? "white" : "black" }}>Profile Settings</h1>
 
         <Button
           onClick={(prev) => setToggleModal(!toggleModal)}
@@ -314,7 +314,7 @@ const Profile = () => {
                 htmlFor="image"
                 style={{
                   display: "block",
-                  color: "white",
+                  color: mode ? "white" : "black",
                   textAlign: "center",
                   fontSize: "1rem",
                 }}
@@ -521,67 +521,65 @@ const Profile = () => {
           </>
         </form>
         {}
-        {user && editName && (
-          <Box
-            style={{
-              color: "white",
-              padding: "15px",
 
-              width: "65%",
+        <Box
+          style={{
+            padding: "15px",
+            color: mode ? "white" : "black",
+            width: "65%",
+          }}
+        >
+          <h3 className="profile">
+            First_Name:
+            <span className="profile-info"> {editName.first_name}</span>
+          </h3>
+          <h3 className="profile">
+            Last_Name:
+            <span className="profile-info"> {editName.last_name}</span>
+          </h3>
+          <h3 className="profile">
+            DOB:{" "}
+            <span className="profile-info">
+              {moment(user.dob).format("MM/DD/YYYY")}
+            </span>
+          </h3>
+          <h3 className="profile">
+            Email: <span className="profile-info">{user.email}</span>
+          </h3>
+          <h3 className="profile">
+            Username:
+            <span className="profile-info"> {user.username}</span>
+          </h3>
+          <h3 className="profile">
+            Role: <span className="profile-info">{editName.role}</span>
+          </h3>
+          <h3 className="profile">
+            Dark_Mode:
+            <span className="profile-info">
+              {" "}
+              {user.dark_mode ? "true" : "false"}
+            </span>
+          </h3>
+          <h3 className="profile">
+            About_You:
+            <span className="profile-info"> {editName.about_you}</span>
+          </h3>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "1rem",
             }}
           >
-            <h3 className="profile">
-              First_Name:
-              <span className="profile-info"> {editName.first_name}</span>
-            </h3>
-            <h3 className="profile">
-              Last_Name:
-              <span className="profile-info"> {editName.last_name}</span>
-            </h3>
-            <h3 className="profile">
-              DOB:{" "}
-              <span className="profile-info">
-                {moment(user.dob).format("MM/DD/YYYY")}
-              </span>
-            </h3>
-            <h3 className="profile">
-              Email: <span className="profile-info">{user.email}</span>
-            </h3>
-            <h3 className="profile">
-              Username:
-              <span className="profile-info"> {user.username}</span>
-            </h3>
-            <h3 className="profile">
-              Role: <span className="profile-info">{editName.role}</span>
-            </h3>
-            <h3 className="profile">
-              Dark_Mode:
-              <span className="profile-info">
-                {" "}
-                {user.dark_mode ? "true" : "false"}
-              </span>
-            </h3>
-            <h3 className="profile">
-              About_You:
-              <span className="profile-info"> {editName.about_you}</span>
-            </h3>
-
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "1rem",
-              }}
-            >
-              <p>Full Avatar</p>
-            </Box>
-            <div style={{ textAlign: "center", marginTop: "10px" }}>
-              {user.avatar && (
-                <img src={user.avatar} alt="avatar" height="100px" />
-              )}
-            </div>
+            <p>Full Avatar</p>
           </Box>
-        )}
+          <div style={{ textAlign: "center", marginTop: "10px" }}>
+            {user.avatar && (
+              <img src={user.avatar} alt="avatar" height="100px" />
+            )}
+          </div>
+        </Box>
       </StyledBox>
     </div>
   );
