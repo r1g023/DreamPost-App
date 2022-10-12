@@ -58,7 +58,7 @@ const Comments = ({
   handleCommentDelete,
   handleCommentLike,
   handleCommentEdit,
-  // commentData,
+  commentData,
   setEditComment,
   editComment,
   setCommentUpdateToggle,
@@ -72,9 +72,9 @@ const Comments = ({
 
   const isCurrentUser = currentUser.user.username === user;
 
-  // React.useEffect(() => {
-  //   // keep track of commentData
-  // }, [commentData]);
+  React.useEffect(() => {
+    // keep track of commentData
+  }, [commentData]);
 
   // console.log("Comment user-->", id, liked, count, user);
   // // console.log("COMMENT ----> currentUser -->", currentUser);
@@ -110,50 +110,57 @@ const Comments = ({
               >
                 {user}
               </h4>
+              {console.log("commentData -->", commentData)}
+              {/* iterate over the comment ids and find the first comment that matches the id of the post */}
+              {commentData.getComments.find((item) => {
+                // return Modal.commentId === item.id;
+                if (item.id === id) {
+                  return (
+                    <Modal
+                      onCancel={() => setCommentUpdateToggle(false)}
+                      style={{
+                        border: "5px solid purple",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {console.log("id--------------->", id)}
+                      <textarea
+                        style={{
+                          resize: "vertical",
+                          overflow: "auto",
+                        }}
+                        name="editComment"
+                        placeholder="Edit comment..."
+                        value={editComment}
+                        onChange={setEditComment}
+                      />
 
-              {isCurrentUser && commentUpdateToggle ? (
-                <Modal
-                  onCancel={() => setCommentUpdateToggle(false)}
-                  style={{
-                    border: "5px solid purple",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  <textarea
-                    style={{
-                      resize: "vertical",
-                      overflow: "auto",
-                    }}
-                    name="editComment"
-                    placeholder="Edit comment..."
-                    value={editComment}
-                    onChange={setEditComment}
-                  />
-
-                  <Button
-                    variant="contained"
-                    color="success"
-                    sx={{ padding: "5px", marginTop: "5px" }}
-                    onClick={() => handleCommentEdit(id)}
-                  >
-                    Update
-                  </Button>
-                </Modal>
-              ) : (
-                <p
-                  style={{
-                    textAlign: "left",
-                    color: mode ? "white" : "",
-                    marginTop: "20px",
-                    padding: "10px",
-                    overflow: "hidden",
-                    wordWrap: "break-word",
-                  }}
-                >
-                  {comment}
-                </p>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        sx={{ padding: "5px", marginTop: "5px" }}
+                        onClick={() => handleCommentEdit(id)}
+                      >
+                        Update
+                      </Button>
+                    </Modal>
+                  );
+                }
+              })}
+              : (
+              <p
+                style={{
+                  textAlign: "left",
+                  color: mode ? "white" : "",
+                  marginTop: "20px",
+                  padding: "10px",
+                  overflow: "hidden",
+                  wordWrap: "break-word",
+                }}
+              >
+                {comment}
+              </p>
               )}
-
               <p
                 style={{
                   textAlign: "left",
@@ -210,6 +217,8 @@ const Comments = ({
                       cursor: "pointer",
                     }}
                     onClick={() => {
+                      // only toggle selected comment to be edited
+
                       setCommentUpdateToggle(!commentUpdateToggle);
                     }}
                   ></i>

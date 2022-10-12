@@ -284,10 +284,9 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   // handle comment edit and update
   const handleCommentEdit = (comment) => {
-    // console.log("comment on handleCommentEdit--->", comment);
-    // e.preventDefault();
     updateCommentID({
       variables: {
+        // iterate on comment.id and find the comment that matches the id and update the comment
         id: comment.id,
         comment: editComment,
       },
@@ -484,6 +483,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
             {data &&
               data.getComments
                 .map((item) => {
+                  console.log("items---comments--->", item);
                   if (item.post_id === post.id) {
                     return (
                       <Comments
@@ -491,12 +491,16 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                         key={item.id}
                         handleCommentDelete={() => handleCommentDelete(item)}
                         handleCommentLike={() => handleCommentLike(item)}
-                        handleCommentEdit={() => handleCommentEdit(item)}
+                        handleCommentEdit={() => {
+                          handleCommentEdit((item) => {
+                            item.find((item) => item === item.id);
+                          });
+                        }}
                         setEditComment={handleCommentUpdate}
                         editComment={editComment}
                         setCommentUpdateToggle={setCommentUpdateToggle}
                         commentUpdateToggle={commentUpdateToggle}
-                        commentData={item}
+                        commentData={data}
                         mode={mode}
                       />
                     );
