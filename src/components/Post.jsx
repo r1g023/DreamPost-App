@@ -286,7 +286,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   const handleCommentEdit = (comment) => {
     updateCommentID({
       variables: {
-        // iterate on comment.id and find the comment that matches the id and update the comment
         id: comment.id,
         comment: editComment,
       },
@@ -491,11 +490,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                         key={item.id}
                         handleCommentDelete={() => handleCommentDelete(item)}
                         handleCommentLike={() => handleCommentLike(item)}
-                        handleCommentEdit={() => {
-                          handleCommentEdit((item) => {
-                            item.find((item) => item === item.id);
-                          });
-                        }}
+                        handleCommentEdit={() => handleCommentEdit(item)}
                         setEditComment={handleCommentUpdate}
                         editComment={editComment}
                         setCommentUpdateToggle={setCommentUpdateToggle}

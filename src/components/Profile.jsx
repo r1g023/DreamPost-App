@@ -130,7 +130,7 @@ const StyledBox = styled(Box)({
   flexDirection: "column",
   gap: "1rem",
 
-  height: "130vh",
+  height: "100vh",
 });
 
 const Profile = () => {
@@ -527,6 +527,8 @@ const Profile = () => {
             padding: "15px",
             color: mode ? "white" : "black",
             width: "65%",
+            background: mode ? "" : "white",
+            borderRadius: "0.7rem",
           }}
         >
           <h3 className="profile">

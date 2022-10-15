@@ -110,56 +110,48 @@ const Comments = ({
               >
                 {user}
               </h4>
-              {console.log("commentData -->", commentData)}
-              {/* iterate over the comment ids and find the first comment that matches the id of the post */}
-              {commentData.getComments.find((item) => {
-                // return Modal.commentId === item.id;
-                if (item.id === id) {
-                  return (
-                    <Modal
-                      onCancel={() => setCommentUpdateToggle(false)}
-                      style={{
-                        border: "5px solid purple",
-                        wordBreak: "break-word",
-                      }}
-                    >
-                      {console.log("id--------------->", id)}
-                      <textarea
-                        style={{
-                          resize: "vertical",
-                          overflow: "auto",
-                        }}
-                        name="editComment"
-                        placeholder="Edit comment..."
-                        value={editComment}
-                        onChange={setEditComment}
-                      />
 
-                      <Button
-                        variant="contained"
-                        color="success"
-                        sx={{ padding: "5px", marginTop: "5px" }}
-                        onClick={() => handleCommentEdit(id)}
-                      >
-                        Update
-                      </Button>
-                    </Modal>
-                  );
-                }
-              })}
-              : (
-              <p
-                style={{
-                  textAlign: "left",
-                  color: mode ? "white" : "",
-                  marginTop: "20px",
-                  padding: "10px",
-                  overflow: "hidden",
-                  wordWrap: "break-word",
-                }}
-              >
-                {comment}
-              </p>
+              {isCurrentUser && commentUpdateToggle ? (
+                <Modal
+                  onCancel={() => setCommentUpdateToggle(false)}
+                  style={{
+                    border: "5px solid purple",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  <textarea
+                    style={{
+                      resize: "vertical",
+                      overflow: "auto",
+                    }}
+                    name="editComment"
+                    placeholder="Edit comment..."
+                    value={editComment}
+                    onChange={setEditComment}
+                  />
+
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ padding: "5px", marginTop: "5px" }}
+                    onClick={() => handleCommentEdit(id)}
+                  >
+                    Update
+                  </Button>
+                </Modal>
+              ) : (
+                <p
+                  style={{
+                    textAlign: "left",
+                    color: mode ? "white" : "",
+                    marginTop: "20px",
+                    padding: "10px",
+                    overflow: "hidden",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {comment}
+                </p>
               )}
               <p
                 style={{

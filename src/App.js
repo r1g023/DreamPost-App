@@ -31,6 +31,8 @@ function App() {
     document.title = user.username
       ? `Welcome  ${user.username} `
       : "please login";
+
+    // if no user is logged in, redirect to login page
   }, [user.username, user.dark_mode, navigate]);
 
   return (
