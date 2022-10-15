@@ -81,6 +81,9 @@ const Comments = ({
   // console.log("commentData -->", commentData);
 
   // React.useEffect(() => {}, []);
+  let selectedCommentId = commentData.getComments.find(
+    (comment) => comment.id === id
+  );
   return (
     <div
       className="commentContainer"
@@ -111,34 +114,37 @@ const Comments = ({
                 {user}
               </h4>
 
-              {isCurrentUser && commentUpdateToggle ? (
-                <Modal
-                  onCancel={() => setCommentUpdateToggle(false)}
-                  style={{
-                    border: "5px solid purple",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  <textarea
+              {isCurrentUser && commentUpdateToggle && selectedCommentId ? (
+                (console.log("selectedCommentId -->", selectedCommentId),
+                (
+                  <Modal
+                    onCancel={() => setCommentUpdateToggle(false)}
                     style={{
-                      resize: "vertical",
-                      overflow: "auto",
+                      border: "5px solid purple",
+                      wordBreak: "break-word",
                     }}
-                    name="editComment"
-                    placeholder="Edit comment..."
-                    value={editComment}
-                    onChange={setEditComment}
-                  />
-
-                  <Button
-                    variant="contained"
-                    color="success"
-                    sx={{ padding: "5px", marginTop: "5px" }}
-                    onClick={() => handleCommentEdit(id)}
                   >
-                    Update
-                  </Button>
-                </Modal>
+                    <textarea
+                      style={{
+                        resize: "vertical",
+                        overflow: "auto",
+                      }}
+                      name="editComment"
+                      placeholder="Edit comment..."
+                      value={editComment}
+                      onChange={setEditComment}
+                    />
+
+                    <Button
+                      variant="contained"
+                      color="success"
+                      sx={{ padding: "5px", marginTop: "5px" }}
+                      onClick={() => handleCommentEdit(id)}
+                    >
+                      Update
+                    </Button>
+                  </Modal>
+                ))
               ) : (
                 <p
                   style={{
