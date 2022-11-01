@@ -290,7 +290,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
         comment: editComment,
       },
     });
-    setCommentUpdateToggle(false);
+    setCommentUpdateToggle(!commentUpdateToggle);
   };
 
   // handle comment edit and update
@@ -482,7 +482,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
             {data &&
               data.getComments
                 .map((item) => {
-                  console.log("items---comments--->", item);
                   if (item.post_id === post.id) {
                     return (
                       <Comments
@@ -497,6 +496,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                         commentUpdateToggle={commentUpdateToggle}
                         commentData={data}
                         mode={mode}
+                        userList={userList}
                       />
                     );
                   }

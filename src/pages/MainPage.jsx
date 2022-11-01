@@ -9,7 +9,7 @@ import { useQuery, useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 export const ModeContext = createContext();
 
-const GET_USERS = gql`
+export const GET_USERS = gql`
   query getUsers {
     getUsers {
       id

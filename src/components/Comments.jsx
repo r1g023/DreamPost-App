@@ -65,6 +65,7 @@ const Comments = ({
   commentUpdateToggle,
   date,
   mode,
+  userList,
 }) => {
   const currentUser = React.useContext(UserContext);
 
@@ -84,6 +85,9 @@ const Comments = ({
   let selectedCommentId = commentData.getComments.find(
     (comment) => comment.id === id
   );
+
+  let result = commentData.getComments.find((comment) => comment.id === id);
+  console.log("result -->", result);
   return (
     <div
       className="commentContainer"
@@ -101,7 +105,14 @@ const Comments = ({
         >
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
-              <Avatar alt="Remy Sharp" src={""} />
+              <Avatar
+                alt="Remy Sharp"
+                src={
+                  userList &&
+                  userList.getUsers.find((user) => user.username === user)
+                    .avatar
+                }
+              />
             </Grid>
             <Grid justifyContent="left" item xs zeroMinWidth>
               <h4
@@ -115,7 +126,13 @@ const Comments = ({
               </h4>
 
               {isCurrentUser && commentUpdateToggle && selectedCommentId ? (
-                (console.log("selectedCommentId -->", selectedCommentId),
+                (console.log(
+                  "selectedCommentId -->",
+                  selectedCommentId,
+                  "and",
+                  selectedCommentId.id === id,
+                  id
+                ),
                 (
                   <Modal
                     onCancel={() => setCommentUpdateToggle(false)}
@@ -124,16 +141,18 @@ const Comments = ({
                       wordBreak: "break-word",
                     }}
                   >
-                    <textarea
-                      style={{
-                        resize: "vertical",
-                        overflow: "auto",
-                      }}
-                      name="editComment"
-                      placeholder="Edit comment..."
-                      value={editComment}
-                      onChange={setEditComment}
-                    />
+                    {id === selectedCommentId.id && (
+                      <textarea
+                        style={{
+                          resize: "vertical",
+                          overflow: "auto",
+                        }}
+                        name="editComment"
+                        placeholder="Edit comment..."
+                        value={editComment}
+                        onChange={setEditComment}
+                      />
+                    )}
 
                     <Button
                       variant="contained"
@@ -215,8 +234,6 @@ const Comments = ({
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      // only toggle selected comment to be edited
-
                       setCommentUpdateToggle(!commentUpdateToggle);
                     }}
                   ></i>
