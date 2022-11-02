@@ -114,8 +114,6 @@ const CreatePost = ({ mode }) => {
     moment().endOf("day").format("MM/DD/YYYY").toLocaleString("en-US")
   );
 
-  React.useEffect(() => {}, [startDate]);
-
   const [addPost, setAddPost] = React.useState({
     title: "",
     date: "",
@@ -123,6 +121,8 @@ const CreatePost = ({ mode }) => {
     user: "",
     post: "",
   });
+
+  React.useEffect(() => {}, [startDate, addPost]);
 
   // console.log("user on create post----->", user);
 
