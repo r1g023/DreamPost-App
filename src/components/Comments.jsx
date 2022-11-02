@@ -27,6 +27,7 @@ import { UserContext } from "../App";
 import SvgIcon from "@mui/material/SvgIcon";
 import Modal from "./Modal";
 import moment from "moment";
+import { GET_USERS } from "../pages/MainPage";
 
 //container for like and edit/delete buttons
 const StyledBox = styled(Box)({
@@ -70,24 +71,24 @@ const Comments = ({
   const currentUser = React.useContext(UserContext);
 
   // get current loggedIn user
-
   const isCurrentUser = currentUser.user.username === user;
+
+  const { data } = useQuery(GET_USERS);
+  // console.log("userListData on Comment component---->", data);
 
   React.useEffect(() => {
     // keep track of commentData
-  }, [commentData]);
-
-  // console.log("Comment user-->", id, liked, count, user);
-  // // console.log("COMMENT ----> currentUser -->", currentUser);
-  // console.log("commentData -->", commentData);
+  }, [commentData, data, user]);
 
   // React.useEffect(() => {}, []);
   let selectedCommentId = commentData.getComments.find(
     (comment) => comment.id === id
   );
 
-  let result = commentData.getComments.find((comment) => comment.id === id);
-  console.log("result -->", result);
+  // let datamore = data.getUsers.find(
+  //   (user) => user.username === user
+  // );
+  // console.log("datamore-->", datamore);
   return (
     <div
       className="commentContainer"
@@ -108,9 +109,10 @@ const Comments = ({
               <Avatar
                 alt="Remy Sharp"
                 src={
-                  userList &&
-                  userList.getUsers.find((user) => user.username === user)
-                    .avatar
+                  data &&
+                  data.getUsers.find((item) => {
+                    return item.username === user;
+                  }).avatar
                 }
               />
             </Grid>

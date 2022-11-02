@@ -53,7 +53,12 @@ const Rightbar = ({ mode }) => {
         {/* container for the online friends */}
         <AvatarGroup total={10}>
           {friends.map((item) => (
-            <Avatar key={item.id} alt={item.name} src={item.avatar} />
+            <Avatar
+              key={item.id}
+              alt={item.name}
+              src={item.avatar}
+              border={10}
+            />
           ))}
         </AvatarGroup>
 
@@ -100,7 +105,7 @@ const Rightbar = ({ mode }) => {
                         width: "100px",
                         height: "100px",
                         cursor: "pointer",
-                        border: "1px solid white",
+                        boxShadow: "5px 10px 18px #888888",
                       }}
                     />
                   </ImageListItem>

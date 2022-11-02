@@ -77,6 +77,7 @@ const MainPage = () => {
           height: "100%",
           opacity: "0.9",
           color: mode ? "white" : "black",
+          marginTop: "65px",
         }}
       >
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />

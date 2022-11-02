@@ -304,7 +304,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   // console.log("user on POST COMMENT ---->", user);
 
   const isCurrentUser = user.username === post.user;
-  const loggedInUser = user.username === user;
 
   return (
     <>
@@ -325,15 +324,11 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
               sx={{ background: "navy" }}
               aria-label="recipe"
               src={
-                //iterate over userListData and find the user with the username that matches the post.user
-
                 userList &&
                 userList.getUsers.find((user) => user.username === post.user)
                   .avatar
               }
-            >
-              {/* iterate over userListData.data.getUsers to get the user's avatar */}
-            </Avatar>
+            ></Avatar>
           }
           action={
             <IconButton
@@ -367,10 +362,10 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
         <h4
           style={{
-            padding: isCurrentUser ? "2px" : "2px",
+            padding: isCurrentUser ? "4px 15px" : "4px 15px",
             background: isCurrentUser ? "green" : "#002A53",
             color: "white",
-            width: isCurrentUser ? "20%" : "20%",
+            width: "fit-content",
             textAlign: isCurrentUser ? "center" : "center",
             borderRadius: isCurrentUser ? "10px" : "10px",
             margin: "5px",

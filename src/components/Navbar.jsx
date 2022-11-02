@@ -51,7 +51,12 @@ const Navbar = ({ setUser }) => {
 
   return (
     <>
-      <AppBar position="sticky" style={{ paddingTop: "9px" }}>
+      <AppBar
+        position="fixed"
+        style={{
+          paddingTop: "9px",
+        }}
+      >
         {/* If there's no user.username logged in, display logo */}
         {!user.username ? (
           <img
