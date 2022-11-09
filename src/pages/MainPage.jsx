@@ -48,6 +48,8 @@ export const GET_USERS = gql`
   }
 `;
 
+// will need to bring posts here as well
+
 const MainPage = () => {
   const { user, setUser, mode, setMode } = React.useContext(UserContext);
 
