@@ -96,7 +96,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const CreatePost = ({ mode }) => {
+const CreatePost = ({ mode, clearResults }) => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
@@ -195,6 +195,7 @@ const CreatePost = ({ mode }) => {
     toggleModal();
     setUploadPhoto(null);
     scrollToTop();
+    clearResults();
     // console.log("new post---------------------", newPost);
 
     return newPost;

@@ -70,13 +70,19 @@ const Rightbar = ({ mode }) => {
         {/* </ImageList> */}
 
         {/* container for the latest posts */}
-        <ImageList cols={3} rowHeight={100} gap={10}>
+        <ImageList
+          cols={3}
+          rowHeight={100}
+          gap={10}
+          sx={{ height: "600px", overflowY: "scroll", overflowX: "hidden" }}
+        >
           {loading ? (
             <>
               <Stack
                 sx={{
                   width: "100%",
                   color: "grey.500",
+                  border: "1px solid red",
                 }}
                 spacing={2}
               >
