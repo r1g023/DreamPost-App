@@ -9,6 +9,27 @@ import { useQuery, useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 export const ModeContext = createContext();
 
+const GET_POSTS = gql`
+  query getPosts {
+    getPosts {
+      id
+      title
+      date
+      image
+      post
+      liked
+      user
+      user_id
+      comments {
+        id
+        comment
+        user
+        post_id
+      }
+    }
+  }
+`;
+
 export const GET_USERS = gql`
   query getUsers {
     getUsers {
@@ -52,6 +73,21 @@ export const GET_USERS = gql`
 
 const MainPage = () => {
   const { user, setUser, mode, setMode } = React.useContext(UserContext);
+  const [searchValue, setSearchValue] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState("");
+
+  const getAllPosts = useQuery(GET_POSTS);
+
+  console.log("datas---->", getAllPosts);
+
+  const [postData, setPostData] = React.useState(getAllPosts.data);
+
+  function clearResults() {
+    setSearchValue("");
+    let results = getAllPosts.data.getPosts.map((item) => item);
+    setPostData(results);
+    setErrorMessage("");
+  }
 
   const navigate = useNavigate();
   // GET users from query
@@ -83,12 +119,35 @@ const MainPage = () => {
         }}
       >
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
-        <Feed mode={mode} userList={data} />
+        <Feed
+          mode={mode}
+          userList={data}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          clearResults={clearResults}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          data={getAllPosts.data}
+          postData={postData}
+          setPostData={setPostData}
+          loading={getAllPosts.loading}
+          error={getAllPosts.error}
+        />
         <Rightbar mode={mode} />
       </Stack>
-      <CreatePost mode={mode} />
+      <CreatePost mode={mode} clearResults={""} />
     </>
   );
 };
 
 export default MainPage;
+// searchValue,
+// setSearchValue,
+// clearResults,
+// errorMessage,
+// setErrorMessage,
+// data,
+// postData,
+// setPostData,
+// loading,
+// error,

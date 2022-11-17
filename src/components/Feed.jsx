@@ -43,13 +43,23 @@ const DELETE_POST = gql`
   }
 `;
 
-const Feed = ({ mode, userList }) => {
-  const [searchValue, setSearchValue] = React.useState("");
-  const { loading, error, data } = useQuery(GET_POSTS);
-
+const Feed = ({
+  mode,
+  userList,
+  searchValue,
+  setSearchValue,
+  clearResults,
+  errorMessage,
+  setErrorMessage,
+  data,
+  postData,
+  setPostData,
+  loading,
+  error,
+}) => {
   const [deletePost] = useMutation(DELETE_POST);
-  const [postData, setPostData] = useState(data);
-  const [errorMessage, setErrorMessage] = useState("");
+
+  // const [errorMessage, setErrorMessage] = useState("");
 
   //useEffect
   React.useEffect(() => {
@@ -104,13 +114,13 @@ const Feed = ({ mode, userList }) => {
     setPostData(result);
   };
 
-  // clear results
-  function clearResults() {
-    setSearchValue("");
-    let results = data.getPosts.map((item) => item);
-    setPostData(results);
-    setErrorMessage("");
-  }
+  // // clear results
+  // function clearResults() {
+  //   setSearchValue("");
+  //   let results = data.getPosts.map((item) => item);
+  //   setPostData(results);
+  //   setErrorMessage("");
+  // }
 
   if (loading)
     return (
