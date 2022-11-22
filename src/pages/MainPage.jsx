@@ -101,7 +101,15 @@ const MainPage = () => {
     if (user.role === "user") {
       navigate("*");
     }
-  }, [user.dark_mode, navigate, user.role, setMode, mode]);
+  }, [
+    user.dark_mode,
+    navigate,
+    user.role,
+    setMode,
+    mode,
+    getAllPosts.data,
+    postData,
+  ]);
 
   return (
     <>
@@ -135,7 +143,7 @@ const MainPage = () => {
         />
         <Rightbar mode={mode} />
       </Stack>
-      <CreatePost mode={mode} clearResults={""} />
+      <CreatePost mode={mode} clearResults={clearResults} />
     </>
   );
 };

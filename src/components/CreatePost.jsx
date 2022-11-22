@@ -100,6 +100,8 @@ const CreatePost = ({ mode, clearResults }) => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
+  const { refetch } = useQuery(GET_POSTS);
+
   const toggleModal = () => {
     setOpen(!open);
   };
@@ -122,7 +124,12 @@ const CreatePost = ({ mode, clearResults }) => {
     post: "",
   });
 
-  React.useEffect(() => {}, [startDate, addPost]);
+  React.useEffect(() => {
+    if (createPost) {
+      console.log(createPost);
+      refetch();
+    }
+  }, [startDate, addPost, refetch, createPost]);
 
   // console.log("user on create post----->", user);
 
