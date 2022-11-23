@@ -65,7 +65,12 @@ const Feed = ({
   React.useEffect(() => {
     // console.log("Post data on Feed USE EFFECT---************->", postData);
     // console.log("data on Feed USE EFFECT________________________->", data);
-  }, [data, postData]);
+    // if new post, rerender posts
+
+    if (postData) {
+      setPostData(postData);
+    }
+  }, [data, postData, setPostData]);
 
   // handle delete post
   const handlePostDelete = async (post) => {
