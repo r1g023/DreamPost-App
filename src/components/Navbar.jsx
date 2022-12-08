@@ -47,7 +47,7 @@ const Navbar = ({ setUser }) => {
   const [open, setOpen] = React.useState(false);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
-  React.useEffect(() => {}, [user, user.username, user.role]);
+  React.useEffect(() => {}, [user, user.username, user.role, user.avatar]);
 
   return (
     <>
@@ -125,8 +125,8 @@ const Navbar = ({ setUser }) => {
             <StyledUserBox onClick={() => setOpen(!open)}>
               <Avatar
                 sx={{ height: 30, width: 30 }}
-                alt="Github Avatar"
-                src={user.avatar}
+                alt="profile photo"
+                src={user.avatar ? user.avatar : user.username[0].toUpperCase()}
               />
               <Typography variant="span" sx={{ marginRight: "5px" }}>
                 {user.username}

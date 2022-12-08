@@ -202,7 +202,7 @@ const CreatePost = ({ mode, clearResults }) => {
     toggleModal();
     setUploadPhoto(null);
     scrollToTop();
-    clearResults();
+    // clearResults();
     // console.log("new post---------------------", newPost);
 
     return newPost;
