@@ -75,11 +75,10 @@ const Rightbar = ({ mode }) => {
           rowHeight={100}
           gap={10}
           sx={{
-            height: "600px",
+            height: "40vh",
             overflowY: "scroll",
             overflowX: "hidden",
             border: "1px solid red",
-            margin: 0,
           }}
         >
           {loading ? (
@@ -88,7 +87,6 @@ const Rightbar = ({ mode }) => {
                 sx={{
                   width: "100%",
                   color: "grey.500",
-                  border: "1px solid red",
                 }}
                 spacing={2}
               >
@@ -106,24 +104,25 @@ const Rightbar = ({ mode }) => {
           ) : (
             <>
               {data &&
-                data.getPosts.map((item) => (
-                  <ImageListItem key={item.id}>
-                    <img
-                      src={item.image}
-                      srcSet={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        cursor: "pointer",
-                        boxShadow: "5px 10px 18px #888888",
-                        border: "10px solid red",
-                        padding: "0px",
-                      }}
-                    />
-                  </ImageListItem>
-                ))}
+                data.getPosts
+                  .map((item) => (
+                    <ImageListItem key={item.id}>
+                      <img
+                        src={item.image}
+                        srcSet={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          cursor: "pointer",
+                          boxShadow: "5px 10px 18px #888888",
+                          border: "1px solid red",
+                        }}
+                      />
+                    </ImageListItem>
+                  ))
+                  .reverse()}
             </>
           )}
           {/*Mock data for the latest posts */}
