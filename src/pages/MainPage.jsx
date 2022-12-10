@@ -143,7 +143,7 @@ const MainPage = () => {
         />
         <Rightbar mode={mode} />
       </Stack>
-      <CreatePost mode={mode} />
+      <CreatePost mode={mode} clearResults={clearResults} />
     </>
   );
 };

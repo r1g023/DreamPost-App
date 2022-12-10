@@ -179,7 +179,8 @@ const Feed = ({
             paddingBottom: "100vh",
           }}
         >
-          {errorMessage}
+          <h3> {errorMessage}</h3>
+          <h6>Clear results to see latest posts...</h6>
         </h2>
       )}
 

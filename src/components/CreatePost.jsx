@@ -125,11 +125,11 @@ const CreatePost = ({ mode, clearResults }) => {
   });
 
   React.useEffect(() => {
-    if (createPost) {
-      console.log(createPost);
-      refetch();
+    // if new post clear results
+    if (data) {
+      clearResults();
     }
-  }, [startDate, addPost, refetch, createPost]);
+  }, [startDate, addPost, refetch, createPost, clearResults]);
 
   // console.log("user on create post----->", user);
 
@@ -202,7 +202,7 @@ const CreatePost = ({ mode, clearResults }) => {
     toggleModal();
     setUploadPhoto(null);
     scrollToTop();
-    // clearResults();
+
     // console.log("new post---------------------", newPost);
 
     return newPost;

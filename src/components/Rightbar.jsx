@@ -75,10 +75,10 @@ const Rightbar = ({ mode }) => {
           rowHeight={100}
           gap={10}
           sx={{
-            height: "40vh",
             overflowY: "scroll",
             overflowX: "hidden",
             border: "1px solid red",
+            maxHeight: "500px",
           }}
         >
           {loading ? (

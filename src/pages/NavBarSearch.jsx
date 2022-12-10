@@ -42,7 +42,12 @@ const NavBarSearch = ({
       {searchValue && (
         <span title="clear search results and go back to posts">
           <ClearIcon
-            sx={{ cursor: "pointer" }}
+            sx={{
+              cursor: "pointer",
+              webkitAnimation: "glow 1s ease-in-out infinite alternate",
+              mozAnimation: "glow 1s ease-in-out infinite alternate",
+              animation: "glow 1s ease-in-out infinite alternate",
+            }}
             color="error"
             title="clear search results"
             onClick={clearResults}
