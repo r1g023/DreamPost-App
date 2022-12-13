@@ -25,9 +25,16 @@ const RightBarPosts = ({ data, mode }) => {
         borderBottom: mode ? "1px solid #e0e0e0" : "none",
       }}
     >
-      <ListItem alignItems="flex-start" col={10} sx={{ overflow: "auto" }}>
+      <ListItem
+        alignItems="flex-start"
+        col={10}
+        sx={{
+          overflow: "auto",
+          "&:hover": { boxShadow: "5px 10px 18px #888888", cursor: "pointer" },
+        }}
+      >
         <ListItemAvatar>
-          <Avatar alt={data.name} src={data.avatar} />
+          <Avatar alt={data.name} src={data.image} />
         </ListItemAvatar>
         <ListItemText
           // title subject
@@ -48,7 +55,9 @@ const RightBarPosts = ({ data, mode }) => {
           secondary={
             <React.Fragment>
               <Typography
-                sx={{ display: "inline" }}
+                sx={{
+                  display: "inline",
+                }}
                 component="span"
                 fontWeight="fontWeightBold"
                 variant="body2"

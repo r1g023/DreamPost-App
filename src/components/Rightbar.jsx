@@ -32,7 +32,7 @@ const Rightbar = ({ mode }) => {
     // console.log("useEffect post data image Righbar-->", data);
   }, [data]);
 
-  console.log("data---->", data);
+  console.log("data---- in RIGHTBAR>", data);
 
   if (error) return <p>Error: {error.message}</p>;
   return (
@@ -77,7 +77,6 @@ const Rightbar = ({ mode }) => {
           sx={{
             overflowY: "scroll",
             overflowX: "hidden",
-            border: "1px solid red",
             maxHeight: "500px",
           }}
         >
@@ -117,7 +116,11 @@ const Rightbar = ({ mode }) => {
                           height: "100px",
                           cursor: "pointer",
                           boxShadow: "5px 10px 18px #888888",
-                          border: "1px solid red",
+                          "&:hover": {
+                            boxShadow: "90px 90px 90px #888888",
+                          },
+
+                          // hover
                         }}
                       />
                     </ImageListItem>
@@ -153,6 +156,7 @@ const Rightbar = ({ mode }) => {
           {data &&
             data.getPosts
               .map((item, index) => {
+                console.log("item in rightbar-->", item);
                 return <RightBarPosts key={item.id} data={item} mode={mode} />;
               })
               .reverse()}
