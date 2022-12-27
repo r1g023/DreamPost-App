@@ -119,10 +119,11 @@ const MainPage = () => {
         justifyContent="space-around"
         sx={{
           background: mode ? "#1B2430" : "",
-
           opacity: "0.9",
           color: mode ? "white" : "black",
           marginTop: "65px",
+          height: searchValue ? "100vh" : "auto",
+          overflow: "auto",
         }}
       >
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
@@ -142,7 +143,11 @@ const MainPage = () => {
         />
         <Rightbar mode={mode} />
       </Stack>
-      <CreatePost mode={mode} clearResults={clearResults} />
+      <CreatePost
+        mode={mode}
+        clearResults={clearResults}
+        searchValue={searchValue}
+      />
     </>
   );
 };
