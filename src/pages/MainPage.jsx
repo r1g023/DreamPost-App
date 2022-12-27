@@ -117,10 +117,9 @@ const MainPage = () => {
         direction="row"
         spacing={0}
         justifyContent="space-around"
-        height="100vh"
         sx={{
           background: mode ? "#1B2430" : "",
-          height: "100%",
+
           opacity: "0.9",
           color: mode ? "white" : "black",
           marginTop: "65px",

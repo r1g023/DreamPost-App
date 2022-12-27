@@ -45,10 +45,21 @@ const Rightbar = ({ mode }) => {
           sm: "none",
           md: "block",
         },
+
+        scrollY: "scroll",
+        overflowX: "hidden",
       }}
     >
       {/* container for the rightbar */}
-      <Box position="fixed" p={2}>
+      <Box
+        position="fixed"
+        p={2}
+        sx={{
+          overflowY: "scroll",
+          overflowX: "hidden",
+          maxHeight: "100vh",
+        }}
+      >
         <Typography variant="h4">Online Friends</Typography>
         {/* container for the online friends */}
         <AvatarGroup total={10}>
@@ -146,20 +157,26 @@ const Rightbar = ({ mode }) => {
         </Typography>
 
         {/* latest conversations by each user */}
-        <Box sx={{ overflowY: "scroll", height: "700px" }}>
+        <Box
+          sx={{
+            scrollY: "scroll",
+            overflowX: "hidden",
+            maxHeight: "600px",
+            marginBottom: "100px",
+          }}
+        >
+          {data &&
+            data.getPosts
+              .map((item, index) => {
+                return <RightBarPosts key={item.id} data={item} mode={mode} />;
+              })
+              .reverse()}
+
           {friends.map((item, index) => {
             return (
               <RightBarConversations key={item.id} data={item} mode={mode} />
             );
           })}
-
-          {data &&
-            data.getPosts
-              .map((item, index) => {
-                console.log("item in rightbar-->", item);
-                return <RightBarPosts key={item.id} data={item} mode={mode} />;
-              })
-              .reverse()}
         </Box>
       </Box>
     </Box>

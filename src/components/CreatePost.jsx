@@ -126,10 +126,7 @@ const CreatePost = ({ mode, clearResults }) => {
 
   React.useEffect(() => {
     // if new post clear results
-    if (data) {
-      clearResults();
-    }
-  }, [startDate, addPost, refetch, createPost, clearResults]);
+  }, [startDate, addPost]);
 
   // console.log("user on create post----->", user);
 

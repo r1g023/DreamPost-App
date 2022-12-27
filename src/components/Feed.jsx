@@ -109,6 +109,7 @@ const Feed = ({
 
       if (item.title.match(new RegExp(searchValue, "i"))) return item;
       if (item.post.match(new RegExp(searchValue, "i"))) return item;
+      if (item.user.match(new RegExp(searchValue, "i"))) return item;
     });
     // console.log("result", result);
     // save no result to errors
@@ -155,7 +156,7 @@ const Feed = ({
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box flex={6} p={3} sx={{ height: "100%" }}>
+    <Box flex={6} p={3} sx={{}}>
       <div
         style={{
           display: "flex",
@@ -184,6 +185,7 @@ const Feed = ({
         </h2>
       )}
 
+      {/* all posts */}
       {postData &&
         postData
           .map((item) => {
@@ -200,6 +202,7 @@ const Feed = ({
           })
           .reverse()}
 
+      {/* search results after searching for posts */}
       {!postData &&
         data &&
         data.getPosts

@@ -30,7 +30,7 @@ const RightBarPosts = ({ data, mode }) => {
         col={10}
         sx={{
           overflow: "auto",
-          "&:hover": { boxShadow: "5px 10px 18px #888888", cursor: "pointer" },
+          "&:hover": { boxShadow: "5px 5px 10px #888888", cursor: "pointer" },
         }}
       >
         <ListItemAvatar>
@@ -47,7 +47,9 @@ const RightBarPosts = ({ data, mode }) => {
                 color="text.primary"
                 fontWeight="fontWeightBold"
               >
-                <span style={{ color: mode ? "white" : "" }}>{data.title}</span>
+                <span style={{ color: mode ? "white" : "", fontSize: "1.1em" }}>
+                  {data.title}
+                </span>
               </Typography>
             </React.Fragment>
           }
@@ -63,11 +65,20 @@ const RightBarPosts = ({ data, mode }) => {
                 variant="body2"
                 color="text.primary"
               >
-                <span style={{ color: mode ? "white" : "" }}>
-                  @{data.user} -
+                <span
+                  style={{
+                    color: mode ? "white" : "",
+                    fontSize: "1em",
+                    textDecoration: "underline",
+                  }}
+                >
+                  @{data.user}
                 </span>
+                <span style={{ color: mode ? "white" : "" }}> - </span>
               </Typography>
-              <span style={{ color: mode ? "white" : "" }}>{data.post}</span>
+              <span style={{ color: mode ? "white" : "", fontSize: "0.9em" }}>
+                {data.post}
+              </span>
             </React.Fragment>
           }
         />
