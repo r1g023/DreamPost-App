@@ -21,7 +21,15 @@ const NavBarSearch = ({
   clearResults,
 }) => {
   return (
-    <Search>
+    <Search
+      sx={{
+        position: "fixed",
+        marginTop: "10px",
+        zIndex: "1",
+        marginLeft: searchValue ? "-15px" : "0px",
+      }}
+    >
+      {/* Search Input */}
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search Posts"
@@ -30,6 +38,8 @@ const NavBarSearch = ({
         onChange={setSearchValue}
         value={searchValue}
       />
+
+      {/* Search Icon to search after inputting your search words */}
       <IconButton
         type="submit"
         sx={{ p: "10px", ml: 1 }}
@@ -39,14 +49,12 @@ const NavBarSearch = ({
         <SearchIcon />
       </IconButton>
 
+      {/* X to clear the results from the page */}
       {searchValue && (
         <span title="clear search results and go back to posts">
           <ClearIcon
             sx={{
               cursor: "pointer",
-              webkitAnimation: "glow 1s ease-in-out infinite alternate",
-              mozAnimation: "glow 1s ease-in-out infinite alternate",
-              animation: "glow 1s ease-in-out infinite alternate",
             }}
             color="error"
             title="clear search results"

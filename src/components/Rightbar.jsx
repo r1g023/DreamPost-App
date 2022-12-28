@@ -116,7 +116,18 @@ const Rightbar = ({ mode }) => {
               {data &&
                 data.getPosts
                   .map((item) => (
-                    <ImageListItem key={item.id}>
+                    <ImageListItem
+                      key={item.id}
+                      sx={{
+                        cursor: "pointer",
+                        boxShadow: "5px 10px 18px #888888",
+                        borderRadius: "10px",
+                        "&:hover": {
+                          opacity: "0.9",
+                          boxShadow: "none",
+                        },
+                      }}
+                    >
                       <img
                         src={item.image}
                         srcSet={item.image}
@@ -125,13 +136,6 @@ const Rightbar = ({ mode }) => {
                         style={{
                           width: "100px",
                           height: "100px",
-                          cursor: "pointer",
-                          boxShadow: "5px 10px 18px #888888",
-                          "&:hover": {
-                            boxShadow: "90px 90px 90px #888888",
-                          },
-
-                          // hover
                         }}
                       />
                     </ImageListItem>

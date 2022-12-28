@@ -145,8 +145,8 @@ const MainPage = () => {
       </Stack>
       <CreatePost
         mode={mode}
-        clearResults={clearResults}
         searchValue={searchValue}
+        setPostData={postData}
       />
     </>
   );

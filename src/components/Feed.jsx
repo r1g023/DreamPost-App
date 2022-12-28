@@ -156,70 +156,68 @@ const Feed = ({
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <Box flex={6} p={3} sx={{}}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <NavBarSearch
-          sx={{ margin: "0 auto" }}
-          setSearchValue={(e) => setSearchValue(e.target.value)}
-          searchValue={searchValue}
-          handleSubmit={handleSubmit}
-          clearResults={clearResults}
-        />
-      </div>
-
+    <div>
+      <NavBarSearch
+        setSearchValue={(e) => setSearchValue(e.target.value)}
+        searchValue={searchValue}
+        handleSubmit={handleSubmit}
+        clearResults={clearResults}
+      />
       {errorMessage && (
         <h2
           style={{
             color: "red",
-            marginLeft: "105px",
-            paddingBottom: "100vh",
+            marginTop: searchValue ? "90px" : "0px",
           }}
         >
-          <h3> {errorMessage}</h3>
-          <h6>Clear results to see latest posts...</h6>
+          <p> {errorMessage}</p>
+          <p>Clear results to see latest posts...</p>
         </h2>
       )}
 
-      {/* all posts */}
-      {postData &&
-        postData
-          .map((item) => {
-            return (
-              <Post
-                post={item}
-                key={item.id}
-                handlePostDelete={() => handlePostDelete(item)}
-                mode={mode}
-                postData={postData}
-                userList={userList}
-              />
-            );
-          })
-          .reverse()}
+      <div
+        style={{
+          marginTop: "20px",
+        }}
+      >
+        <Box flex={6} p={3} sx={{ display: "block", marginTop: "10px" }}>
+          {/* all posts */}
+          {postData &&
+            postData
+              .map((item) => {
+                return (
+                  <Post
+                    post={item}
+                    key={item.id}
+                    handlePostDelete={() => handlePostDelete(item)}
+                    mode={mode}
+                    postData={postData}
+                    userList={userList}
+                  />
+                );
+              })
+              .reverse()}
 
-      {/* search results after searching for posts */}
-      {!postData &&
-        data &&
-        data.getPosts
-          .map((item) => {
-            return (
-              <Post
-                post={item}
-                key={item.id}
-                handlePostDelete={() => handlePostDelete(item)}
-                mode={mode}
-                postData={postData}
-                userList={userList}
-              />
-            );
-          })
-          .reverse()}
-    </Box>
+          {/* search results after searching for posts */}
+          {!postData &&
+            data &&
+            data.getPosts
+              .map((item) => {
+                return (
+                  <Post
+                    post={item}
+                    key={item.id}
+                    handlePostDelete={() => handlePostDelete(item)}
+                    mode={mode}
+                    postData={postData}
+                    userList={userList}
+                  />
+                );
+              })
+              .reverse()}
+        </Box>
+      </div>
+    </div>
   );
 };
 

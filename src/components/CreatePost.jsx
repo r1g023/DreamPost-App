@@ -96,7 +96,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-const CreatePost = ({ mode, clearResults, searchValue }) => {
+const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
@@ -201,10 +201,14 @@ const CreatePost = ({ mode, clearResults, searchValue }) => {
     scrollToTop();
 
     // console.log("new post---------------------", newPost);
-    // if searchValue, refresh results
-    if (searchValue) {
-      clearResults();
+    if (searchValue && newPost) {
+      // add popup message
+      window.alert(
+        "Added a New Post? Make sure to clear your search results to see it!"
+      );
     }
+
+    return newPost;
   }
 
   if (loading) return <h1>Loading....</h1>;
