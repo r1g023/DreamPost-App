@@ -310,12 +310,12 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
     <>
       <Card
         sx={{
-          margin: "0 auto",
-          marginTop: "1rem",
+          margin: "30px auto",
           background: mode ? "#2C394B" : "white",
           color: mode ? "white" : "black",
           maxWidth: "350px",
           width: "100%",
+          boxShadow: mode ? "0px 0px 12px 0px gray" : "0px 0px 12px 0px gray",
         }}
       >
         {/* Card Header */}

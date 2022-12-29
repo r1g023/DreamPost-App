@@ -102,6 +102,7 @@ const Comments = ({
             padding: "10px 20px",
             background: mode ? "#30475E" : "",
             color: mode ? "white" : "",
+            boxShadow: mode ? "0px 0px 7px 0px gray" : "0px 0px 12px 0px gray",
           }}
         >
           <Grid container wrap="nowrap" spacing={2}>

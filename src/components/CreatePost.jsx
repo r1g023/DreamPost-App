@@ -200,15 +200,10 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     setUploadPhoto(null);
     scrollToTop();
 
-    // console.log("new post---------------------", newPost);
-    if (searchValue && newPost) {
-      // add popup message
-      window.alert(
-        "Added a New Post? Make sure to clear your search results to see it!"
-      );
+    if (postData) {
+      // window.location.reload();
+      window.alert("Post created successfully, clear or refresh to see it");
     }
-
-    return newPost;
   }
 
   if (loading) return <h1>Loading....</h1>;

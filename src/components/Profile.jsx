@@ -284,12 +284,16 @@ const Profile = () => {
       style={{
         backgroundColor: mode ? "#002A53" : "#E1D9D1",
         opacity: 0.9,
+
+        marginTop: "65px",
       }}
     >
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
-        <h1 style={{ color: mode ? "white" : "black" }}>Profile Settings</h1>
+        <h1 style={{ color: mode ? "white" : "black", paddingTop: "20px" }}>
+          Profile Settings
+        </h1>
 
         <Button
           onClick={(prev) => setToggleModal(!toggleModal)}
@@ -314,7 +318,7 @@ const Profile = () => {
                 htmlFor="image"
                 style={{
                   display: "block",
-                  color: mode ? "white" : "black",
+                  color: mode ? "white" : "white",
                   textAlign: "center",
                   fontSize: "1rem",
                 }}

@@ -147,6 +147,7 @@ const MainPage = () => {
         mode={mode}
         searchValue={searchValue}
         setPostData={postData}
+        postData={postData}
       />
     </>
   );

@@ -155,6 +155,8 @@ const Feed = ({
 
   if (error) return <p>Error: {error.message}</p>;
 
+  // if new post, automatically click on submit to rerender posts
+
   return (
     <div>
       <NavBarSearch
@@ -162,7 +164,18 @@ const Feed = ({
         searchValue={searchValue}
         handleSubmit={handleSubmit}
         clearResults={clearResults}
+        mode={mode}
       />
+      <button
+        style={{
+          position: "fixed",
+          display: "block",
+          top: "130px",
+          right: "43%",
+        }}
+      >
+        REFETCH
+      </button>
       {errorMessage && (
         <h2
           style={{
@@ -180,7 +193,7 @@ const Feed = ({
           marginTop: "20px",
         }}
       >
-        <Box flex={6} p={3} sx={{ display: "block", marginTop: "10px" }}>
+        <Box flex={6} p={3} sx={{ display: "block", marginTop: "110px" }}>
           {/* all posts */}
           {postData &&
             postData

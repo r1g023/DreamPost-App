@@ -19,14 +19,23 @@ const NavBarSearch = ({
   handleSubmit,
   searchValue,
   clearResults,
+  mode,
 }) => {
   return (
     <Search
       sx={{
         position: "fixed",
-        marginTop: "10px",
+        marginTop: "19px",
         zIndex: "1",
         marginLeft: searchValue ? "-15px" : "0px",
+        border: mode ? "" : "1px solid orange",
+        boxShadow: mode ? "0px 0px 7px 0px orange" : "0px 0px 12px 0px gray",
+        // hover
+        "&:hover": {
+          boxShadow: mode
+            ? "0px 0px 12px 0px orange"
+            : "0px 0px 12px 0px orange",
+        },
       }}
     >
       {/* Search Input */}
