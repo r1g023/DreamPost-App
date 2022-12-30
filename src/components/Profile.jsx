@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import { UserContext } from "../App";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Image } from "cloudinary-react";
 import axios from "axios";
 import {
@@ -17,16 +17,11 @@ import {
   MenuItem,
   Box,
 } from "@mui/material";
-import { PhotoCamera } from "@mui/icons-material";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import dayjs from "dayjs";
 
-import Stack from "@mui/material/Stack";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import moment from "moment";
 import ProfileModal from "../pages/ProfileModal";
 
@@ -587,6 +582,7 @@ const Profile = () => {
           </div>
         </Box>
       </StyledBox>
+      <p className="search-test">TEST</p>
     </div>
   );
 };

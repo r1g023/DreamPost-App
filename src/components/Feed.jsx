@@ -10,6 +10,7 @@ import Post from "./Post";
 import NavBarSearch from "../pages/NavBarSearch";
 import { useQuery, useMutation, gql } from "@apollo/client";
 import Modal from "./Modal";
+import RotateRightSharpIcon from "@mui/icons-material/RotateRightSharp";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -153,6 +154,14 @@ const Feed = ({
       </Stack>
     );
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   if (error) return <p>Error: {error.message}</p>;
 
   // if new post, automatically click on submit to rerender posts
@@ -165,25 +174,44 @@ const Feed = ({
         handleSubmit={handleSubmit}
         clearResults={clearResults}
         mode={mode}
+        errorMessage={errorMessage}
       />
-      <button
-        style={{
+
+      {/* Refresh Icon */}
+      <RotateRightSharpIcon
+        sx={{
           position: "fixed",
           display: "block",
-          top: "130px",
-          right: "43%",
+          top: "140px",
+          zIndex: "100",
+          marginLeft: "136px",
+          fontSize: "75px",
+          cursor: "pointer",
+          color: "green",
         }}
-      >
-        REFETCH
-      </button>
+        //add size
+        fontSize="large"
+        title="See Latest Posts"
+        onClick={() => {
+          if (searchValue) {
+            setSearchValue("");
+            setErrorMessage("");
+            setPostData(data.getPosts);
+          } else {
+            scrollToTop();
+            handleSubmit();
+          }
+        }}
+      />
+
       {errorMessage && (
         <h2
           style={{
-            color: "red",
-            marginTop: searchValue ? "90px" : "0px",
+            color: mode ? "white" : "black",
+            marginTop: searchValue || errorMessage ? "160px" : "0px",
           }}
         >
-          <p> {errorMessage}</p>
+          <p style={{ color: "red" }}> {errorMessage}</p>
           <p>Clear results to see latest posts...</p>
         </h2>
       )}

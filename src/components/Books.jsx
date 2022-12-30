@@ -34,7 +34,7 @@ const Books = () => {
     <>
       {user.role === "admin" && (
         <div style={{ marginTop: "70px", paddingTop: "22px" }}>
-          <h1>Books</h1>
+          <h1 className="books">Books</h1>
           {data.getBooks.map((book) => (
             <div key={book.id}>
               <p>{book.name}</p>

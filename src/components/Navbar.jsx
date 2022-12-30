@@ -55,6 +55,7 @@ const Navbar = ({ setUser }) => {
         position="fixed"
         style={{
           paddingTop: "9px",
+          zIndex: "-1",
         }}
       >
         {/* If there's no user.username logged in, display logo */}

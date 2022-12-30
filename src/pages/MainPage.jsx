@@ -121,8 +121,8 @@ const MainPage = () => {
           background: mode ? "#1B2430" : "",
           opacity: "0.9",
           color: mode ? "white" : "black",
-          marginTop: "65px",
-          height: searchValue ? "100vh" : "auto",
+          marginTop: errorMessage ? "65px" : "65px",
+          height: searchValue || errorMessage ? "100vh" : "auto",
           overflow: "auto",
         }}
       >

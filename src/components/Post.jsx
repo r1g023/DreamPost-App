@@ -313,7 +313,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           margin: "30px auto",
           background: mode ? "#2C394B" : "white",
           color: mode ? "white" : "black",
-          maxWidth: "350px",
+          maxWidth: "400px",
           width: "100%",
           boxShadow: mode ? "0px 0px 12px 0px gray" : "0px 0px 12px 0px gray",
         }}
@@ -353,7 +353,10 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                 variant="body2"
                 color="text.primary"
               >
-                <span style={{ color: mode ? "white" : "", fontSize: "10px" }}>
+                <span
+                  style={{ color: mode ? "white" : "", fontSize: "10px" }}
+                  className="numero"
+                >
                   posted on {post.date}
                 </span>
               </Typography>
@@ -362,6 +365,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
         />
 
         <h4
+          className="numero"
           style={{
             padding: isCurrentUser ? "4px 15px" : "4px 15px",
             background: isCurrentUser ? "green" : "#002A53",

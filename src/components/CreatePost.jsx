@@ -4,7 +4,7 @@ import { Image } from "cloudinary-react";
 import axios from "axios";
 // import css file from ilndex.css
 import moment from "moment";
-import "../index.css";
+// import "../index.css";
 
 import {
   Avatar,

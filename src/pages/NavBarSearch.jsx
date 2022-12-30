@@ -19,6 +19,7 @@ const NavBarSearch = ({
   handleSubmit,
   searchValue,
   clearResults,
+  errorMessage,
   mode,
 }) => {
   return (
@@ -27,7 +28,9 @@ const NavBarSearch = ({
         position: "fixed",
         marginTop: "19px",
         zIndex: "1",
-        marginLeft: searchValue ? "-15px" : "0px",
+        // marginLeft: searchValue ? "-15px" : "0px",
+        marginLeft: errorMessage ? "10px" : searchValue ? "8px" : "18px",
+
         border: mode ? "" : "1px solid orange",
         boxShadow: mode ? "0px 0px 7px 0px orange" : "0px 0px 12px 0px gray",
         // hover
@@ -36,11 +39,14 @@ const NavBarSearch = ({
             ? "0px 0px 12px 0px orange"
             : "0px 0px 12px 0px orange",
         },
+        maxWidth: "400px",
+        minWidth: "340px",
+        width: "100%",
       }}
     >
       {/* Search Input */}
       <InputBase
-        sx={{ ml: 1, flex: 1 }}
+        sx={{ ml: 1, flex: 1, maxWidth: "400px", width: "100%" }}
         placeholder="Search Posts"
         inputProps={{ "aria-label": "search posts" }}
         name="searchValue"
