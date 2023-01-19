@@ -167,7 +167,7 @@ const Feed = ({
   // if new post, automatically click on submit to rerender posts
 
   return (
-    <div>
+    <div style={{ zIndex: 2 }}>
       <NavBarSearch
         setSearchValue={(e) => setSearchValue(e.target.value)}
         searchValue={searchValue}
@@ -183,7 +183,7 @@ const Feed = ({
           position: "fixed",
           display: "block",
           top: "140px",
-          zIndex: "100",
+          // zIndex: "100",
           marginLeft: "136px",
           fontSize: "75px",
           cursor: "pointer",

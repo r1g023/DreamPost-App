@@ -3,8 +3,9 @@ import React from "react";
 const PostShareButtons = () => {
   return (
     <div>
+      <h2>Test share TEST</h2>
       {/* <!-- Sharingbutton Facebook --> */}
-      <a
+      {/* <a
         className="resp-sharing-button__link"
         href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsharingbuttons.io"
         target="_blank"
@@ -21,10 +22,10 @@ const PostShareButtons = () => {
             </svg>
           </div>
         </div>
-      </a>
+      </a> */}
 
       {/* <!-- Sharingbutton Twitter --> */}
-      <a
+      {/* <a
         className="resp-sharing-button__link"
         href="https://twitter.com/intent/tweet/?text=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;url=http%3A%2F%2Fsharingbuttons.io"
         target="_blank"
@@ -41,10 +42,10 @@ const PostShareButtons = () => {
             </svg>
           </div>
         </div>
-      </a>
+      </a> */}
 
       {/* <!-- Sharingbutton Pinterest --> */}
-      <a
+      {/* <a
         className="resp-sharing-button__link"
         href="https://pinterest.com/pin/create/button/?url=http%3A%2F%2Fsharingbuttons.io&amp;media=http%3A%2F%2Fsharingbuttons.io&amp;description=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking."
         target="_blank"
@@ -61,10 +62,10 @@ const PostShareButtons = () => {
             </svg>
           </div>
         </div>
-      </a>
+      </a> */}
 
       {/* <!-- Sharingbutton Tumblr --> */}
-      <a
+      {/* <a
         className="resp-sharing-button__link"
         href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;caption=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;content=http%3A%2F%2Fsharingbuttons.io&amp;canonicalUrl=http%3A%2F%2Fsharingbuttons.io&amp;shareSource=tumblr_share_button"
         target="_blank"
@@ -81,10 +82,10 @@ const PostShareButtons = () => {
             </svg>
           </div>
         </div>
-      </a>
+      </a> */}
 
       {/* <!-- Sharingbutton E-Mail --> */}
-      <a
+      {/* <a
         className="resp-sharing-button__link"
         href="mailto:?subject=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;body=http%3A%2F%2Fsharingbuttons.io"
         target="_self"
@@ -101,7 +102,7 @@ const PostShareButtons = () => {
             </svg>
           </div>
         </div>
-      </a>
+      </a> */}
     </div>
   );
 };
