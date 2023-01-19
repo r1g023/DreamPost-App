@@ -40,7 +40,7 @@ const RightBarConversations = ({ data, mode }) => {
                 color="text.primary"
                 fontWeight="fontWeightBold"
               >
-                <span style={{ color: mode ? "white" : "" }}>
+                <span style={{ color: mode ? "white" : "", fontSize: "1.1em" }}>
                   {data.subject}
                 </span>
               </Typography>
@@ -56,9 +56,19 @@ const RightBarConversations = ({ data, mode }) => {
                 color="text.primary"
                 fontWeight="fontWeightBold"
               >
-                <span style={{ color: mode ? "white" : "" }}>@{data.name}</span>
+                <span
+                  style={{
+                    color: mode ? "white" : "",
+                    fontSize: "1em",
+                    textDecoration: "underline",
+                  }}
+                >
+                  @{data.name}
+                </span>
               </Typography>
-              <span style={{ color: mode ? "white" : "" }}>{data.comment}</span>
+              <span style={{ color: mode ? "white" : "", fontSize: "0.9em" }}>
+                {data.comment}
+              </span>
             </React.Fragment>
           }
         />

@@ -101,7 +101,15 @@ const MainPage = () => {
     if (user.role === "user") {
       navigate("*");
     }
-  }, [user.dark_mode, navigate, user.role, setMode, mode]);
+  }, [
+    user.dark_mode,
+    navigate,
+    user.role,
+    setMode,
+    mode,
+    getAllPosts.data,
+    postData,
+  ]);
 
   return (
     <>
@@ -109,13 +117,13 @@ const MainPage = () => {
         direction="row"
         spacing={0}
         justifyContent="space-around"
-        height="100vh"
         sx={{
           background: mode ? "#1B2430" : "",
-          height: "100%",
           opacity: "0.9",
           color: mode ? "white" : "black",
-          marginTop: "65px",
+          marginTop: errorMessage ? "65px" : "65px",
+          height: searchValue || errorMessage ? "100vh" : "auto",
+          overflow: "auto",
         }}
       >
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
@@ -135,7 +143,12 @@ const MainPage = () => {
         />
         <Rightbar mode={mode} />
       </Stack>
-      <CreatePost mode={mode} clearResults={""} />
+      <CreatePost
+        mode={mode}
+        searchValue={searchValue}
+        setPostData={postData}
+        postData={postData}
+      />
     </>
   );
 };

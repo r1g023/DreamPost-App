@@ -33,8 +33,15 @@ const Books = () => {
   return (
     <>
       {user.role === "admin" && (
-        <div style={{ marginTop: "65px" }}>
-          <h1>Books</h1>
+        <div
+          style={{
+            marginTop: "70px",
+            paddingTop: "22px",
+            paddingLeft: "22px",
+            paddingRight: "22px",
+          }}
+        >
+          <h1 className="books">Books</h1>
           {data.getBooks.map((book) => (
             <div key={book.id}>
               <p>{book.name}</p>
@@ -62,6 +69,7 @@ const Books = () => {
                   Profile
                 </Link>
               </Button>
+              <h1 className="test">Test</h1>
               <Button sx={{ marginLeft: "1px" }}>
                 <Link
                   to={"/"}

@@ -25,9 +25,16 @@ const RightBarPosts = ({ data, mode }) => {
         borderBottom: mode ? "1px solid #e0e0e0" : "none",
       }}
     >
-      <ListItem alignItems="flex-start" col={10} sx={{ overflow: "auto" }}>
+      <ListItem
+        alignItems="flex-start"
+        col={10}
+        sx={{
+          overflow: "auto",
+          "&:hover": { boxShadow: "5px 5px 10px #888888", cursor: "pointer" },
+        }}
+      >
         <ListItemAvatar>
-          <Avatar alt={data.name} src={data.avatar} />
+          <Avatar alt={data.name} src={data.image} />
         </ListItemAvatar>
         <ListItemText
           // title subject
@@ -40,7 +47,9 @@ const RightBarPosts = ({ data, mode }) => {
                 color="text.primary"
                 fontWeight="fontWeightBold"
               >
-                <span style={{ color: mode ? "white" : "" }}>{data.title}</span>
+                <span style={{ color: mode ? "white" : "", fontSize: "1.1em" }}>
+                  {data.title}
+                </span>
               </Typography>
             </React.Fragment>
           }
@@ -48,17 +57,28 @@ const RightBarPosts = ({ data, mode }) => {
           secondary={
             <React.Fragment>
               <Typography
-                sx={{ display: "inline" }}
+                sx={{
+                  display: "inline",
+                }}
                 component="span"
                 fontWeight="fontWeightBold"
                 variant="body2"
                 color="text.primary"
               >
-                <span style={{ color: mode ? "white" : "" }}>
-                  @{data.user} -
+                <span
+                  style={{
+                    color: mode ? "white" : "",
+                    fontSize: "1em",
+                    textDecoration: "underline",
+                  }}
+                >
+                  @{data.user}
                 </span>
+                <span style={{ color: mode ? "white" : "" }}> - </span>
               </Typography>
-              <span style={{ color: mode ? "white" : "" }}>{data.post}</span>
+              <span style={{ color: mode ? "white" : "", fontSize: "0.9em" }}>
+                {data.post}
+              </span>
             </React.Fragment>
           }
         />

@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Avatar,
   Button,
@@ -309,12 +310,12 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
     <>
       <Card
         sx={{
-          margin: "0 auto",
-          marginTop: "1rem",
+          margin: "30px auto",
           background: mode ? "#2C394B" : "white",
           color: mode ? "white" : "black",
-          maxWidth: "350px",
+          maxWidth: "400px",
           width: "100%",
+          boxShadow: mode ? "0px 0px 12px 0px gray" : "0px 0px 12px 0px gray",
         }}
       >
         {/* Card Header */}
@@ -361,6 +362,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
         />
 
         <h4
+          className="numero"
           style={{
             padding: isCurrentUser ? "4px 15px" : "4px 15px",
             background: isCurrentUser ? "green" : "#002A53",

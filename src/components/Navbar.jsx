@@ -47,7 +47,7 @@ const Navbar = ({ setUser }) => {
   const [open, setOpen] = React.useState(false);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
-  React.useEffect(() => {}, [user, user.username, user.role]);
+  React.useEffect(() => {}, [user, user.username, user.role, user.avatar]);
 
   return (
     <>
@@ -55,6 +55,7 @@ const Navbar = ({ setUser }) => {
         position="fixed"
         style={{
           paddingTop: "9px",
+          zIndex: "10",
         }}
       >
         {/* If there's no user.username logged in, display logo */}
@@ -106,10 +107,19 @@ const Navbar = ({ setUser }) => {
 
             {/* Mail and notification icons + avatar - remove if display is mobile */}
             <StyledIcons>
-              <Badge badgeContent={1} color="secondary">
+              <Badge
+                badgeContent={1}
+                color="secondary"
+                sx={{ cursor: "pointer" }}
+              >
                 <MailIcon />
               </Badge>
-              <Badge badgeContent={8} color="secondary">
+              <Badge
+                badgeContent={8}
+                color="secondary"
+                sx={{ cursor: "pointer" }}
+              >
+                {" "}
                 <Notifications />
               </Badge>
 
@@ -125,8 +135,8 @@ const Navbar = ({ setUser }) => {
             <StyledUserBox onClick={() => setOpen(!open)}>
               <Avatar
                 sx={{ height: 30, width: 30 }}
-                alt="Github Avatar"
-                src={user.avatar}
+                alt="profile photo"
+                src={user.avatar ? user.avatar : user.username[0].toUpperCase()}
               />
               <Typography variant="span" sx={{ marginRight: "5px" }}>
                 {user.username}

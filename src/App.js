@@ -2,6 +2,7 @@ import React, { createContext, useEffect } from "react";
 //import css from index.css
 import "./index.css";
 import { Box } from "@mui/material";
+import "./App.css";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -31,8 +32,6 @@ function App() {
     document.title = user.username
       ? `Welcome  ${user.username} `
       : "please login";
-
-    // if no user is logged in, redirect to login page
   }, [user.username, user.dark_mode, navigate]);
 
   return (
@@ -41,6 +40,7 @@ function App() {
       {/* add styling to Box for small screens */}
       <Box sx={{ overflow: "hidden" }}>
         <Navbar setUser={setUser} mode={mode} />
+        <h1>Testing</h1>
         <Routes>
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />

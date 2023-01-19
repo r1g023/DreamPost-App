@@ -10,6 +10,7 @@ import Post from "./Post";
 import NavBarSearch from "../pages/NavBarSearch";
 import { useQuery, useMutation, gql } from "@apollo/client";
 import Modal from "./Modal";
+import RotateRightSharpIcon from "@mui/icons-material/RotateRightSharp";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -65,7 +66,12 @@ const Feed = ({
   React.useEffect(() => {
     // console.log("Post data on Feed USE EFFECT---************->", postData);
     // console.log("data on Feed USE EFFECT________________________->", data);
-  }, [data, postData]);
+    // if new post, rerender posts
+
+    if (postData) {
+      setPostData(postData);
+    }
+  }, [data, postData, setPostData]);
 
   // handle delete post
   const handlePostDelete = async (post) => {
@@ -104,6 +110,7 @@ const Feed = ({
 
       if (item.title.match(new RegExp(searchValue, "i"))) return item;
       if (item.post.match(new RegExp(searchValue, "i"))) return item;
+      if (item.user.match(new RegExp(searchValue, "i"))) return item;
     });
     // console.log("result", result);
     // save no result to errors
@@ -147,70 +154,111 @@ const Feed = ({
       </Stack>
     );
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   if (error) return <p>Error: {error.message}</p>;
 
+  // if new post, automatically click on submit to rerender posts
+
   return (
-    <Box flex={6} p={3} sx={{ height: "100%" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
+    <div style={{ zIndex: 2 }}>
+      <NavBarSearch
+        setSearchValue={(e) => setSearchValue(e.target.value)}
+        searchValue={searchValue}
+        handleSubmit={handleSubmit}
+        clearResults={clearResults}
+        mode={mode}
+        errorMessage={errorMessage}
+      />
+
+      {/* Refresh Icon */}
+      <RotateRightSharpIcon
+        sx={{
+          position: "fixed",
+          display: "block",
+          top: "140px",
+          // zIndex: "100",
+          marginLeft: "136px",
+          fontSize: "75px",
+          cursor: "pointer",
+          color: "green",
         }}
-      >
-        <NavBarSearch
-          sx={{ margin: "0 auto" }}
-          setSearchValue={(e) => setSearchValue(e.target.value)}
-          searchValue={searchValue}
-          handleSubmit={handleSubmit}
-          clearResults={clearResults}
-        />
-      </div>
+        //add size
+        fontSize="large"
+        title="See Latest Posts"
+        onClick={() => {
+          if (searchValue) {
+            setSearchValue("");
+            setErrorMessage("");
+            setPostData(data.getPosts);
+          } else {
+            scrollToTop();
+            handleSubmit();
+          }
+        }}
+      />
 
       {errorMessage && (
         <h2
           style={{
-            color: "red",
-            marginLeft: "105px",
-            paddingBottom: "100vh",
+            color: mode ? "white" : "black",
+            marginTop: searchValue || errorMessage ? "160px" : "0px",
           }}
         >
-          {errorMessage}
+          <p style={{ color: "red" }}> {errorMessage}</p>
+          <p>Clear results to see latest posts...</p>
         </h2>
       )}
 
-      {postData &&
-        postData
-          .map((item) => {
-            return (
-              <Post
-                post={item}
-                key={item.id}
-                handlePostDelete={() => handlePostDelete(item)}
-                mode={mode}
-                postData={postData}
-                userList={userList}
-              />
-            );
-          })
-          .reverse()}
+      <div
+        style={{
+          marginTop: "20px",
+        }}
+      >
+        <Box flex={6} p={3} sx={{ display: "block", marginTop: "110px" }}>
+          {/* all posts */}
+          {postData &&
+            postData
+              .map((item) => {
+                return (
+                  <Post
+                    post={item}
+                    key={item.id}
+                    handlePostDelete={() => handlePostDelete(item)}
+                    mode={mode}
+                    postData={postData}
+                    userList={userList}
+                  />
+                );
+              })
+              .reverse()}
 
-      {!postData &&
-        data &&
-        data.getPosts
-          .map((item) => {
-            return (
-              <Post
-                post={item}
-                key={item.id}
-                handlePostDelete={() => handlePostDelete(item)}
-                mode={mode}
-                postData={postData}
-                userList={userList}
-              />
-            );
-          })
-          .reverse()}
-    </Box>
+          {/* search results after searching for posts */}
+          {!postData &&
+            data &&
+            data.getPosts
+              .map((item) => {
+                return (
+                  <Post
+                    post={item}
+                    key={item.id}
+                    handlePostDelete={() => handlePostDelete(item)}
+                    mode={mode}
+                    postData={postData}
+                    userList={userList}
+                  />
+                );
+              })
+              .reverse()}
+        </Box>
+      </div>
+    </div>
   );
 };
 

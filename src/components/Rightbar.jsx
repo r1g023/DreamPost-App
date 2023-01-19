@@ -32,7 +32,7 @@ const Rightbar = ({ mode }) => {
     // console.log("useEffect post data image Righbar-->", data);
   }, [data]);
 
-  console.log("data---->", data);
+  console.log("data---- in RIGHTBAR>", data);
 
   if (error) return <p>Error: {error.message}</p>;
   return (
@@ -45,10 +45,21 @@ const Rightbar = ({ mode }) => {
           sm: "none",
           md: "block",
         },
+
+        scrollY: "scroll",
+        overflowX: "hidden",
       }}
     >
       {/* container for the rightbar */}
-      <Box position="fixed" p={2}>
+      <Box
+        position="fixed"
+        p={2}
+        sx={{
+          overflowY: "scroll",
+          overflowX: "hidden",
+          maxHeight: "100vh",
+        }}
+      >
         <Typography variant="h4">Online Friends</Typography>
         {/* container for the online friends */}
         <AvatarGroup total={10}>
@@ -74,7 +85,11 @@ const Rightbar = ({ mode }) => {
           cols={3}
           rowHeight={100}
           gap={10}
-          sx={{ height: "600px", overflowY: "scroll", overflowX: "hidden" }}
+          sx={{
+            overflowY: "scroll",
+            overflowX: "hidden",
+            maxHeight: "500px",
+          }}
         >
           {loading ? (
             <>
@@ -82,7 +97,6 @@ const Rightbar = ({ mode }) => {
                 sx={{
                   width: "100%",
                   color: "grey.500",
-                  border: "1px solid red",
                 }}
                 spacing={2}
               >
@@ -100,22 +114,33 @@ const Rightbar = ({ mode }) => {
           ) : (
             <>
               {data &&
-                data.getPosts.map((item) => (
-                  <ImageListItem key={item.id}>
-                    <img
-                      src={item.image}
-                      srcSet={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      style={{
-                        width: "100px",
-                        height: "100px",
+                data.getPosts
+                  .map((item) => (
+                    <ImageListItem
+                      key={item.id}
+                      sx={{
                         cursor: "pointer",
                         boxShadow: "5px 10px 18px #888888",
+                        borderRadius: "10px",
+                        "&:hover": {
+                          opacity: "0.9",
+                          boxShadow: "none",
+                        },
                       }}
-                    />
-                  </ImageListItem>
-                ))}
+                    >
+                      <img
+                        src={item.image}
+                        srcSet={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                        }}
+                      />
+                    </ImageListItem>
+                  ))
+                  .reverse()}
             </>
           )}
           {/*Mock data for the latest posts */}
@@ -136,19 +161,26 @@ const Rightbar = ({ mode }) => {
         </Typography>
 
         {/* latest conversations by each user */}
-        <Box sx={{ overflowY: "scroll", height: "700px" }}>
-          {friends.map((item, index) => {
-            return (
-              <RightBarConversations key={item.id} data={item} mode={mode} />
-            );
-          })}
-
+        <Box
+          sx={{
+            scrollY: "scroll",
+            overflowX: "hidden",
+            maxHeight: "600px",
+            marginBottom: "100px",
+          }}
+        >
           {data &&
             data.getPosts
               .map((item, index) => {
                 return <RightBarPosts key={item.id} data={item} mode={mode} />;
               })
               .reverse()}
+
+          {friends.map((item, index) => {
+            return (
+              <RightBarConversations key={item.id} data={item} mode={mode} />
+            );
+          })}
         </Box>
       </Box>
     </Box>

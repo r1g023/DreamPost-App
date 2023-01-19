@@ -218,7 +218,7 @@ background-color: #FF6600
 }
 
 .profile-info {
-  color: orange;
+  color: green;
   font-size: 15px;
 }
 
@@ -257,7 +257,3 @@ background-color: #FF6600
 }
 
 
-/* styling for profile info */
-.profile{
-  color: "white";
-}

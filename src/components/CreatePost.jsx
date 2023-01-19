@@ -4,7 +4,7 @@ import { Image } from "cloudinary-react";
 import axios from "axios";
 // import css file from ilndex.css
 import moment from "moment";
-import "../index.css";
+// import "../index.css";
 
 import {
   Avatar,
@@ -96,9 +96,11 @@ const Input = styled("input")({
   display: "none",
 });
 
-const CreatePost = ({ mode, clearResults }) => {
+const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
+
+  const { refetch } = useQuery(GET_POSTS);
 
   const toggleModal = () => {
     setOpen(!open);
@@ -122,7 +124,9 @@ const CreatePost = ({ mode, clearResults }) => {
     post: "",
   });
 
-  React.useEffect(() => {}, [startDate, addPost]);
+  React.useEffect(() => {
+    // if new post clear results
+  }, [startDate, addPost]);
 
   // console.log("user on create post----->", user);
 
@@ -195,10 +199,11 @@ const CreatePost = ({ mode, clearResults }) => {
     toggleModal();
     setUploadPhoto(null);
     scrollToTop();
-    clearResults();
-    // console.log("new post---------------------", newPost);
 
-    return newPost;
+    if (postData) {
+      // window.location.reload();
+      window.alert("Post created successfully, clear or refresh to see it");
+    }
   }
 
   if (loading) return <h1>Loading....</h1>;
