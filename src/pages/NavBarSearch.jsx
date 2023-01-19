@@ -24,10 +24,12 @@ const NavBarSearch = ({
 }) => {
   return (
     <Search
+      className="searchBar"
       sx={{
         position: "fixed",
         marginTop: "19px",
         zIndex: "1",
+
         // marginLeft: searchValue ? "-15px" : "0px",
         marginLeft: errorMessage ? "10px" : searchValue ? "8px" : "18px",
 

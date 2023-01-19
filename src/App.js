@@ -40,7 +40,7 @@ function App() {
       {/* add styling to Box for small screens */}
       <Box sx={{ overflow: "hidden" }}>
         <Navbar setUser={setUser} mode={mode} />
-        <h1>Testing</h1>
+
         <Routes>
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />

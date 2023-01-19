@@ -1,17 +1,11 @@
-.test {
-  background: red;
+@media only screen and (max-width: 451px) {
+  body {
+    background-color: red;
+  }
+  body .searchBar {
+    background: green;
+    max-width: 100px;
+    width: 100%;
+  }
 }
 /*# sourceMappingURL=App.css.map */
-
-.done {
-  background: "red"
-}
-
-.sidebar {
-  background: "green"
-}
-
-.profileProp{
-  color: "black";
-  background: "red"
-}

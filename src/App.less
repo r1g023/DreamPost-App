@@ -1,3 +1,14 @@
-.test {
-    background: red
-}
+// responsive query for the NavbarSearch Post 
+// component
+@media only screen and (max-width: 451px) {
+    body {
+      background-color: red;
+      // for search bar
+      .searchBar {
+        background: green;
+        // add responsive query for the search bar, if screen less than 451px then make the width 100%
+        max-width: 100px;
+        width: 100%;
+      }
+    }
+  }
