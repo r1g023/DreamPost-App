@@ -1,14 +1,61 @@
 // responsive query for the NavbarSearch Post 
-// component
+// if the screen is less than 451px, the search bar will be 350px
 @media only screen and (max-width: 451px) {
     body {
-      background-color: red;
       // for search bar
       .searchBar {
-        background: green;
-        // add responsive query for the search bar, if screen less than 451px then make the width 100%
-        max-width: 100px;
+        max-width: 340px;
+        width: 100%;
+       
+      }
+      .searchIcon {
+        color: green;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  // if the screen is less than 400px, the search bar will be 300px
+  @media only screen and (max-width: 400px) {
+    body {
+      // for search bar
+      .searchBar {
+        max-width: 300px;
+        width: 100%;
+      }
+      .searchIcon {
+        color: red;
+      }
+    }
+  }
+
+  // if the screen is less than 350px, the search bar will be 250px
+  @media only screen and (max-width: 350px) {
+    body {
+      // for search bar
+      .searchBar {
+        max-width: 250px;
         width: 100%;
       }
     }
   }
+
+  // main styling for whole app within body
+   body {
+        // profile page section
+        .profile-info {
+          color: orange;
+          font-size: 15px;
+        }
+    
+        .searchIcon {
+          color: orange;
+          position: fixed;
+          display: block;
+          top: 140px;
+          // zIndex: "100",
+          margin-left: 180px;
+          font-size: 75px;
+          cursor: pointer;
+        }
+   }

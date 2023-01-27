@@ -29,7 +29,6 @@ const NavBarSearch = ({
         position: "fixed",
         marginTop: "19px",
         zIndex: "1",
-
         // marginLeft: searchValue ? "-15px" : "0px",
         marginLeft: errorMessage ? "10px" : searchValue ? "8px" : "18px",
 
@@ -42,7 +41,7 @@ const NavBarSearch = ({
             : "0px 0px 12px 0px orange",
         },
         maxWidth: "400px",
-        minWidth: "340px",
+        minWidth: "200px",
         width: "100%",
       }}
     >

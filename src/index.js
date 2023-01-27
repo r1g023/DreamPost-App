@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "@mui/material";
 import App from "./App";
 // import "./style.less";
+import "./App.css";
 
 import { BrowserRouter } from "react-router-dom";
 import { theme } from "./theme";

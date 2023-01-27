@@ -582,7 +582,6 @@ const Profile = () => {
           </div>
         </Box>
       </StyledBox>
-      <p className="search-test">TEST</p>
     </div>
   );
 };

@@ -134,11 +134,14 @@ const Navbar = ({ setUser }) => {
             {/* User avatar and name for smaller screens - display if mobile */}
             <StyledUserBox onClick={() => setOpen(!open)}>
               <Avatar
-                sx={{ height: 30, width: 30 }}
+                sx={{ height: 30, width: 30, cursor: "pointer" }}
                 alt="profile photo"
                 src={user.avatar ? user.avatar : user.username[0].toUpperCase()}
               />
-              <Typography variant="span" sx={{ marginRight: "5px" }}>
+              <Typography
+                variant="span"
+                sx={{ marginRight: "5px", cursor: "pointer" }}
+              >
                 {user.username}
               </Typography>
               {/*Link to books */}

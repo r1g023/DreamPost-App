@@ -179,16 +179,7 @@ const Feed = ({
 
       {/* Refresh Icon */}
       <RotateRightSharpIcon
-        sx={{
-          position: "fixed",
-          display: "block",
-          top: "140px",
-          // zIndex: "100",
-          marginLeft: "136px",
-          fontSize: "75px",
-          cursor: "pointer",
-          color: "green",
-        }}
+        className="searchIcon"
         //add size
         fontSize="large"
         title="See Latest Posts"

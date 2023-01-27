@@ -1,11 +1,39 @@
 @media only screen and (max-width: 451px) {
-  body {
-    background-color: red;
-  }
   body .searchBar {
-    background: green;
-    max-width: 100px;
+    max-width: 340px;
     width: 100%;
   }
+  body .searchIcon {
+    color: green;
+    margin-left: 10px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  body .searchBar {
+    max-width: 300px;
+    width: 100%;
+  }
+  body .searchIcon {
+    color: red;
+  }
+}
+@media only screen and (max-width: 350px) {
+  body .searchBar {
+    max-width: 250px;
+    width: 100%;
+  }
+}
+body .profile-info {
+  color: orange;
+  font-size: 15px;
+}
+body .searchIcon {
+  color: orange;
+  position: fixed;
+  display: block;
+  top: 140px;
+  margin-left: 180px;
+  font-size: 75px;
+  cursor: pointer;
 }
 /*# sourceMappingURL=App.css.map */
