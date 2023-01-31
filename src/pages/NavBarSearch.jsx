@@ -24,7 +24,7 @@ const NavBarSearch = ({
 }) => {
   return (
     <Search
-      className="searchBar"
+      className="searchBar responsive"
       sx={{
         position: "fixed",
         marginTop: "19px",
@@ -40,7 +40,7 @@ const NavBarSearch = ({
             ? "0px 0px 12px 0px orange"
             : "0px 0px 12px 0px orange",
         },
-        maxWidth: "400px",
+        maxWidth: "700px",
         minWidth: "200px",
         width: "100%",
       }}

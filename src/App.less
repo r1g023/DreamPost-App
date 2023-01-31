@@ -3,14 +3,41 @@
 @media only screen and (max-width: 451px) {
     body {
       // for search bar
-      .searchBar {
-        max-width: 340px;
+      .searchBar.responsive {
+        max-width: 390px;
         width: 100%;
        
       }
-      .searchIcon {
-        color: green;
-        margin-left: 10px;
+      #myTest {
+
+        margin-left: 175px;
+      }
+
+      #profile-responsive {
+        padding-top: 150px;
+        height: 100vh;
+        padding-bottom: 150px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 433px) {
+    body {
+      // for search bar
+      .searchBar.responsive {
+        max-width: 360px;
+        width: 100%;
+       
+      }
+      #myTest {
+
+        margin-left: 160px;
+      }
+
+      #profile-responsive {
+        padding-top: 175px;
+        height: 100vh;
+        padding-bottom: 175px;
       }
     }
   }
@@ -19,26 +46,81 @@
   @media only screen and (max-width: 400px) {
     body {
       // for search bar
-      .searchBar {
-        max-width: 300px;
+      .searchBar.responsive {
+        max-width: 340px;
         width: 100%;
       }
-      .searchIcon {
-        color: red;
+      #myTest {
+    
+        margin-left: 150px;
+      }
+
+      #profile-responsive {
+        padding-top: 125px;
+        height: 100vh;
+        padding-bottom: 125px;
       }
     }
   }
 
   // if the screen is less than 350px, the search bar will be 250px
-  @media only screen and (max-width: 350px) {
+  @media only screen and (max-width: 375px) {
     body {
       // for search bar
-      .searchBar {
-        max-width: 250px;
+      .searchBar.responsive {
+        max-width: 200px;
         width: 100%;
+      }
+      #myTest {
+    
+        margin-left: 10px;
+      }
+
+      #profile-responsive {
+        padding-top: 125px;
+        height: 100vh;
+        padding-bottom: 125px;
       }
     }
   }
+
+   // if the screen is less than 350px, the search bar will be 250px
+   @media only screen and (max-width: 360px) {
+    body {
+      // for search bar
+      .searchBar.responsive {
+        max-width: 310px;
+        width: 100%;
+      }
+      #myTest {
+    
+        margin-left: 130px;
+      }
+
+      #profile-responsive {
+        padding-top: 300px;
+        height: 100vh;
+        padding-bottom: 300px;
+      }
+    }
+  }
+
+    // if the screen is less than 350px, the search bar will be 250px
+    @media only screen and (max-width: 315px) {
+      body {
+        // for search bar
+        .searchBar.responsive {
+          max-width: 260px;
+          width: 100%;
+        }
+
+        #profile-responsive {
+          padding-top: 300px;
+          height: 100vh;
+          padding-bottom: 300px;
+        }
+      }
+    }
 
   // main styling for whole app within body
    body {
@@ -46,6 +128,12 @@
         .profile-info {
           color: orange;
           font-size: 15px;
+        }
+
+        .searchBar {
+          max-width: 415px;
+          width: 100%;
+         
         }
     
         .searchIcon {
