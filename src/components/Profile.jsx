@@ -208,7 +208,7 @@ const Profile = () => {
     postImage();
   }
 
-  // handle form submission
+  // handle form submission .
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("updateUserID Submit", updateUserID);
