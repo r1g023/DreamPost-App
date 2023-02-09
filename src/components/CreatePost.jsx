@@ -354,7 +354,19 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                           // setTimeout(() => {
                           //   setTogglePhoto(!togglePhoto);
                           // }, 5000);
-                          uploadImage();
+                          if (uploadImage) {
+                            uploadImage();
+                            // Remove the image from the input
+                            setSelectedImages(null);
+                          } else {
+                            window.alert("Please select an image");
+                          }
+
+                          if (!selectedImages && !uploadPhoto) {
+                            window.alert("Please select an image");
+                            // do not post to cloudinary
+                            // makde sure uploadImage doesn't post to cloudinary or run
+                          }
                         }}
                       />
                     )}

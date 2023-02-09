@@ -184,7 +184,7 @@ const Profile = () => {
   // set localStorage to editName
   React.useEffect(() => {
     localStorage.setItem("editName", JSON.stringify(editName));
-  }, [editName]);
+  }, [editName, user.id]);
 
   //upload image to Cloud
   function uploadImage(e) {

@@ -103,7 +103,7 @@ const Feed = ({
 
   // handle submit
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     // add data to search.posts array
     let result = data.getPosts.filter((item) => {
       // console.log("item search", item);
