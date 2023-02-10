@@ -71,7 +71,7 @@ const Feed = ({
     if (postData) {
       setPostData(postData);
     }
-  }, [data, postData, setPostData]);
+  }, [data, postData, setPostData, deletePost]);
 
   // handle delete post
   const handlePostDelete = async (post) => {
@@ -97,7 +97,13 @@ const Feed = ({
           });
         },
       });
-      return deletedPost;
+
+      // console.log("deletedPost--->", deletedPost);
+
+      // if post is deleted and there's a search value, display alert
+      if (searchValue && deletedPost) {
+        window.alert("Post deleted");
+      }
     }
   };
 

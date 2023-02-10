@@ -155,6 +155,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     const formData = new FormData();
     formData.append("file", selectedImages);
     formData.append("upload_preset", "xhfk3bp5_u");
+    console.log("post on image upload test");
+    console.count("post on image count:");
 
     const postImage = async () => {
       try {
@@ -169,7 +171,13 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
         console.log("error uploading image");
       }
     };
-    postImage();
+
+    // do not post if no image is selected
+    if (!selectedImages) {
+      return false;
+    } else {
+      postImage();
+    }
   }
 
   // handle submit for posts
@@ -358,14 +366,9 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                             uploadImage();
                             // Remove the image from the input
                             setSelectedImages(null);
-                          } else {
-                            window.alert("Please select an image");
                           }
-
                           if (!selectedImages && !uploadPhoto) {
                             window.alert("Please select an image");
-                            // do not post to cloudinary
-                            // makde sure uploadImage doesn't post to cloudinary or run
                           }
                         }}
                       />
