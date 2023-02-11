@@ -100,10 +100,7 @@ const Feed = ({
 
       // console.log("deletedPost--->", deletedPost);
 
-      // if post is deleted and there's a search value, display alert
-      if (searchValue && deletedPost) {
-        window.alert("Post deleted");
-      }
+      return deletedPost;
     }
   };
 
@@ -228,7 +225,19 @@ const Feed = ({
                   <Post
                     post={item}
                     key={item.id}
-                    handlePostDelete={() => handlePostDelete(item)}
+                    handlePostDelete={() => {
+                      // if postData and searchValue are both true, then delete post but display alert to refresh page to see latest posts
+                      if (postData && searchValue) {
+                        let confirmDelete = window.confirm(
+                          "Are you sure you want to delete this post? Refresh page to see latest posts..."
+                        );
+                        if (confirmDelete) {
+                          handlePostDelete(item);
+                          handleSubmit();
+                        }
+                      }
+                      // if postData is true and searchValue is false, then delete post and display latest posts
+                    }}
                     mode={mode}
                     postData={postData}
                     userList={userList}
