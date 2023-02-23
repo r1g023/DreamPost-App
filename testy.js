@@ -1,39 +1,59 @@
-// This week’s exercise
-// You are given a list of positive integers which represents some range of integers which has been truncated. Find the missing bits, insert ellipses to show that that part has been truncated, and print it. If the consecutive values differ by exactly two, then insert the missing value.
-// Examples:
-// missingBits([1,2,3,4,20,21,22,23])
-// "[1,2,3,4,...,20,21,22,23]"
+// Given a string of any length which contains only digits from 0 to 9, replace each consecutive run of the digit 0 with its length.
 
-// missingBits([1,2,3,5,6])
-// "[1,2,3,4,5,6]"
+// replaceZeros('1234500362000440')
+// 1234523623441
 
-// missingBits([1,3,20,27])
-// "[1,2,3,...,20,...,27]"
+// > replaceZeros('123450036200044')
+// > 123452362344
 
-let firstArray = [1, 2, 3, 4, 20, 21, 22, 23];
-let secondArray = [1, 2, 3, 5, 6];
-let thirdArray = [1, 3, 20, 27];
+// > replaceZeros('000000000000')
+// > 12
 
-function missingBits(arr) {
-  let result = [];
+// > replaceZeros('123456789')
+// > 123456789
 
-  arr.forEach((item) => {
+function replaceZeros(str) {
+  let count = 0;
+  let result = "";
+  let split = str.split("");
+
+  // worst case
+  if (split.length === 0 || split === undefined || split == " ") {
+    return false;
+  }
+
+  split.forEach((item, i) => {
     console.log(item);
-    console.log(result[result.length - 1]); // this will not include the last item in array
 
-    if (item - result[result.length - 1] > 1) {
-      console.log(item);
-      result.push("...");
-      console.log(result);
+    if (item === "0") {
+      console.log(count); // there's 12 zeros in the array so we can add this to my count variable
+      count++;
+      console.log("count", count); // 1
+    } else {
+      if (count > 0) {
+        result = result + count;
+      }
+
+      result = result + item;
+      console.log("result", result);
+      count = 0;
     }
 
-    result.push(item);
-    console.log(result); // this will add last item in array, that we ignored the first time
+    console.log("my initial count of zeros", count);
   });
 
+  if (count > 0) {
+    console.log("final count", count); // 12
+    result = result + count;
+  }
+  console.log("result", result);
   return result;
 }
 
-console.log(missingBits(firstArray)); // [ 1, 2, 3, 4, '...', 20, 21, 22, 23 ]
-console.log(missingBits(secondArray)); // [ 1, 2, 3, '...', 5, 6 ]
-console.log(missingBits(thirdArray)); // [ 1, '...', 3, '...', 20, '...', 27 ]
+console.log(replaceZeros("000000000000")); // 12
+console.log(replaceZeros("1234500362000440")); // 1234523623441
+console.log(replaceZeros("123450036200044")); // 123452362344
+console.log(replaceZeros("123456789")); // 123456789
+
+console.log(replaceZeros("1009")); // 129
+console.log(replaceZeros(" ")); //  false

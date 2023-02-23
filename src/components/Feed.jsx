@@ -226,17 +226,17 @@ const Feed = ({
                     post={item}
                     key={item.id}
                     handlePostDelete={() => {
-                      // if postData and searchValue are both true, then delete post but display alert to refresh page to see latest posts
-                      if (postData && searchValue) {
-                        let confirmDelete = window.confirm(
-                          "Are you sure you want to delete this post? Refresh page to see latest posts..."
-                        );
-                        if (confirmDelete) {
-                          handlePostDelete(item);
-                          handleSubmit();
+                      // if there is a search value or error message, clear results and show all posts
+                      let confirmDelete = window.confirm("Are you sure?");
+
+                      if (confirmDelete) {
+                        handlePostDelete(item);
+                        if (searchValue || errorMessage) {
+                          setSearchValue("");
+                          setErrorMessage("");
+                          setPostData(data.getPosts);
                         }
                       }
-                      // if postData is true and searchValue is false, then delete post and display latest posts
                     }}
                     mode={mode}
                     postData={postData}
