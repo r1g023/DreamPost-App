@@ -68,8 +68,15 @@ const Feed = ({
     // console.log("data on Feed USE EFFECT________________________->", data);
     // if new post, rerender posts
 
-    if (postData) {
-      setPostData(postData);
+
+ 
+      if (data.getPosts.length !== postData.length) {
+  
+
+        clearResults();
+        handleSubmit();
+        setPostData(data.getPosts);
+      }
     }
   }, [data, postData, setPostData, deletePost]);
 
@@ -221,6 +228,7 @@ const Feed = ({
           {postData &&
             postData
               .map((item) => {
+                console.log("non search result data", item);
                 return (
                   <Post
                     post={item}
@@ -235,6 +243,7 @@ const Feed = ({
                           setSearchValue("");
                           setErrorMessage("");
                           setPostData(data.getPosts);
+                          handleSubmit();
                         }
                       }
                     }}
@@ -251,6 +260,7 @@ const Feed = ({
             data &&
             data.getPosts
               .map((item) => {
+                console.log("search result data", item);
                 return (
                   <Post
                     post={item}
