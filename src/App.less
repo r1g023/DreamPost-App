@@ -68,11 +68,10 @@
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 200px;
+        max-width: 300px;
         width: 100%;
       }
       #myTest {
-    
         margin-left: 10px;
       }
 
@@ -119,6 +118,18 @@
           height: 100vh;
           padding-bottom: 300px;
         }
+        
+        
+      }
+    }
+
+    // media query for screens larger than 1000px
+    @media only screen and (min-width: 1000px) {
+      body {
+    
+        .searchBar {
+          background: purple;
+        }
       }
     }
 
@@ -130,11 +141,10 @@
           font-size: 15px;
         }
 
-        .searchBar {
-          max-width: 415px;
-          width: 100%;
-         
-        }
+        // .searchBar {
+        //   max-width: 415px;
+        //   width: 100%;         
+        // }
     
         .searchIcon {
           color: orange;
@@ -145,5 +155,9 @@
           margin-left: 180px;
           font-size: 75px;
           cursor: pointer;
+        }
+
+        .errorMessage {
+          padding-left: 20px;
         }
    }

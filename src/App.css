@@ -42,7 +42,7 @@
 }
 @media only screen and (max-width: 375px) {
   body .searchBar.responsive {
-    max-width: 200px;
+    max-width: 300px;
     width: 100%;
   }
   body #myTest {
@@ -79,13 +79,14 @@
     padding-bottom: 300px;
   }
 }
+@media only screen and (min-width: 1000px) {
+  body .searchBar {
+    background: purple;
+  }
+}
 body .profile-info {
   color: orange;
   font-size: 15px;
-}
-body .searchBar {
-  max-width: 415px;
-  width: 100%;
 }
 body .searchIcon {
   color: orange;
@@ -95,5 +96,8 @@ body .searchIcon {
   margin-left: 180px;
   font-size: 75px;
   cursor: pointer;
+}
+body .errorMessage {
+  padding-left: 20px;
 }
 /*# sourceMappingURL=App.css.map */

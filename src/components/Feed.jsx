@@ -67,18 +67,15 @@ const Feed = ({
     // console.log("Post data on Feed USE EFFECT---************->", postData);
     // console.log("data on Feed USE EFFECT________________________->", data);
     // if new post, rerender posts
-
-
- 
-      if (data.getPosts.length !== postData.length) {
-  
-
-        clearResults();
-        handleSubmit();
-        setPostData(data.getPosts);
-      }
-    }
   }, [data, postData, setPostData, deletePost]);
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
 
   // handle delete post
   const handlePostDelete = async (post) => {
@@ -129,6 +126,7 @@ const Feed = ({
       : setErrorMessage("");
 
     setPostData(result);
+    scrollToTop();
   };
 
   // // clear results
@@ -163,14 +161,6 @@ const Feed = ({
         />
       </Stack>
     );
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -208,6 +198,7 @@ const Feed = ({
 
       {errorMessage && (
         <h2
+          className="errorMessage"
           style={{
             color: mode ? "white" : "black",
             marginTop: searchValue || errorMessage ? "160px" : "0px",
@@ -237,15 +228,8 @@ const Feed = ({
                       // if there is a search value or error message, clear results and show all posts
                       let confirmDelete = window.confirm("Are you sure?");
 
-                      if (confirmDelete) {
-                        handlePostDelete(item);
-                        if (searchValue || errorMessage) {
-                          setSearchValue("");
-                          setErrorMessage("");
-                          setPostData(data.getPosts);
-                          handleSubmit();
-                        }
-                      }
+                      // if search value or postData, clear results and show all posts after deleting post
+                      handlePostDelete(item);
                     }}
                     mode={mode}
                     postData={postData}
