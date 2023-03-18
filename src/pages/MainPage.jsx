@@ -139,7 +139,7 @@ const MainPage = () => {
           postData={postData}
           setPostData={setPostData}
           loading={getAllPosts.loading}
-          error={getAllPosts.error}
+          postError={getAllPosts.error}
         />
         <Rightbar mode={mode} />
       </Stack>
