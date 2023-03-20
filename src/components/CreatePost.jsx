@@ -155,6 +155,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     const formData = new FormData();
     formData.append("file", selectedImages);
     formData.append("upload_preset", "xhfk3bp5_u");
+    console.log("post on image upload test");
+    console.count("post on image count:");
 
     const postImage = async () => {
       try {
@@ -169,7 +171,13 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
         console.log("error uploading image");
       }
     };
-    postImage();
+
+    // do not post if no image is selected
+    if (!selectedImages) {
+      return false;
+    } else {
+      postImage();
+    }
   }
 
   // handle submit for posts
@@ -354,7 +362,14 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                           // setTimeout(() => {
                           //   setTogglePhoto(!togglePhoto);
                           // }, 5000);
-                          uploadImage();
+                          if (uploadImage) {
+                            uploadImage();
+                            // Remove the image from the input
+                            setSelectedImages(null);
+                          }
+                          if (!selectedImages && !uploadPhoto) {
+                            window.alert("Please select an image");
+                          }
                         }}
                       />
                     )}

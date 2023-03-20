@@ -24,6 +24,7 @@ const NavBarSearch = ({
 }) => {
   return (
     <Search
+      className="searchBar responsive"
       sx={{
         position: "fixed",
         marginTop: "19px",
@@ -39,9 +40,7 @@ const NavBarSearch = ({
             ? "0px 0px 12px 0px orange"
             : "0px 0px 12px 0px orange",
         },
-        maxWidth: "400px",
-        minWidth: "340px",
-        width: "100%",
+        width: errorMessage ? "370px" : "400px",
       }}
     >
       {/* Search Input */}

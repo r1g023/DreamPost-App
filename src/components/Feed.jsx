@@ -56,9 +56,9 @@ const Feed = ({
   postData,
   setPostData,
   loading,
-  error,
+  postError,
 }) => {
-  const [deletePost] = useMutation(DELETE_POST);
+  const [deletePost, { error }] = useMutation(DELETE_POST);
 
   // const [errorMessage, setErrorMessage] = useState("");
 
@@ -67,43 +67,47 @@ const Feed = ({
     // console.log("Post data on Feed USE EFFECT---************->", postData);
     // console.log("data on Feed USE EFFECT________________________->", data);
     // if new post, rerender posts
+  }, [data, postData, setPostData, deletePost, error]);
 
-    if (postData) {
-      setPostData(postData);
-    }
-  }, [data, postData, setPostData]);
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
 
   // handle delete post
   const handlePostDelete = async (post) => {
-    let confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
-    if (confirmDelete) {
-      let deletedPost = await deletePost({
-        variables: { id: post.id },
-        //get from cache and update upon delete instead of refetching post query
-        update: (cache) => {
-          // console.log("post cache--->", cache);
-          const prevData = cache.readQuery({ query: GET_POSTS });
-          // console.log("prevData--->", prevData);
-          const newData = prevData.getPosts.filter(
-            (item) => item.id !== post.id
-          );
-          // console.log("newData--->", newData);
-          // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
-          cache.writeQuery({
-            query: GET_POSTS,
-            data: { getPosts: newData },
-          });
-        },
-      });
-      return deletedPost;
-    }
+    // let confirmDelete = window.confirm(
+    //   "Are you sure you want to delete this post?"
+    // );
+
+    let deletedPost = await deletePost({
+      variables: { id: post.id },
+      //get from cache and update upon delete instead of refetching post query
+      update: (cache) => {
+        // console.log("post cache--->", cache);
+        const prevData = cache.readQuery({ query: GET_POSTS });
+        // console.log("prevData--->", prevData);
+        const newData = prevData.getPosts.filter((item) => item.id !== post.id);
+        // console.log("newData--->", newData);
+        // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
+        cache.writeQuery({
+          query: GET_POSTS,
+          data: { getPosts: newData },
+        });
+      },
+    });
+
+    // console.log("deletedPost--->", deletedPost);
+    console.log("deletedPost", deletedPost);
+    return deletedPost;
   };
 
   // handle submit
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     // add data to search.posts array
     let result = data.getPosts.filter((item) => {
       // console.log("item search", item);
@@ -119,6 +123,7 @@ const Feed = ({
       : setErrorMessage("");
 
     setPostData(result);
+    scrollToTop();
   };
 
   // // clear results
@@ -154,17 +159,10 @@ const Feed = ({
       </Stack>
     );
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  };
-
-  if (error) return <p>Error: {error.message}</p>;
-
-  // if new post, automatically click on submit to rerender posts
+  // if (error) {
+  //   console.log("myError ---->>>>>>> Error: ", error.message);
+  //   window.confirm("Error: " + error.message + ". Please refresh the page.");
+  // }
 
   return (
     <div style={{ zIndex: 2 }}>
@@ -179,16 +177,8 @@ const Feed = ({
 
       {/* Refresh Icon */}
       <RotateRightSharpIcon
-        sx={{
-          position: "fixed",
-          display: "block",
-          top: "140px",
-          // zIndex: "100",
-          marginLeft: "136px",
-          fontSize: "75px",
-          cursor: "pointer",
-          color: "green",
-        }}
+        className="searchIcon"
+        id="myTest"
         //add size
         fontSize="large"
         title="See Latest Posts"
@@ -206,6 +196,7 @@ const Feed = ({
 
       {errorMessage && (
         <h2
+          className="errorMessage"
           style={{
             color: mode ? "white" : "black",
             marginTop: searchValue || errorMessage ? "160px" : "0px",
@@ -226,11 +217,30 @@ const Feed = ({
           {postData &&
             postData
               .map((item) => {
+                console.log("non search result data", item);
                 return (
                   <Post
                     post={item}
                     key={item.id}
-                    handlePostDelete={() => handlePostDelete(item)}
+                    handlePostDelete={() => {
+                      // if post is deleted and error, clear search results and add alert to refresh page
+                      let confirmDelete = window.confirm(
+                        "Are you sure you want to delete this post?"
+                      );
+                      // if no error, delete post
+                      if (confirmDelete && !error) {
+                        handlePostDelete(item);
+                      }
+                      // if error, clear search results and add alert to refresh page
+                      if (error) {
+                        console.log("item delete------->", item);
+                        // let confirmRefresh = window.confirm(
+                        //   "Error: " +
+                        //     error.message +
+                        //     ". Please refresh the page."
+                        // );
+                      }
+                    }}
                     mode={mode}
                     postData={postData}
                     userList={userList}
@@ -244,11 +254,14 @@ const Feed = ({
             data &&
             data.getPosts
               .map((item) => {
+                console.log("search result data", item);
                 return (
                   <Post
                     post={item}
                     key={item.id}
-                    handlePostDelete={() => handlePostDelete(item)}
+                    handlePostDelete={() => {
+                      handlePostDelete(item);
+                    }}
                     mode={mode}
                     postData={postData}
                     userList={userList}

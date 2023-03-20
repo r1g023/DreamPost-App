@@ -117,7 +117,7 @@ const Input = styled("input")({
   },
 });
 
-// container for profile page
+// container reponsive for profile page
 const StyledBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
@@ -184,7 +184,7 @@ const Profile = () => {
   // set localStorage to editName
   React.useEffect(() => {
     localStorage.setItem("editName", JSON.stringify(editName));
-  }, [editName]);
+  }, [editName, user.id]);
 
   //upload image to Cloud
   function uploadImage(e) {
@@ -208,7 +208,7 @@ const Profile = () => {
     postImage();
   }
 
-  // handle form submission
+  // handle form submission .
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("updateUserID Submit", updateUserID);
@@ -276,17 +276,22 @@ const Profile = () => {
   console.log("PROFILE did mount");
   return (
     <div
+      className="profile-container responsive"
+      id="profile-responsive"
       style={{
         backgroundColor: mode ? "#002A53" : "#E1D9D1",
         opacity: 0.9,
-
-        marginTop: "65px",
+        height: "100vh",
+        marginTop: "60px",
+        // scrollBehavior: "smooth",
+        // overflowY: "scroll",
+        // overflowX: "hidden",
       }}
     >
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
-        <h1 style={{ color: mode ? "white" : "black", paddingTop: "20px" }}>
+        <h1 style={{ color: mode ? "white" : "black", paddingTop: "40px" }}>
           Profile Settings
         </h1>
 
@@ -582,7 +587,6 @@ const Profile = () => {
           </div>
         </Box>
       </StyledBox>
-      <p className="search-test">TEST</p>
     </div>
   );
 };

@@ -178,7 +178,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   };
 
   // for post delete
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState("");
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -264,6 +264,8 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           });
         },
       });
+      console.log("deleted comment errors--->", deletedComment);
+
       return deletedComment;
     }
   };

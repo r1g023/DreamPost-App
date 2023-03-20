@@ -211,16 +211,12 @@ background-color: #FF6600
   background: "red"
 }
 
-.profile {
+/* .profile {
   width: 100%;
 
   word-wrap: break-word;
-}
+} */
 
-.profile-info {
-  color: green;
-  font-size: 15px;
-}
 
 
 /* styling for ProfileModal */
