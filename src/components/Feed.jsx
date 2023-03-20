@@ -228,17 +228,15 @@ const Feed = ({
                         "Are you sure you want to delete this post?"
                       );
                       // if no error, delete post
-                      if (confirmDelete && !error) {
-                        handlePostDelete(item);
+                      if (confirmDelete) {
+                        if (!error) handlePostDelete(item);
                       }
                       // if error, clear search results and add alert to refresh page
                       if (error) {
                         console.log("item delete------->", item);
-                        // let confirmRefresh = window.confirm(
-                        //   "Error: " +
-                        //     error.message +
-                        //     ". Please refresh the page."
-                        // );
+                        window.confirm(
+                          "post deleted, please refresh page to see changes"
+                        );
                       }
                     }}
                     mode={mode}
