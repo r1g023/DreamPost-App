@@ -67,7 +67,7 @@ const Feed = ({
     // console.log("Post data on Feed USE EFFECT---************->", postData);
     // console.log("data on Feed USE EFFECT________________________->", data);
     // if new post, rerender posts
-  }, [data, postData, setPostData, deletePost, error]);
+  }, [data, postData, setPostData, deletePost]);
 
   function scrollToTop() {
     window.scrollTo({
@@ -223,21 +223,7 @@ const Feed = ({
                     post={item}
                     key={item.id}
                     handlePostDelete={() => {
-                      // if post is deleted and error, clear search results and add alert to refresh page
-                      let confirmDelete = window.confirm(
-                        "Are you sure you want to delete this post?"
-                      );
-                      // if no error, delete post
-                      if (confirmDelete) {
-                        if (!error) handlePostDelete(item);
-                      }
-                      // if error, clear search results and add alert to refresh page
-                      if (error) {
-                        console.log("item delete------->", item);
-                        window.confirm(
-                          "post deleted, please refresh page to see changes"
-                        );
-                      }
+                      handlePostDelete(item);
                     }}
                     mode={mode}
                     postData={postData}
