@@ -77,6 +77,7 @@ const MainPage = () => {
   const [errorMessage, setErrorMessage] = React.useState("");
 
   const getAllPosts = useQuery(GET_POSTS);
+  console.log("error retrieving posts....----->", getAllPosts.error);
 
   console.log("datas---->", getAllPosts);
 
@@ -111,6 +112,14 @@ const MainPage = () => {
     postData,
   ]);
 
+  // if error retrieving posts, display error message and reload page
+  if (getAllPosts.error) {
+    setErrorMessage("Error retrieving posts. Reloading page...");
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+
   return (
     <>
       <Stack
@@ -124,8 +133,7 @@ const MainPage = () => {
           marginTop: errorMessage ? "65px" : "65px",
           height: searchValue || errorMessage ? "100vh" : "auto",
           overflow: "auto",
-        }}
-      >
+        }}>
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
         <Feed
           mode={mode}

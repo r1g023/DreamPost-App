@@ -164,6 +164,14 @@ const Feed = ({
   //   window.confirm("Error: " + error.message + ". Please refresh the page.");
   // }
 
+  if (error) {
+    // add popup that something happened and to refresh page
+    let confirmRefresh = window.confirm("Error: something went wrong.");
+    if (confirmRefresh) {
+      window.location.reload();
+    }
+  }
+
   return (
     <div style={{ zIndex: 2 }}>
       <NavBarSearch
@@ -221,14 +229,15 @@ const Feed = ({
                     post={item}
                     key={item.id}
                     handlePostDelete={(myTest) => {
-                      let confirmDelete = window.confirm("u sure?");
+                      let confirmDelete = window.confirm(
+                        "Are you sure you want to delete your Post?"
+                      );
                       if (confirmDelete) {
                         handlePostDelete(item);
-                        // reload page
+
                         window.location.reload(false);
                       }
                     }}
-                    //////////////////////////////////////////////////
                     mode={mode}
                     postData={postData}
                     userList={userList}
