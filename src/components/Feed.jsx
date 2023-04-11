@@ -103,6 +103,7 @@ const Feed = ({
 
     // console.log("deletedPost--->", deletedPost);
     console.log("deletedPost", deletedPost);
+    return deletedPost;
   };
 
   // handle submit
