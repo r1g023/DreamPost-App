@@ -112,14 +112,6 @@ const MainPage = () => {
     postData,
   ]);
 
-  // if error retrieving posts, display error message and reload page
-  if (getAllPosts.error) {
-    setErrorMessage("Error retrieving posts. Reloading page...");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  }
-
   return (
     <>
       <Stack

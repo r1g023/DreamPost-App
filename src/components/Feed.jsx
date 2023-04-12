@@ -159,13 +159,8 @@ const Feed = ({
       </Stack>
     );
 
-  // if (error) {
-  //   console.log("myError ---->>>>>>> Error: ", error.message);
-  //   window.confirm("Error: " + error.message + ". Please refresh the page.");
-  // }
-
+  // adding this in case of an error the reload the page
   if (error) {
-    // add popup that something happened and to refresh page
     let confirmRefresh = window.confirm("Error: something went wrong.");
     if (confirmRefresh) {
       window.location.reload();
