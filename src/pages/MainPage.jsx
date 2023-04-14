@@ -118,6 +118,7 @@ const MainPage = () => {
         direction="row"
         spacing={0}
         justifyContent="space-around"
+        className="feed-responsiveOverflow"
         sx={{
           background: mode ? "#1B2430" : "",
           opacity: "0.9",

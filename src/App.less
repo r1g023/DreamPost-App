@@ -2,6 +2,9 @@
 // if the screen is less than 451px, the search bar will be 350px
 @media only screen and (max-width: 451px) {
     body {
+
+     
+
       // for search bar
       .searchBar.responsive {
         max-width: 390px;
@@ -23,6 +26,11 @@
 
   @media only screen and (max-width: 433px) {
     body {
+       // for feed page and remove overflow
+       .feed-responsiveOverflow {
+        overflow: "auto"
+      }
+      
       // for search bar
       .searchBar.responsive {
         max-width: 360px;
@@ -125,9 +133,13 @@
 
     // media query for screens larger than 1000px
     @media only screen and (min-width: 1000px) {
-      body {
-        // will get to this once i test larger screens
-      }
+      // body {
+      //   // will get to this once i test larger screens
+      //   // .searchBar {
+      //   //   max-width: 415px;
+      //   //   width: 100%;         
+      //   // }
+      // }
     }
 
   // main styling for whole app within body
@@ -138,10 +150,10 @@
           font-size: 15px;
         }
 
-        // .searchBar {
-        //   max-width: 415px;
-        //   width: 100%;         
-        // }
+        .searchBar {
+          max-width: 415px;
+          width: 100%;         
+        }
     
         .searchIcon {
           color: orange;
