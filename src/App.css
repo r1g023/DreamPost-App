@@ -17,7 +17,7 @@
     overflow: "auto";
   }
   body .searchBar.responsive {
-    max-width: 360px;
+    max-width: 355px;
     width: 100%;
   }
   body #myTest {
@@ -31,8 +31,11 @@
 }
 @media only screen and (max-width: 400px) {
   body .searchBar.responsive {
-    max-width: 340px;
+    max-width: 328px;
     width: 100%;
+  }
+  body .searchError {
+    max-width: 340px;
   }
   body #myTest {
     margin-left: 150px;
@@ -48,6 +51,9 @@
     max-width: 300px;
     width: 100%;
   }
+  body .searchError {
+    max-width: 310px;
+  }
   body #myTest {
     margin-left: 10px;
   }
@@ -59,7 +65,7 @@
 }
 @media only screen and (max-width: 360px) {
   body .searchBar.responsive {
-    max-width: 310px;
+    max-width: 308px;
     width: 100%;
   }
   body #myTest {
@@ -89,7 +95,7 @@ body .profile-info {
   font-size: 15px;
 }
 body .searchBar {
-  max-width: 415px;
+  max-width: 410px;
   width: 100%;
 }
 body .searchIcon {
@@ -110,5 +116,8 @@ body .shareButtonContainer {
   padding: 5px;
   max-width: 400px;
   width: 100%;
+}
+body .feed-responsiveOverflow {
+  height: auto;
 }
 /*# sourceMappingURL=App.css.map */

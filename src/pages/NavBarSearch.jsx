@@ -24,7 +24,7 @@ const NavBarSearch = ({
 }) => {
   return (
     <Search
-      className="searchBar responsive"
+      className={errorMessage ? "searchError" : "searchBar responsive"}
       sx={{
         position: "fixed",
         marginTop: "19px",
