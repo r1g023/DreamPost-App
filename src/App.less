@@ -1,28 +1,46 @@
 // responsive query for the NavbarSearch Post 
 // if the screen is less than 451px, the search bar will be 350px
-@media only screen and (max-width: 451px) {
-    body {
+// @media only screen and (max-width: 599px) {
+//     body {
 
      
 
-      // for search bar
-      .searchBar.responsive {
-        max-width: 390px;
-        width: 100%;
+//       // for search bar
+//       .searchBar.responsive {
+//         max-width: 390px;
+//         width: 100%;
        
-      }
-      #myTest {
+//       }
+//       #refreshIcon {
+//         margin-left: 175px;
+//       }
 
-        margin-left: 175px;
-      }
+//       #profile-responsive {
+//         padding: 175px 0 175px;
+//         border: 10px solid red;
+//       }
+//     }
+//   }
 
-      #profile-responsive {
-        padding-top: 150px;
-        height: 100vh;
-        padding-bottom: 150px;
-      }
+// if min 320 and max 599
+@media only screen and (min-width: 320px) and (max-width: 599px) {
+  body {
+    // for search bar
+    .searchBar.responsive {
+      max-width: 390px;
+      width: 100%;
+     
+    }
+    #refreshIcon {
+      margin-left: 175px;
+    }
+
+    #profile-responsive {
+      padding: 50px 0 50px;
+      border: 10px solid green;
     }
   }
+}
 
   @media only screen and (max-width: 433px) {
     body {
@@ -37,16 +55,15 @@
         width: 100%;
        
       }
-      #myTest {
-
+      #refreshIcon {f
         margin-left: 160px;
       }
 
-      #profile-responsive {
-        padding-top: 175px;
-        height: 100vh;
-        padding-bottom: 175px;
-      }
+      //#profile-responsive {
+        //padding-top: 175px;
+        //height: 100vh;
+        //padding-bottom: 175px;
+      //}
     }
   }
 
@@ -65,15 +82,15 @@
       }
 
 
-      #myTest {
+      #refreshIcon {
         margin-left: 150px;
       }
 
-      #profile-responsive {
-        padding-top: 125px;
-        height: 100vh;
-        padding-bottom: 125px;
-      }
+      //#profile-responsive {
+        //padding-top: 125px;
+        //height: 100vh;
+        //padding-bottom: 125px;
+      //}
     }
   }
 
@@ -84,6 +101,7 @@
       .searchBar.responsive {
         max-width: 300px;
         width: 100%;
+        background: green;
       }
 
        // styling for searchBar on Feed page
@@ -91,67 +109,79 @@
         max-width: 310px;
       }
 
-      #myTest {
+      #refreshIcon {
         margin-left: 10px;
       }
 
-      #profile-responsive {
-        padding-top: 125px;
-        height: 100vh;
-        padding-bottom: 125px;
-      }
+      //#profile-responsive {
+        //padding-top: 125px;
+        //height: 100vh;
+        //padding-bottom: 125px;
+      //}
     }
   }
 
-   // if the screen is less than 350px, the search bar will be 250px
-   @media only screen and (max-width: 360px) {
+   // if the screen is less than 361px, the search bar will be 250px
+   @media only screen and (max-width: 361px) {
     body {
       // for search bar
       .searchBar.responsive {
         max-width: 308px;
         width: 100%;
+        background: red;
       }
-      #myTest {
-    
+      #refreshIcon {
         margin-left: 130px;
       }
 
-      #profile-responsive {
-        padding-top: 300px;
-        height: 100vh;
-        padding-bottom: 300px;
-      }
+      // #profile-responsive {
+      //   padding-top: 300px;
+      //   height: 100vh;
+      //   padding-bottom: 300px;
+      // }
     }
   }
 
-    // if the screen is less than 350px, the search bar will be 250px
-    @media only screen and (max-width: 315px) {
+    // if the screen is less than 320px, the search bar will be 250px
+    @media only screen and (max-width: 320px) {
       body {
         // for search bar
         .searchBar.responsive {
           max-width: 260px;
           width: 100%;
+          background: purple;
         }
 
       
 
-        #profile-responsive {
-          padding-top: 300px;
-          height: 100vh;
-          padding-bottom: 300px;
-        }
-        
+        // #profile-responsive {
+        //   padding: 340px 0 340px;
+        //   border: 10px solid red;
+        //   margin-top: 100px;
+        // }
+          
         
       }
     }
 
     // media query for screens larger than 1000px
-    @media only screen and (min-width: 1281px) {
+    // @media only screen and (max-width: 1280px) {
+    //   body {
+    //     #profile-responsive {
+    //       margin-top: 73px;
+    //       padding: 100px 0 100px;
+    //       border: 10px solid orange;
+    //     }
+    //   }
+    // }
+
+    // media query if min 451 and max 1280
+    @media only screen and (min-width: 600px) and (max-width: 1280px) {
       body {
         #profile-responsive {
-          padding-top: 300px;
-          height: 100vh;
-          padding-bottom: 300px;
+          margin-top: 73px;
+          padding: 100px 0 100px;
+          border: 10px solid orange;
         }
       }
     }
@@ -164,12 +194,16 @@
           font-size: 15px;
         }
 
+        .profie-container {
+          border: 10px solid green;
+        }
+
         .searchBar {
           max-width: 410px;
           width: 100%;         
         }
         
-    
+  
         .searchIcon {
           color: orange;
           position: fixed;
@@ -185,6 +219,7 @@
           padding-left: 20px;
         }
 
+        
       // share button styling on post card and it works on mobile as well
       .shareButtonContainer {
         box-shadow:  0px 0px 12px 0px gray;

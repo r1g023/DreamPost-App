@@ -281,9 +281,9 @@ const Profile = () => {
       style={{
         backgroundColor: mode ? "#002A53" : "#E1D9D1",
         opacity: 0.9,
-        marginTop: "73px",
-        border: "3px solid red",
-        padding: "50px 0 50px",
+        // marginTop: "73px",
+        // border: "3px solid red",
+        // padding: "50px 0 50px",
       }}>
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}

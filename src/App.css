@@ -1,15 +1,14 @@
-@media only screen and (max-width: 451px) {
+@media only screen and (min-width: 320px) and (max-width: 599px) {
   body .searchBar.responsive {
     max-width: 390px;
     width: 100%;
   }
-  body #myTest {
+  body #refreshIcon {
     margin-left: 175px;
   }
   body #profile-responsive {
-    padding-top: 150px;
-    height: 100vh;
-    padding-bottom: 150px;
+    padding: 50px 0 50px;
+    border: 10px solid green;
   }
 }
 @media only screen and (max-width: 433px) {
@@ -20,13 +19,8 @@
     max-width: 355px;
     width: 100%;
   }
-  body #myTest {
-    margin-left: 160px;
-  }
-  body #profile-responsive {
-    padding-top: 175px;
-    height: 100vh;
-    padding-bottom: 175px;
+  body #refreshIcon {
+    fmargin-left: 160px;
   }
 }
 @media only screen and (max-width: 400px) {
@@ -37,67 +31,53 @@
   body .searchError {
     max-width: 340px;
   }
-  body #myTest {
+  body #refreshIcon {
     margin-left: 150px;
-  }
-  body #profile-responsive {
-    padding-top: 125px;
-    height: 100vh;
-    padding-bottom: 125px;
   }
 }
 @media only screen and (max-width: 375px) {
   body .searchBar.responsive {
     max-width: 300px;
     width: 100%;
+    background: green;
   }
   body .searchError {
     max-width: 310px;
   }
-  body #myTest {
+  body #refreshIcon {
     margin-left: 10px;
   }
-  body #profile-responsive {
-    padding-top: 125px;
-    height: 100vh;
-    padding-bottom: 125px;
-  }
 }
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 361px) {
   body .searchBar.responsive {
     max-width: 308px;
     width: 100%;
+    background: red;
   }
-  body #myTest {
+  body #refreshIcon {
     margin-left: 130px;
   }
-  body #profile-responsive {
-    padding-top: 300px;
-    height: 100vh;
-    padding-bottom: 300px;
-  }
 }
-@media only screen and (max-width: 315px) {
+@media only screen and (max-width: 320px) {
   body .searchBar.responsive {
     max-width: 260px;
     width: 100%;
-  }
-  body #profile-responsive {
-    padding-top: 300px;
-    height: 100vh;
-    padding-bottom: 300px;
+    background: purple;
   }
 }
-@media only screen and (min-width: 1281px) {
+@media only screen and (min-width: 600px) and (max-width: 1280px) {
   body #profile-responsive {
-    padding-top: 300px;
-    height: 100vh;
-    padding-bottom: 300px;
+    margin-top: 73px;
+    padding: 100px 0 100px;
+    border: 10px solid orange;
   }
 }
 body .profile-info {
   color: orange;
   font-size: 15px;
+}
+body .profie-container {
+  border: 10px solid green;
 }
 body .searchBar {
   max-width: 410px;

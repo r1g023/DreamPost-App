@@ -181,7 +181,7 @@ const Feed = ({
       {/* Refresh Icon */}
       <RotateRightSharpIcon
         className="searchIcon"
-        id="myTest"
+        id="refreshIcon"
         //add size
         fontSize="large"
         title="See Latest Posts"
