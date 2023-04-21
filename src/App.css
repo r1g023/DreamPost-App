@@ -1,16 +1,3 @@
-@media only screen and (min-width: 320px) and (max-width: 599px) {
-  body .searchBar.responsive {
-    max-width: 390px;
-    width: 100%;
-  }
-  body #refreshIcon {
-    margin-left: 175px;
-  }
-  body #profile-responsive {
-    padding: 50px 0 50px;
-    border: 10px solid green;
-  }
-}
 @media only screen and (max-width: 433px) {
   body .feed-responsiveOverflow {
     overflow: "auto";
@@ -20,13 +7,14 @@
     width: 100%;
   }
   body #refreshIcon {
-    fmargin-left: 160px;
+    margin-left: 160px;
   }
 }
 @media only screen and (max-width: 400px) {
   body .searchBar.responsive {
     max-width: 328px;
     width: 100%;
+    background: yellow;
   }
   body .searchError {
     max-width: 340px;
@@ -35,9 +23,9 @@
     margin-left: 150px;
   }
 }
-@media only screen and (max-width: 375px) {
+@media only screen and (min-width: 360px) and (max-width: 399px) {
   body .searchBar.responsive {
-    max-width: 300px;
+    max-width: 100px;
     width: 100%;
     background: green;
   }
@@ -45,10 +33,10 @@
     max-width: 310px;
   }
   body #refreshIcon {
-    margin-left: 10px;
+    margin-left: 100px;
   }
 }
-@media only screen and (max-width: 361px) {
+@media only screen and (max-width: 359px) {
   body .searchBar.responsive {
     max-width: 308px;
     width: 100%;
@@ -58,25 +46,49 @@
     margin-left: 130px;
   }
 }
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 321px) {
   body .searchBar.responsive {
-    max-width: 260px;
+    max-width: 200px;
     width: 100%;
-    background: purple;
+    background: blue;
+  }
+  body #refreshIcon {
+    margin-left: 120px;
   }
 }
-@media only screen and (min-width: 600px) and (max-width: 1280px) {
+@media only screen and (min-width: 600px) and (max-width: 2000px) {
   body #profile-responsive {
     margin-top: 73px;
-    padding: 100px 0 100px;
+    padding: 200px 0 200px;
     border: 10px solid orange;
+  }
+}
+@media only screen and (min-width: 361px) and (max-width: 599px) {
+  body #profile-responsive {
+    margin-top: 65px;
+    padding: 275px 0 275px;
+    border: 10px solid purple;
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 360px) {
+  body .searchBar.responsive {
+    max-width: 390px;
+    width: 100%;
+  }
+  body #refreshIcon {
+    margin-left: 175px;
+  }
+  body #profile-responsive {
+    margin-top: 65px;
+    padding: 300px 0 300px;
+    border: 10px solid green;
   }
 }
 body .profile-info {
   color: orange;
   font-size: 15px;
 }
-body .profie-container {
+body .profile-container {
   border: 10px solid green;
 }
 body .searchBar {
