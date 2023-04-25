@@ -74,14 +74,71 @@
     }
   }
 
- 
-  @media only screen and (min-width: 360px) and (max-width: 399px) {
+   // if the screen is less than 400px, the search bar will be 300px
+   @media only screen and (max-width: 395px) {
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 100px;
+        max-width: 335px;
+        width: 100%;
+        background: orange;
+      }
+
+      // styling for searchBar on Feed page
+      .searchError {
+        max-width: 340px;
+      }
+
+
+      #refreshIcon {
+        margin-left: 150px;
+      }
+
+      //#profile-responsive {
+        //padding-top: 125px;
+        //height: 100vh;
+        //padding-bottom: 125px;
+      //}
+    }
+  }
+
+     // if the screen is less than 400px, the search bar will be 300px
+     @media only screen and (max-width: 385px) {
+      body {
+        // for search bar
+        .searchBar.responsive {
+          max-width: 329px;
+          width: 100%;
+          background: orange;
+        }
+  
+        // styling for searchBar on Feed page
+        .searchError {
+          max-width: 340px;
+        }
+  
+  
+        #refreshIcon {
+          margin-left: 150px;
+        }
+  
+        //#profile-responsive {
+          //padding-top: 125px;
+          //height: 100vh;
+          //padding-bottom: 125px;
+        //}
+      }
+    }
+
+ 
+  @media only screen and (max-width: 376px) {
+    body {
+      // for search bar
+      .searchBar.responsive {
+        max-width: 317px;
         width: 100%;
         background: green;
+       
       }
 
        // styling for searchBar on Feed page
@@ -100,6 +157,34 @@
       //}
     }
   }
+
+  @media only screen and (max-width: 370px) {
+    body {
+      // for search bar
+      .searchBar.responsive {
+        max-width: 304px;
+        width: 100%;
+        background: purple;
+       
+      }
+
+       // styling for searchBar on Feed page
+       .searchError {
+        max-width: 310px;
+      }
+
+      #refreshIcon {
+        margin-left: 100px;
+      }
+
+      //#profile-responsive {
+        //padding-top: 125px;
+        //height: 100vh;
+        //padding-bottom: 125px;
+      //}
+    }
+  }
+
 
    // if the screen is less than 361px, the search bar will be 250px
    @media only screen and (max-width: 359px) {
@@ -122,11 +207,11 @@
   }
 
     // if the screen is less than 320px, the search bar will be 250px
-    @media only screen and (max-width: 321px) {
+    @media only screen and (max-width: 320px) {
       body {
         // for search bar
         .searchBar.responsive {
-          max-width: 200px;
+          max-width: 266px;
           width: 100%;
           background: blue;
         }
@@ -134,6 +219,12 @@
         // refresh icon
         #refreshIcon {
           margin-left: 120px;
+        }
+
+        // search error 
+        .searchError {
+          max-width: 280px;
+          width: 100%;
         }
 
         // #profile-responsive {
@@ -144,28 +235,6 @@
       }
     }
 
-    // // if the screen is less than 320px, the search bar will be 250px
-    // @media only screen and (max-width: 319px) {
-    //   body {
-    //     // for search bar
-    //     .searchBar.responsive {
-    //       max-width: 225px;
-    //       width: 100%;
-    //       background: blue;
-    //     }
-
-    //     // refresh icon
-    //     #refreshIcon {
-    //       margin-left: 11px;
-    //     }
-
-    //     // #profile-responsive {
-    //     //   padding: 340px 0 340px;
-    //     //   border: 10px solid red;
-    //     //   margin-top: 100px;
-    //     // }
-    //   }
-    // }
 
 ///////////////////////////////////////////////////////////////////////////////
     //  adjust padding on top and bottom of profile page for larger screens
@@ -193,16 +262,6 @@
     // adjust padding on top and bottom of profile page for smaller screens
     @media only screen and (min-width: 320px) and (max-width: 360px) {
       body {
-        // for search bar
-        .searchBar.responsive {
-          max-width: 390px;
-          width: 100%;
-        
-        }
-        #refreshIcon {
-          margin-left: 175px;
-        }
-
         #profile-responsive {
           margin-top: 65px;
           padding: 300px 0 300px;
