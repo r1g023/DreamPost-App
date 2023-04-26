@@ -1,20 +1,19 @@
 @media only screen and (max-width: 433px) {
-  body .feed-responsiveOverflow {
-    overflow: "auto";
-  }
   body .searchBar.responsive {
-    max-width: 355px;
+    max-width: 360px;
     width: 100%;
   }
   body #refreshIcon {
     margin-left: 160px;
   }
+  body .searchError {
+    max-width: 385px;
+  }
 }
 @media only screen and (max-width: 400px) {
   body .searchBar.responsive {
-    max-width: 328px;
+    max-width: 320px;
     width: 100%;
-    background: yellow;
   }
   body .searchError {
     max-width: 340px;
@@ -25,12 +24,11 @@
 }
 @media only screen and (max-width: 395px) {
   body .searchBar.responsive {
-    max-width: 335px;
+    max-width: 340px;
     width: 100%;
-    background: orange;
   }
   body .searchError {
-    max-width: 340px;
+    max-width: 355px;
   }
   body #refreshIcon {
     margin-left: 150px;
@@ -40,7 +38,6 @@
   body .searchBar.responsive {
     max-width: 329px;
     width: 100%;
-    background: orange;
   }
   body .searchError {
     max-width: 340px;
@@ -51,35 +48,32 @@
 }
 @media only screen and (max-width: 376px) {
   body .searchBar.responsive {
-    max-width: 317px;
+    max-width: 323px;
     width: 100%;
-    background: green;
   }
   body .searchError {
-    max-width: 310px;
+    max-width: 340px;
   }
   body #refreshIcon {
-    margin-left: 100px;
+    margin-left: 140px;
   }
 }
 @media only screen and (max-width: 370px) {
   body .searchBar.responsive {
-    max-width: 304px;
+    max-width: 307px;
     width: 100%;
-    background: purple;
   }
   body .searchError {
-    max-width: 310px;
+    max-width: 325px;
   }
   body #refreshIcon {
-    margin-left: 100px;
+    margin-left: 133px;
   }
 }
 @media only screen and (max-width: 359px) {
   body .searchBar.responsive {
     max-width: 308px;
     width: 100%;
-    background: red;
   }
   body #refreshIcon {
     margin-left: 130px;
@@ -87,15 +81,27 @@
 }
 @media only screen and (max-width: 320px) {
   body .searchBar.responsive {
-    max-width: 266px;
+    max-width: 270px;
     width: 100%;
-    background: blue;
   }
   body #refreshIcon {
     margin-left: 120px;
   }
   body .searchError {
-    max-width: 280px;
+    max-width: 295px;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 280px) {
+  body .searchBar.responsive {
+    max-width: 240px;
+    width: 100%;
+  }
+  body #refreshIcon {
+    margin-left: 110px;
+  }
+  body .searchError {
+    max-width: 250px;
     width: 100%;
   }
 }

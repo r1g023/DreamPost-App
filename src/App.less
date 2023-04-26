@@ -1,41 +1,28 @@
-// responsive query for the NavbarSearch Post 
-// if the screen is less than 451px, the search bar will be 350px
-// @media only screen and (max-width: 599px) {
-//     body {
-//       // for search bar
-//       .searchBar.responsive {
-//         max-width: 390px;
-//         width: 100%;
-       
-//       }
-//       #refreshIcon {
-//         margin-left: 175px;
-//       }
-
-//       #profile-responsive {
-//         padding: 175px 0 175px;
-//         border: 10px solid red;
-//       }
-//     }
-//   }
+// This file contains all the media queries for the entire app
 
 
-
+// if the screen is less than 433px 
   @media only screen and (max-width: 433px) {
     body {
        // for feed page and remove overflow
-       .feed-responsiveOverflow {
-        overflow: "auto"
-      }
+      //  .feed-responsiveOverflow {
+      //   overflow: "auto";
+        
+      // }
       
       // for search bar
       .searchBar.responsive {
-        max-width: 355px;
-        width: 100%;
-       
+        max-width: 360px;
+        width: 100%;  
       }
+
+   
       #refreshIcon {
         margin-left: 160px;
+      }
+
+      .searchError {
+        max-width: 385px;
       }
 
       //#profile-responsive {
@@ -46,14 +33,13 @@
     }
   }
 
-  // if the screen is less than 400px, the search bar will be 300px
+  // if the screen is less than 400px 
   @media only screen and (max-width: 400px) {
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 328px;
+        max-width: 320px;
         width: 100%;
-        background: yellow;
       }
 
       // styling for searchBar on Feed page
@@ -74,19 +60,18 @@
     }
   }
 
-   // if the screen is less than 400px, the search bar will be 300px
+   // if the screen is less than  395px
    @media only screen and (max-width: 395px) {
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 335px;
+        max-width: 340px;
         width: 100%;
-        background: orange;
       }
 
       // styling for searchBar on Feed page
       .searchError {
-        max-width: 340px;
+        max-width: 355px;
       }
 
 
@@ -102,14 +87,13 @@
     }
   }
 
-     // if the screen is less than 400px, the search bar will be 300px
+     // if the screen is less than  385px 
      @media only screen and (max-width: 385px) {
       body {
         // for search bar
         .searchBar.responsive {
           max-width: 329px;
           width: 100%;
-          background: orange;
         }
   
         // styling for searchBar on Feed page
@@ -130,24 +114,23 @@
       }
     }
 
- 
+
+  // if the screen is less than 376px,
   @media only screen and (max-width: 376px) {
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 317px;
+        max-width: 323px;
         width: 100%;
-        background: green;
-       
       }
 
        // styling for searchBar on Feed page
        .searchError {
-        max-width: 310px;
+        max-width: 340px;
       }
 
       #refreshIcon {
-        margin-left: 100px;
+        margin-left: 140px;
       }
 
       //#profile-responsive {
@@ -162,19 +145,17 @@
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 304px;
+        max-width: 307px;
         width: 100%;
-        background: purple;
-       
       }
 
        // styling for searchBar on Feed page
        .searchError {
-        max-width: 310px;
+        max-width: 325px;
       }
 
       #refreshIcon {
-        margin-left: 100px;
+        margin-left: 133px;
       }
 
       //#profile-responsive {
@@ -186,19 +167,19 @@
   }
 
 
-   // if the screen is less than 361px, the search bar will be 250px
+   // if the screen is less than 359px, the search bar will be 250px
    @media only screen and (max-width: 359px) {
     body {
       // for search bar
       .searchBar.responsive {
         max-width: 308px;
         width: 100%;
-        background: red;
       }
 
       #refreshIcon {
         margin-left: 130px;
       }
+      
 
       // #profile-responsive {
       //   border: 5px solid red
@@ -206,14 +187,14 @@
     }
   }
 
-    // if the screen is less than 320px, the search bar will be 250px
+    // if the screen is less than 320px 
     @media only screen and (max-width: 320px) {
       body {
         // for search bar
         .searchBar.responsive {
-          max-width: 266px;
+          max-width: 270px;
           width: 100%;
-          background: blue;
+
         }
 
         // refresh icon
@@ -223,7 +204,7 @@
 
         // search error 
         .searchError {
-          max-width: 280px;
+          max-width: 295px;
           width: 100%;
         }
 
@@ -234,6 +215,36 @@
         // }
       }
     }
+
+    // screen for 280px
+    @media  only screen and (max-width: 280px) {
+      body {
+        // for search bar
+        .searchBar.responsive {
+          max-width: 240px;
+          width: 100%;
+        }
+
+        // refresh icon
+        #refreshIcon {
+          margin-left: 110px;
+        }
+
+        // search error 
+        .searchError {
+          max-width: 250px;
+          width: 100%;
+        }
+
+        // #profile-responsive {
+        //   padding: 340px 0 340px;
+        //   border: 10px solid red;
+        //   margin-top: 100px;
+        // }
+      }
+    }
+      
+    
 
 
 ///////////////////////////////////////////////////////////////////////////////
