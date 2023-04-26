@@ -386,6 +386,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       color="error"
                       sx={{ marginTop: "3rem" }}
                       onClick={() => {
+                        // fix toggle when canceling photo upload
                         setUploadPhoto(null);
                         setTogglePhoto(!togglePhoto);
                       }}>
