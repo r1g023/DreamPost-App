@@ -118,6 +118,7 @@ const MainPage = () => {
         direction="row"
         spacing={0}
         justifyContent="space-around"
+        className="feed-responsiveOverflow"
         sx={{
           background: mode ? "#1B2430" : "",
           opacity: "0.9",
@@ -125,6 +126,7 @@ const MainPage = () => {
           marginTop: errorMessage ? "65px" : "65px",
           height: searchValue || errorMessage ? "100vh" : "auto",
           overflow: "auto",
+          border: "2px solid orange",
         }}>
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
         <Feed

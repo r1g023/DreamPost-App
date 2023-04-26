@@ -24,7 +24,7 @@ const NavBarSearch = ({
 }) => {
   return (
     <Search
-      className="searchBar responsive"
+      className={errorMessage ? "searchError" : "searchBar responsive"}
       sx={{
         position: "fixed",
         marginTop: "19px",
@@ -41,8 +41,7 @@ const NavBarSearch = ({
             : "0px 0px 12px 0px orange",
         },
         width: errorMessage ? "370px" : "400px",
-      }}
-    >
+      }}>
       {/* Search Input */}
       <InputBase
         sx={{ ml: 1, flex: 1, maxWidth: "400px", width: "100%" }}
@@ -58,8 +57,7 @@ const NavBarSearch = ({
         type="submit"
         sx={{ p: "10px", ml: 1 }}
         aria-label="search"
-        onClick={handleSubmit}
-      >
+        onClick={handleSubmit}>
         <SearchIcon />
       </IconButton>
 

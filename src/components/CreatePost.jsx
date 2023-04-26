@@ -23,7 +23,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
 import { UserContext } from "../App";
-import { PhotoCamera } from "@mui/icons-material";
+import { OpenInBrowser, PhotoCamera } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const GET_POSTS = gql`
@@ -228,10 +228,10 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
           position: "fixed",
           bottom: 20,
           left: { xs: "calc(50% - 25px)", md: 30 },
-        }}
-      >
+        }}>
         <Fab color={mode ? "" : "primary"} aria-label="add">
           <AddIcon />
+          test
         </Fab>
       </Tooltip>
 
@@ -241,16 +241,14 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
           open={open}
           onClose={toggleModal}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           <Box
             width={300}
             height={420}
             bgcolor="white"
             borderRadius={"10px"}
             p={3}
-            textAlign="center"
-          >
+            textAlign="center">
             {/*userbox of current logged in user.username */}
             <UserBox>
               {/*form */}
@@ -261,8 +259,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                   padding: "1rem",
                   borderRadius: "0.7rem",
                   gap: "0.2rem",
-                }}
-              >
+                }}>
                 {togglePhoto ? (
                   <>
                     <Avatar
@@ -301,8 +298,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       variant="contained"
                       color="success"
                       type="submit"
-                      onClick={handleSubmit}
-                    >
+                      onClick={handleSubmit}>
                       Add Post
                     </Button>{" "}
                     {/* <h2>Photo upload is required</h2> */}
@@ -312,8 +308,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     <Button
                       variant="outlined"
                       onClick={() => setTogglePhoto(!togglePhoto)}
-                      color="otherColor"
-                    >
+                      color="otherColor">
                       Upload Photo
                     </Button>
                   </>
@@ -337,8 +332,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       <IconButton
                         color="primary"
                         aria-label="upload picture"
-                        component="span"
-                      >
+                        component="span">
                         <PhotoCamera />
                       </IconButton>
                     </label>
@@ -383,8 +377,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         variant="contained"
                         color="success"
                         sx={{ marginTop: 5 }}
-                        onClick={() => setTogglePhoto(!togglePhoto)}
-                      >
+                        onClick={() => setTogglePhoto(!togglePhoto)}>
                         Submit
                       </Button>
                     )}
@@ -395,8 +388,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       onClick={() => {
                         setUploadPhoto(null);
                         setTogglePhoto(!togglePhoto);
-                      }}
-                    >
+                      }}>
                       Cancel
                     </Button>
                   </>

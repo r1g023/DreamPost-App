@@ -168,7 +168,7 @@ const Feed = ({
   }
 
   return (
-    <div style={{ zIndex: 2 }}>
+    <div className="searchResults" style={{ zIndex: 2 }}>
       <NavBarSearch
         setSearchValue={(e) => setSearchValue(e.target.value)}
         searchValue={searchValue}
@@ -181,7 +181,7 @@ const Feed = ({
       {/* Refresh Icon */}
       <RotateRightSharpIcon
         className="searchIcon"
-        id="myTest"
+        id="refreshIcon"
         //add size
         fontSize="large"
         title="See Latest Posts"
@@ -212,6 +212,7 @@ const Feed = ({
       <div
         style={{
           marginTop: "20px",
+          height: errorMessage || searchValue ? "100vh" : "",
         }}>
         <Box flex={6} p={3} sx={{ display: "block", marginTop: "110px" }}>
           {/* all posts */}

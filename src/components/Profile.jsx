@@ -281,13 +281,10 @@ const Profile = () => {
       style={{
         backgroundColor: mode ? "#002A53" : "#E1D9D1",
         opacity: 0.9,
-        height: "100vh",
-        marginTop: "60px",
-        // scrollBehavior: "smooth",
-        // overflowY: "scroll",
-        // overflowX: "hidden",
-      }}
-    >
+        // marginTop: "73px",
+        // border: "3px solid red",
+        // padding: "50px 0 50px",
+      }}>
       {console.log("PROFILE DID RENDER--->")}
       {/* form to update user */}
       <StyledBox>
@@ -298,8 +295,7 @@ const Profile = () => {
         <Button
           onClick={(prev) => setToggleModal(!toggleModal)}
           variant="outlined"
-          color="otherColor"
-        >
+          color="otherColor">
           Change Avatar
         </Button>
 
@@ -312,8 +308,7 @@ const Profile = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-              }}
-            >
+              }}>
               <label
                 htmlFor="image"
                 style={{
@@ -321,8 +316,7 @@ const Profile = () => {
                   color: mode ? "white" : "white",
                   textAlign: "center",
                   fontSize: "1rem",
-                }}
-              >
+                }}>
                 Click avatar to select new image and click upload button
               </label>
               <Typography
@@ -331,8 +325,7 @@ const Profile = () => {
                   display: "block",
 
                   textAlign: "center",
-                }}
-              >
+                }}>
                 <span style={{ color: "green" }}>@{user.username}</span>
               </Typography>
               {/* Current Avatar Icon */}
@@ -350,8 +343,7 @@ const Profile = () => {
               <IconButton
                 color="primary"
                 aria-label="upload picture"
-                component="span"
-              >
+                component="span">
                 <Avatar
                   src={user.avatar}
                   // src="https://i.pravatar.cc/300"
@@ -363,8 +355,7 @@ const Profile = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 {uploadPhoto && (
                   <Image
                     cloudName="dcvh93esc"
@@ -384,8 +375,7 @@ const Profile = () => {
 
                 display: "flex",
                 flexDirection: "column",
-              }}
-            >
+              }}>
               {!uploadPhoto && (
                 <CloudUploadIcon
                   color="otherColor"
@@ -405,8 +395,7 @@ const Profile = () => {
                   onClick={handlePhotoSubmit}
                   variant="contained"
                   color="success"
-                  sx={{ marginTop: 5 }}
-                >
+                  sx={{ marginTop: 5 }}>
                   Upload Photo
                 </Button>
               )}
@@ -418,8 +407,7 @@ const Profile = () => {
         <IconButton
           color="primary"
           aria-label="upload picture"
-          component="span"
-        >
+          component="span">
           <Avatar
             src={user.avatar}
             // src="https://i.pravatar.cc/300"
@@ -431,8 +419,7 @@ const Profile = () => {
           sx={{
             display: "block",
             textAlign: "center",
-          }}
-        >
+          }}>
           <span style={{ color: "green" }}>@{user.username}</span>
         </Typography>
         {/* ----------------------------------------------------------------------------------------------------------------FORM STARTS HERE--------------------------------------------------------*/}
@@ -445,8 +432,7 @@ const Profile = () => {
             display: "flex",
             flexDirection: "column",
             width: "55%",
-          }}
-        >
+          }}>
           <>
             {/* first_name */}
             <TextField
@@ -492,8 +478,7 @@ const Profile = () => {
                 name="role"
                 label="Role"
                 onChange={handleChange}
-                value={editName.role || ""}
-              >
+                value={editName.role || ""}>
                 <MenuItem value="">
                   <em>Must Select One</em>
                 </MenuItem>
@@ -518,8 +503,7 @@ const Profile = () => {
               variant="contained"
               color="success"
               type="submit"
-              onClick={handleSubmit}
-            >
+              onClick={handleSubmit}>
               Update Profile
             </Button>{" "}
           </>
@@ -533,8 +517,7 @@ const Profile = () => {
             width: "65%",
             background: mode ? "" : "white",
             borderRadius: "0.7rem",
-          }}
-        >
+          }}>
           <h3 className="profile">
             First_Name:
             <span className="profile-info"> {editName.first_name}</span>
@@ -576,8 +559,7 @@ const Profile = () => {
               display: "flex",
               justifyContent: "center",
               marginTop: "1rem",
-            }}
-          >
+            }}>
             <p>Full Avatar</p>
           </Box>
           <div style={{ textAlign: "center", marginTop: "10px" }}>
