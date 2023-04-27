@@ -1,38 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
+// import react
+import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 
-export default function useSignupForm(initialValue) {
+export default function useCreatePostForm(initialValue) {
   const [value, setValue] = useState(initialValue);
 
   //errors for form validation
   const [errors, setErrors] = useState(value);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  //Form validation error for inputs
+  // form validation error for inputs for post and title
   let formSchema = yup.object().shape({
-    email: yup
+    title: yup
       .string()
-      .min(3, "must be at least 3 characters long")
-      .email("must be a valid email"),
-    username: yup
+      .required("Please enter a title for your post.")
+      .min(3, "Your title is too short."),
+    post: yup
       .string()
-      .required("please enter username")
-      .min(3, "minimum of 3 characters needed to register"),
-    // password should give out error if it's incorrect
-    password: yup
-      .string()
-      .required("Please enter your password.")
-      .min(5, "Your password is too short."),
-    //array of admin or user roles
-    role: yup
-      .string()
-      .oneOf(["admin", "user"])
-      .required("Please indicate your role."),
+      .required("Please enter a post.")
+      .min(5, "Your post is too short."),
   });
 
   useEffect(() => {
     formSchema.isValid(value).then((valid) => {
-      console.log("valid-------------->?", valid);
       setButtonDisabled(!valid);
     });
   }, [value, formSchema]);
@@ -53,8 +43,10 @@ export default function useSignupForm(initialValue) {
       });
   }
 
-  function handleChanges(e) {
-    // e.persist();
+  // handle changes for posts  input fields
+  function handlePostChanges(e) {
+    console.log(e.target.name, e.target.value);
+    e.persist();
     validateChanges(e);
     setValue({
       ...value,
@@ -62,5 +54,5 @@ export default function useSignupForm(initialValue) {
     });
   }
 
-  return [value, setValue, errors, buttonDisabled, handleChanges];
+  return [value, setValue, handlePostChanges, errors, buttonDisabled];
 }
