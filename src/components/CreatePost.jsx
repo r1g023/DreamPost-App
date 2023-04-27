@@ -100,7 +100,7 @@ const Input = styled("input")({
 
 const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   // form hooks
-  const [value, setValue, errors, buttonDisabled, handleChanges] =
+  const [value, setValue, errors, buttonDisabled, handlePostChanges] =
     useCreatePostForm({
       title: "",
       date: "",
@@ -108,6 +108,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
       user: "",
       post: "",
     });
+
+  console.log("value----->", value);
 
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
@@ -186,7 +188,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
 
   // handle submit for posts
   async function handleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     // add upload image to my submit form
     const newPost = await createPost({
@@ -364,13 +366,17 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       id="demo-helper-text-aligned"
                       label="Post Title"
                       name="title"
-                      onChange={handleChanges}
+                      onChange={handlePostChanges}
                     />
+                    {/* error for title */}
+                    {errors.title > 0 ? (
+                      <p style={{ color: "red" }}>{errors.title}</p>
+                    ) : null}
                     {/* <TextField
                       id="demo-helper-text-aligned"
                       label="post"
                       name="post"
-                      onChange={handleChanges}
+                      onChange={handlePostChanges}
                       sx={{ marginTop: "0.5rem" }}
                     /> */}
                     <TextField
@@ -379,17 +385,28 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       name="post"
                       multiline
                       rows={4}
-                      onChange={handleChanges}
+                      onChange={handlePostChanges}
                       sx={{ marginTop: "0.5rem" }}
                       variant="standard"
                       color="otherColor"
                     />
+                    {/* error for post */}
+                    {errors.post > 0 ? (
+                      <p style={{ color: "red" }}>{errors.post}</p>
+                    ) : null}
+                    <br />
                     <Button
                       variant="contained"
                       color="success"
                       type="submit"
                       disabled={buttonDisabled}
-                      onClick={handleSubmit}>
+                      onClick={() => {
+                        // if no image is uploaded, alert user to upload image first
+                        if (!uploadPhoto) {
+                          window.alert("Please upload a photo");
+                        }
+                        handleSubmit();
+                      }}>
                       Add Post
                     </Button>{" "}
                     {/* <h2>Photo upload is required</h2> */}

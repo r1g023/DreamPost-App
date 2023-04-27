@@ -7,7 +7,7 @@ export default function useCreatePostForm(initialValue) {
 
   //errors for form validation
   const [errors, setErrors] = useState(value);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   // form validation error for inputs for post and title
   let formSchema = yup.object().shape({
@@ -45,7 +45,11 @@ export default function useCreatePostForm(initialValue) {
 
   // handle changes for posts  input fields
   function handlePostChanges(e) {
-    console.log(e.target.name, e.target.value);
+    console.log(
+      "e target handlePostChanges------>",
+      e.target.name,
+      e.target.value
+    );
     e.persist();
     validateChanges(e);
     setValue({
@@ -54,5 +58,5 @@ export default function useCreatePostForm(initialValue) {
     });
   }
 
-  return [value, setValue, handlePostChanges, errors, buttonDisabled];
+  return [value, setValue, errors, buttonDisabled, handlePostChanges];
 }
