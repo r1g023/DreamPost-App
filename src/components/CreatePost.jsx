@@ -392,7 +392,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     />
                     {/* error for post */}
                     {errors.post > 0 ? (
-                      <p style={{ color: "red" }}>{errors.post}</p>
+                      <p style={{ color: "red" }}>Test{errors.post}</p>
                     ) : null}
                     <br />
                     <Button

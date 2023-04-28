@@ -14,11 +14,17 @@ export default function useCreatePostForm(initialValue) {
     title: yup
       .string()
       .required("Please enter a title for your post.")
-      .min(3, "Your title is too short."),
+      .min(
+        10,
+        "Your title is too short, please make sure it is at least 10 characters long."
+      ),
     post: yup
       .string()
       .required("Please enter a post.")
-      .min(5, "Your post is too short."),
+      .min(
+        12,
+        "Your post is too short, please make sure it is at least 12 characters long."
+      ),
   });
 
   useEffect(() => {
