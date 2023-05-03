@@ -31,7 +31,24 @@ export default function useCreatePostForm(initialValue) {
     formSchema.isValid(value).then((valid) => {
       setButtonDisabled(!valid);
     });
+
+    // add local storage to title and post
   }, [value, formSchema]);
+
+  // add use effect to get local storage to value.title and value.post
+  useEffect(() => {
+    // get local storage to value.title and value.post
+    const savedValue = JSON.parse(localStorage.getItem("value"));
+    if (savedValue) {
+      setValue(savedValue);
+    }
+  }, []);
+
+  // add use effect to set local storage to value.title and value.post
+  useEffect(() => {
+    // set local storage to value.title and value.post
+    localStorage.setItem("value", JSON.stringify(value));
+  }, [value]);
 
   //validate for errors if inputs are not filled out completely based on yup
   function validateChanges(e) {

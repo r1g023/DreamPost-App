@@ -22,7 +22,10 @@ export default function useForm(initialValue) {
     formSchema.isValid(value).then((valid) => {
       setButtonDisabled(!valid);
     });
+    // add local storage to value.title and value.post
   }, [value, formSchema]);
+
+  // get
 
   //validate for errors if inputs are not filled out completely based on yup
   function validateChanges(e) {

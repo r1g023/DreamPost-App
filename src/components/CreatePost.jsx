@@ -139,15 +139,30 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   //   post: "",
   // });
 
-  React.useEffect(() => {
-    // if new post clear results
-  }, [startDate]);
+  // React.useEffect(() => {
+  //   // get local storage to value.title and value.post
+  //   const savedValue = JSON.parse(localStorage.getItem("value"));
+  //   if (savedValue) {
+  //     setValue(JSON.parse(savedValue));
+  //   }
+  // }, []);
+
+  // // add use effect to set local storage to value.title and value.post
+  // React.useEffect(() => {
+  //   // set local storage to value.title and value.post
+  //   localStorage.setItem("value", JSON.stringify(value));
+  // }, [value]);
+
+  // React.useEffect(() => {
+  //   // if new post clear results
+  // }, [startDate, errors]);
 
   // console.log("user on create post----->", user);
 
   // console.log("value on create post----->", data);
 
   //on post submit, scroll to top function call
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -369,9 +384,13 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       onChange={handlePostChanges}
                     />
                     {/* error for title */}
-                    {errors.title > 0 ? (
-                      <p style={{ color: "red" }}>{errors.title}</p>
-                    ) : null}
+                    {errors ? (
+                      <p style={{ color: "red", fontSize: "11px" }}>
+                        {errors.title}
+                      </p>
+                    ) : (
+                      "all good"
+                    )}
                     {/* <TextField
                       id="demo-helper-text-aligned"
                       label="post"
@@ -391,8 +410,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       color="otherColor"
                     />
                     {/* error for post */}
-                    {errors.post > 0 ? (
-                      <p style={{ color: "red" }}>Test{errors.post}</p>
+                    {errors ? (
+                      <p style={{ color: "red" }}> {errors.post}</p>
                     ) : null}
                     <br />
                     <Button
