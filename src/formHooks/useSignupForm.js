@@ -1,4 +1,3 @@
-import { YoutubeSearchedForSharp } from "@mui/icons-material";
 import React, { useState, useRef, useEffect } from "react";
 import * as yup from "yup";
 
@@ -33,6 +32,7 @@ export default function useSignupForm(initialValue) {
 
   useEffect(() => {
     formSchema.isValid(value).then((valid) => {
+      console.log("valid-------------->?", valid);
       setButtonDisabled(!valid);
     });
   }, [value, formSchema]);
@@ -61,5 +61,6 @@ export default function useSignupForm(initialValue) {
       [e.target.name]: e.target.value,
     });
   }
+
   return [value, setValue, errors, buttonDisabled, handleChanges];
 }
