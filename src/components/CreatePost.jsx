@@ -139,24 +139,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   //   post: "",
   // });
 
-  // React.useEffect(() => {
-  //   // get local storage to value.title and value.post
-  //   const savedValue = JSON.parse(localStorage.getItem("value"));
-  //   if (savedValue) {
-  //     setValue(JSON.parse(savedValue));
-  //   }
-  // }, []);
-
-  // // add use effect to set local storage to value.title and value.post
-  // React.useEffect(() => {
-  //   // set local storage to value.title and value.post
-  //   localStorage.setItem("value", JSON.stringify(value));
-  // }, [value]);
-
-  // React.useEffect(() => {
-  //   // if new post clear results
-  // }, [startDate, errors]);
-
   // console.log("user on create post----->", user);
 
   // console.log("value on create post----->", data);
@@ -377,19 +359,30 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     <Typography variant="h6" sx={{ color: "green" }}>
                       @{user.username}
                     </Typography>
+                    {/* if no upload photo then disable title and post */}
                     <TextField
                       id="demo-helper-text-aligned"
                       label="Post Title"
                       name="title"
                       onChange={handlePostChanges}
+                      disabled={!uploadPhoto ? true : false}
                     />
                     {/* error for title */}
                     {errors ? (
-                      <p style={{ color: "red", fontSize: "11px" }}>
+                      <p
+                        style={{
+                          color: "red",
+                          fontSize: "12px",
+                          border: "1px solid red",
+                          textAlign: "left",
+                          padding: "0.5rem",
+                          maxWidth: "250px",
+                          width: "100%",
+                        }}>
                         {errors.title}
                       </p>
                     ) : (
-                      "all good"
+                      ""
                     )}
                     {/* <TextField
                       id="demo-helper-text-aligned"
@@ -405,9 +398,14 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       multiline
                       rows={4}
                       onChange={handlePostChanges}
-                      sx={{ marginTop: "0.5rem" }}
+                      sx={{
+                        marginTop: "0.5rem",
+                        width: "100%",
+                        padding: "0.5rem",
+                      }}
                       variant="standard"
                       color="otherColor"
+                      disabled={!uploadPhoto ? true : false}
                     />
                     {/* error for post */}
                     {errors ? (

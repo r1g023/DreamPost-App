@@ -109,29 +109,23 @@
   body #profile-responsive {
     margin-top: 73px;
     padding: 200px 0 200px;
-    border: 10px solid orange;
   }
 }
 @media only screen and (min-width: 361px) and (max-width: 599px) {
   body #profile-responsive {
     margin-top: 65px;
     padding: 275px 0 275px;
-    border: 10px solid purple;
   }
 }
 @media only screen and (min-width: 320px) and (max-width: 360px) {
   body #profile-responsive {
     margin-top: 65px;
     padding: 300px 0 300px;
-    border: 10px solid green;
   }
 }
 body .profile-info {
   color: orange;
   font-size: 15px;
-}
-body .profile-container {
-  border: 10px solid green;
 }
 body .searchBar {
   max-width: 410px;
