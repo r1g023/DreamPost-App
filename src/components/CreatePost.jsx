@@ -75,8 +75,10 @@ const ADD_POST = gql`
 // Styled Modal on top of the default MUI Modal
 const StyledModal = styled(Modal)({
   display: "flex",
+
   alignItems: "center",
   justifyContent: "center",
+  width: "100%",
 });
 
 // Styled Box on top of the default MUI Box
@@ -84,6 +86,7 @@ const UserBox = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  width: "100%",
 });
 
 //Styled form
@@ -261,8 +264,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
             sx={{
               background: "none",
 
-              display: "flex",
-              justifyContent: "center",
+              // display: "flex",
+              // justifyContent: "center",
             }}>
             {/*userbox of current logged in user.username */}
             <UserBox>
@@ -275,7 +278,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                   gap: "0.2rem",
                   background: mode ? "#1B2430" : "",
                   color: mode ? "white" : "",
-                  marginTop: "3rem",
+
                   // add halo box shadow around the form
 
                   boxShadow: "0px 0px 12px 0px orange",
@@ -306,6 +309,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     </label>
                     {uploadPhoto && (
                       <Image
+                        style={{ width: "100%", height: "100%" }}
                         cloudName="dcvh93esc"
                         publicId={`${uploadPhoto}`}
                       />

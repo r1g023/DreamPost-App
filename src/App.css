@@ -60,7 +60,7 @@
 }
 @media only screen and (max-width: 370px) {
   body .searchBar.responsive {
-    max-width: 307px;
+    max-width: 303px;
     width: 100%;
   }
   body .searchError {

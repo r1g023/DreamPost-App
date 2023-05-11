@@ -126,7 +126,6 @@ const MainPage = () => {
           marginTop: errorMessage ? "65px" : "65px",
           height: searchValue || errorMessage ? "100vh" : "auto",
           overflow: "auto",
-          // border: "2px solid orange",
         }}>
         <Sidebar mode={mode} user={user} setMode={setMode} setUser={setUser} />
         <Feed
