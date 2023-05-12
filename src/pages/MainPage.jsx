@@ -93,7 +93,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   // GET users from query
   const { data } = useQuery(GET_USERS);
-  console.log("userListData on Post component---->", data);
+  // console.log("userListData on Post component---->", data);
 
   React.useEffect(() => {
     // setMode(!mode);

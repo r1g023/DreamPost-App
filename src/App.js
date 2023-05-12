@@ -21,7 +21,7 @@ function App() {
   const [mode, setMode] = React.useState(user.dark_mode);
   let navigate = useNavigate();
 
-  console.log("user on app---->", user);
+  // console.log("user on app---->", user);
 
   useEffect(() => {
     const data = localStorage.getItem("user");

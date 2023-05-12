@@ -32,7 +32,7 @@ export default function useSignupForm(initialValue) {
 
   useEffect(() => {
     formSchema.isValid(value).then((valid) => {
-      console.log("valid-------------->?", valid);
+      // console.log("valid-------------->?", valid);
       setButtonDisabled(!valid);
     });
   }, [value, formSchema]);
@@ -48,7 +48,7 @@ export default function useSignupForm(initialValue) {
         setErrors({ ...errors, [e.target.name]: "" });
       })
       .catch((err) => {
-        console.log("errors on yup validation---->", err.errors);
+        // console.log("errors on yup validation---->", err.errors);
         setErrors({ ...errors, [e.target.name]: err.errors[0] });
       });
   }

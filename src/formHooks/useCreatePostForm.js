@@ -61,18 +61,18 @@ export default function useCreatePostForm(initialValue) {
         setErrors({ ...errors, [e.target.name]: "" });
       })
       .catch((err) => {
-        console.log("errors on yup validation---->", err.errors);
+        // console.log("errors on yup validation---->", err.errors);
         setErrors({ ...errors, [e.target.name]: err.errors[0] });
       });
   }
 
   // handle changes for posts  input fields
   function handlePostChanges(e) {
-    console.log(
-      "e target handlePostChanges------>",
-      e.target.name,
-      e.target.value
-    );
+    // console.log(
+    //   "e target handlePostChanges------>",
+    //   e.target.name,
+    //   e.target.value
+    // );
     e.persist();
     validateChanges(e);
     setValue({

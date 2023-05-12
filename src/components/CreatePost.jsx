@@ -74,11 +74,10 @@ const ADD_POST = gql`
 
 // Styled Modal on top of the default MUI Modal
 const StyledModal = styled(Modal)({
+  border: "3px solid green",
   display: "flex",
-
   alignItems: "center",
   justifyContent: "center",
-  width: "100%",
 });
 
 // Styled Box on top of the default MUI Box
@@ -86,7 +85,6 @@ const UserBox = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  width: "100%",
 });
 
 //Styled form
@@ -113,7 +111,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
       post: "",
     });
 
-  console.log("value----->", value);
+  // console.log("value----->", value);
 
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
@@ -171,11 +169,11 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
           "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
           formData
         );
-        console.log("response", response);
+        // console.log("response", response);
         // add response to my value image form
         setUploadPhoto(response.data.secure_url);
       } catch {
-        console.log("error uploading image");
+        // console.log("error uploading image");
       }
     };
 
@@ -263,9 +261,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
             textAlign="center"
             sx={{
               background: "none",
-
-              // display: "flex",
-              // justifyContent: "center",
+              // might need to adjust this as the post modal sometimes does not look correct because of the margin,
+              marginLeft: "-1rem",
             }}>
             {/*userbox of current logged in user.username */}
             <UserBox>
@@ -276,9 +273,9 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                   padding: "2rem",
                   borderRadius: "0.7rem",
                   gap: "0.2rem",
-                  background: mode ? "#1B2430" : "",
-                  color: mode ? "white" : "",
-
+                  background: mode ? "#1B2430" : "white",
+                  color: mode ? "white" : "black",
+                  height: "auto",
                   // add halo box shadow around the form
 
                   boxShadow: "0px 0px 12px 0px orange",
@@ -296,7 +293,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         type="file"
                         sx={{ color: "red" }}
                         onChange={(e) => {
-                          console.log("e.target.files", e.target.files);
+                          // console.log("e.target.files", e.target.files);
                           setSelectedImages(e.target.files[0]);
                         }}
                       />
@@ -378,12 +375,22 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     {/* if no upload photo then disable title and post */}
                     <TextField
                       id="demo-helper-text-aligned"
-                      label="Post Title"
+                      label={
+                        !uploadPhoto ? (
+                          "Upload a photo first"
+                        ) : (
+                          <span style={{ color: "green" }}> Enter a Title</span>
+                        )
+                      }
+                      placeholder="Enter a title"
                       name="title"
                       onChange={handlePostChanges}
                       disabled={!uploadPhoto ? true : false}
                       sx={{
                         boxShadow: "0px 0px 12px 0px gray",
+                        marginTop: "0.5rem",
+                        width: "100%",
+                        color: mode ? "red" : "black",
                         background: mode ? "white" : "",
                       }}
                     />
@@ -392,12 +399,9 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       <p
                         style={{
                           color: "red",
-                          fontSize: "12px",
 
+                          fontSize: "14px",
                           textAlign: "left",
-                          padding: "0.5rem",
-                          maxWidth: "250px",
-                          width: "100%",
                         }}>
                         {errors.title}
                       </p>
@@ -413,7 +417,11 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     /> */}
                     <TextField
                       id="standard-multiline-static"
-                      label="What's on your mind?"
+                      label={
+                        !uploadPhoto
+                          ? "Upload a photo first"
+                          : "What's on your mind?"
+                      }
                       name="post"
                       multiline
                       rows={4}
@@ -421,7 +429,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       sx={{
                         marginTop: "0.5rem",
                         width: "100%",
-                        padding: "0.5rem",
+
                         boxShadow: "0px 0px 12px 0px gray",
                         background: mode ? "white" : "",
                       }}
@@ -431,7 +439,16 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     />
                     {/* error for post */}
                     {errors ? (
-                      <p style={{ color: "red" }}> {errors.post}</p>
+                      <p
+                        style={{
+                          color: "red",
+
+                          fontSize: "14px",
+                          textAlign: "left",
+                        }}>
+                        {" "}
+                        {errors.post}
+                      </p>
                     ) : null}
                     <br />
                     <Button
@@ -459,6 +476,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     </span>
                     <Button
                       variant="outlined"
+                      disabled={uploadPhoto ? true : false}
                       onClick={() => {
                         // if no upload photo then don't allow user to submit
                         if (!uploadPhoto) {

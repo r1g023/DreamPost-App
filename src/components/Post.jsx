@@ -267,7 +267,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           });
         },
       });
-      console.log("deleted comment errors--->", deletedComment);
+      // console.log("deleted comment errors--->", deletedComment);
 
       return deletedComment;
     }

@@ -32,7 +32,7 @@ const Rightbar = ({ mode }) => {
     // console.log("useEffect post data image Righbar-->", data);
   }, [data]);
 
-  console.log("data---- in RIGHTBAR>", data);
+  // console.log("data---- in RIGHTBAR>", data);
 
   if (error) return <p>Error: {error.message}</p>;
   return (
@@ -48,8 +48,7 @@ const Rightbar = ({ mode }) => {
 
         scrollY: "scroll",
         overflowX: "hidden",
-      }}
-    >
+      }}>
       {/* container for the rightbar */}
       <Box
         position="fixed"
@@ -58,8 +57,7 @@ const Rightbar = ({ mode }) => {
           overflowY: "scroll",
           overflowX: "hidden",
           maxHeight: "100vh",
-        }}
-      >
+        }}>
         <Typography variant="h4">Online Friends</Typography>
         {/* container for the online friends */}
         <AvatarGroup total={10}>
@@ -89,8 +87,7 @@ const Rightbar = ({ mode }) => {
             overflowY: "scroll",
             overflowX: "hidden",
             maxHeight: "500px",
-          }}
-        >
+          }}>
           {loading ? (
             <>
               <Stack
@@ -98,8 +95,7 @@ const Rightbar = ({ mode }) => {
                   width: "100%",
                   color: "grey.500",
                 }}
-                spacing={2}
-              >
+                spacing={2}>
                 <CircularProgress
                   color="otherColor"
                   sx={{
@@ -126,8 +122,7 @@ const Rightbar = ({ mode }) => {
                           opacity: "0.9",
                           boxShadow: "none",
                         },
-                      }}
-                    >
+                      }}>
                       <img
                         src={item.image}
                         srcSet={item.image}
@@ -167,8 +162,7 @@ const Rightbar = ({ mode }) => {
             overflowX: "hidden",
             maxHeight: "600px",
             marginBottom: "100px",
-          }}
-        >
+          }}>
           {data &&
             data.getPosts
               .map((item, index) => {
