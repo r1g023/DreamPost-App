@@ -16,7 +16,7 @@ const StyledContainer = styled.div`
 const NoMatch = () => {
   const { user } = React.useContext(UserContext);
   return (
-    <StyledContainer>
+    <StyledContainer className="noMatch">
       <h1>This page doesn't exist</h1>
 
       <h3>please make sure your role is 'admin' and try again</h3>
@@ -25,8 +25,7 @@ const NoMatch = () => {
       {/* Edit Profile Link remove styling */}
       <Link
         to="/profile"
-        style={{ textDecoration: "none", color: "white", marginTop: "20px" }}
-      >
+        style={{ textDecoration: "none", color: "white", marginTop: "20px" }}>
         <Button variant="contained" color="otherColor">
           Edit Profile
         </Button>

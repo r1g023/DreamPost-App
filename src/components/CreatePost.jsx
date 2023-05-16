@@ -379,7 +379,16 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         !uploadPhoto ? (
                           "Upload a photo first"
                         ) : (
-                          <span style={{ color: "green" }}> Enter a Title</span>
+                          // add a background color to the title only if the user clicks on input
+                          <span
+                            style={{
+                              background: mode ? "white" : "",
+                              color: mode ? "black" : "black",
+                              fontSize: "1.2rem",
+                              padding: "0.2rem",
+                            }}>
+                            Enter a Title
+                          </span>
                         )
                       }
                       placeholder="Enter a title"
@@ -472,7 +481,24 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     </Button>{" "}
                     {/* <h2>Photo upload is required</h2> */}
                     <span style={{ fontSize: "12px" }}>
-                      Don't forget to upload a photo
+                      {/* if photo is uploaded do not display text  -*/}
+                      {!uploadPhoto ? (
+                        <span style={{ color: "red" }}>
+                          Photo upload is required
+                        </span>
+                      ) : (
+                        <>
+                          <span style={{ color: "green" }}>
+                            Photo uploaded already, please enter a title and
+                            post.
+                          </span>
+                          <br />
+                          <br />
+                          <span style={{ color: "orange" }}>
+                            Or refresh page to upload another photo
+                          </span>
+                        </>
+                      )}
                     </span>
                     <Button
                       variant="outlined"
