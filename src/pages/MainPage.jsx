@@ -77,9 +77,9 @@ const MainPage = () => {
   const [errorMessage, setErrorMessage] = React.useState("");
 
   const getAllPosts = useQuery(GET_POSTS);
-  console.log("error retrieving posts....----->", getAllPosts.error);
+  // console.log("error retrieving posts....----->", getAllPosts.error);
 
-  console.log("datas---->", getAllPosts);
+  // console.log("datas---->", getAllPosts);
 
   const [postData, setPostData] = React.useState(getAllPosts.data);
 

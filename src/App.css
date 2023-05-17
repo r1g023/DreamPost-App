@@ -57,6 +57,9 @@
   body #refreshIcon {
     margin-left: 140px;
   }
+  body .post-form-responsiveness {
+    border: 1px solid red;
+  }
 }
 @media only screen and (max-width: 370px) {
   body .searchBar.responsive {
@@ -90,6 +93,9 @@
   body .searchError {
     max-width: 295px;
     width: 100%;
+  }
+  body .post-form-responsiveness {
+    border: 1px solid red;
   }
 }
 @media only screen and (max-width: 280px) {
@@ -152,5 +158,10 @@ body .shareButtonContainer {
 }
 body .feed-responsiveOverflow {
   height: auto;
+}
+body .noMatch {
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
 }
 /*# sourceMappingURL=App.css.map */

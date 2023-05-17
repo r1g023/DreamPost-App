@@ -211,8 +211,8 @@ const Profile = () => {
   // handle form submission .
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("updateUserID Submit", updateUserID);
-    console.log("editName Submit", editName);
+    // console.log("updateUserID Submit", updateUserID);
+    // console.log("editName Submit", editName);
     updateUser({
       variables: {
         id: user.id,

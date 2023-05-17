@@ -12,9 +12,7 @@ import {
   Button,
   Fab,
   FormControl,
-  FormHelperText,
   IconButton,
-  InputLabel,
   Modal,
   styled,
   TextField,
@@ -24,7 +22,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
 import { UserContext } from "../App";
-import { OpenInBrowser, PhotoCamera } from "@mui/icons-material";
+import { PhotoCamera } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 // import useCreatePostForm
 import useCreatePostForm from "../formHooks/useCreatePostForm";
@@ -74,10 +72,11 @@ const ADD_POST = gql`
 
 // Styled Modal on top of the default MUI Modal
 const StyledModal = styled(Modal)({
-  border: "3px solid green",
   display: "flex",
-  alignItems: "center",
+
   justifyContent: "center",
+  // fit content to modal
+  alignItems: "center",
 });
 
 // Styled Box on top of the default MUI Box
@@ -88,12 +87,12 @@ const UserBox = styled(Box)({
 });
 
 //Styled form
-const StyledForm = styled(FormControl)({
-  background: "white",
-  padding: "1rem",
-  borderRadius: "0.7rem",
-  gap: "0.2rem",
-});
+// const StyledForm = styled(FormControl)({
+//   background: "white",
+//   padding: "1rem",
+//   borderRadius: "0.7rem",
+//   gap: "0.2rem",
+// });
 
 // Remove image upload button from the form
 const Input = styled("input")({
@@ -116,7 +115,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
-  const { refetch } = useQuery(GET_POSTS);
+  // const { refetch } = useQuery(GET_POSTS);
 
   const toggleModal = () => {
     setOpen(!open);
@@ -160,8 +159,8 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     const formData = new FormData();
     formData.append("file", selectedImages);
     formData.append("upload_preset", "xhfk3bp5_u");
-    console.log("post on image upload test");
-    console.count("post on image count:");
+    // console.log("post on image upload test");
+    // console.count("post on image count:");
 
     const postImage = async () => {
       try {
@@ -269,14 +268,15 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
               {/*form */}
 
               <FormControl
+                className="post-form-responsiveness"
                 style={{
                   padding: "2rem",
                   borderRadius: "0.7rem",
                   gap: "0.2rem",
                   background: mode ? "#1B2430" : "white",
                   color: mode ? "white" : "black",
-                  height: "auto",
-                  // add halo box shadow around the form
+                  // add margin bottom to the form
+                  // marginTop: "-100px",
 
                   boxShadow: "0px 0px 12px 0px orange",
                 }}>
@@ -306,7 +306,13 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     </label>
                     {uploadPhoto && (
                       <Image
-                        style={{ width: "100%", height: "100%" }}
+                        style={{
+                          // make the image responsive
+                          height: "225px",
+                          width: "200px",
+                          display: "block",
+                          margin: "0 auto",
+                        }}
                         cloudName="dcvh93esc"
                         publicId={`${uploadPhoto}`}
                       />
@@ -353,7 +359,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     <Button
                       variant="outlined"
                       color="error"
-                      sx={{ marginTop: "3rem" }}
+                      sx={{ marginTop: "1rem" }}
                       onClick={() => {
                         // fix toggle when canceling photo upload
                         setUploadPhoto(null);
@@ -364,6 +370,21 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                   </>
                 ) : (
                   <>
+                    {/* add an X button to close modal */}
+                    <span title="Close and cancel new post">
+                      <ClearIcon
+                        sx={{
+                          cursor: "pointer",
+                          fontSize: 40,
+                          position: "absolute",
+                          right: 20,
+                          top: 20,
+                        }}
+                        color="error"
+                        title="Close and cancel new post"
+                        onClick={toggleModal}
+                      />
+                    </span>
                     <Avatar
                       src={user.avatar}
                       // src="https://i.pravatar.cc/300" //default random image
@@ -495,8 +516,20 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                           <br />
                           <br />
                           <span style={{ color: "orange" }}>
-                            Or refresh page to upload another photo
+                            Or click remove photo to upload a new one.
                           </span>
+                          {/* add a button to remove photo */}
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            sx={{ marginTop: "1rem" }}
+                            onClick={() => {
+                              // fix toggle when canceling photo upload
+                              setUploadPhoto(null);
+                              setTogglePhoto(!togglePhoto);
+                            }}>
+                            Remove Photo
+                          </Button>
                         </>
                       )}
                     </span>
@@ -504,7 +537,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       variant="outlined"
                       disabled={uploadPhoto ? true : false}
                       onClick={() => {
-                        // if no upload photo then don't allow user to submit
+                        //  do not submit if there's no photo
                         if (!uploadPhoto) {
                           setTogglePhoto(!togglePhoto);
                         }
@@ -513,18 +546,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       color="otherColor">
                       Upload Photo
                     </Button>
-                    {/* add an X button to close modal */}
-                    <span title="Close and cancel new post">
-                      <ClearIcon
-                        sx={{
-                          cursor: "pointer",
-                          marginTop: "1rem",
-                        }}
-                        color="error"
-                        title="Close and cancel new post"
-                        onClick={toggleModal}
-                      />
-                    </span>
                   </>
                 )}
               </FormControl>
