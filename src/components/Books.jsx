@@ -39,6 +39,7 @@ const Books = () => {
             paddingTop: "22px",
             paddingLeft: "22px",
             paddingRight: "22px",
+            height: "100vh",
           }}>
           <h1 className="books">Books</h1>
           {data.getBooks.map((book) => (
@@ -65,8 +66,8 @@ const Books = () => {
                   Profile
                 </Link>
               </Button>
-              <h1 className="test">Test</h1>
-              <Button sx={{ marginLeft: "1px" }}>
+
+              <Button sx={{ marginLeft: "10px" }}>
                 <Link
                   to={"/"}
                   reloadDocument={true}

@@ -1,10 +1,22 @@
-import React from "react";
+import * as React from "react";
 import useForm from "../formHooks/useForm";
 import { Box, CircularProgress, styled, TextField } from "@mui/material";
 import { useMutation, gql } from "@apollo/client";
 import { AUTH_TOKEN } from "../auth-token";
 import { Link, useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
+
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import FilledInput from "@mui/material/FilledInput";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const StyledBox = styled(Box)({
   display: "flex",
@@ -69,6 +81,18 @@ function Login({ setUser }) {
     username: "",
     password: "",
   });
+
+  //password visibility
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   let navigate = useNavigate();
   function refreshPage() {
     window.location.reload(false);
@@ -112,8 +136,7 @@ function Login({ setUser }) {
             display: "flex",
             flexDirection: "column",
             width: "40%",
-          }}
-        >
+          }}>
           {/*username */}
           <span style={{ color: "blue", fontWeight: "900" }}>Username</span>
           <TextField
@@ -130,14 +153,38 @@ function Login({ setUser }) {
 
           {/*password */}
           <span style={{ color: "blue", fontWeight: "900" }}>Password</span>
-          <TextField
+          {/* <TextField
             type="password"
             label="password"
+            name="password"
+            // add an eye icon to show password
+
+            onChange={handleChanges}
+            value={value.password}
+            autoComplete="current-password"
+          /> */}
+
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            label="Password"
             name="password"
             onChange={handleChanges}
             value={value.password}
             autoComplete="current-password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end">
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
+
           {errors.password ? (
             <p style={{ color: "red", fontSize: "11px" }}>{errors.password}</p>
           ) : null}
@@ -157,8 +204,7 @@ function Login({ setUser }) {
             type="submit"
             loading={loading}
             // loadingPosition={"start"}
-            loadingIndicator={<CircularProgress color="primary" size={20} />}
-          >
+            loadingIndicator={<CircularProgress color="primary" size={20} />}>
             Login
           </LoadingButton>
         </form>
@@ -173,8 +219,7 @@ function Login({ setUser }) {
                 padding: "5px",
                 borderRadius: "5px",
                 textDecoration: "none",
-              }}
-            >
+              }}>
               Signup
             </span>
           </Link>

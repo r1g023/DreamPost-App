@@ -277,7 +277,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                   color: mode ? "white" : "black",
                   // add margin bottom to the form
                   // marginTop: "-100px",
-
+                  marginTop: "-50px",
                   boxShadow: "0px 0px 12px 0px orange",
                 }}>
                 {togglePhoto ? (
@@ -515,9 +515,9 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                           </span>
                           <br />
                           <br />
-                          <span style={{ color: "orange" }}>
+                          {/* <span style={{ color: "orange" }}>
                             Or click remove photo to upload a new one.
-                          </span>
+                          </span> */}
                           {/* add a button to remove photo */}
                           <Button
                             variant="outlined"
