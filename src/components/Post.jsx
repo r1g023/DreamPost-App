@@ -317,6 +317,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   return (
     <>
       <Card
+        className="post-card"
         sx={{
           margin: "30px auto",
           background: mode ? "#2C394B" : "white",

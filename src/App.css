@@ -38,6 +38,7 @@
   body .searchBar.responsive {
     max-width: 329px;
     width: 100%;
+    background: blue;
   }
   body .searchError {
     max-width: 340px;
@@ -50,6 +51,7 @@
   body .searchBar.responsive {
     max-width: 323px;
     width: 100%;
+    background: green;
   }
   body .searchError {
     max-width: 340px;
@@ -58,13 +60,15 @@
     margin-left: 140px;
   }
   body .post-form-responsiveness {
-    border: 1px solid red;
+    border: 10px solid red;
+    margin-top: -30px;
   }
 }
 @media only screen and (max-width: 370px) {
   body .searchBar.responsive {
     max-width: 303px;
     width: 100%;
+    background: red;
   }
   body .searchError {
     max-width: 325px;
@@ -77,6 +81,7 @@
   body .searchBar.responsive {
     max-width: 308px;
     width: 100%;
+    background: purple;
   }
   body #refreshIcon {
     margin-left: 130px;
@@ -94,13 +99,11 @@
     max-width: 295px;
     width: 100%;
   }
-  body .post-form-responsiveness {
-    border: 1px solid red;
-  }
 }
 @media only screen and (max-width: 280px) {
   body .searchBar.responsive {
     max-width: 240px;
+    border: 10px solid red;
     width: 100%;
   }
   body #refreshIcon {
@@ -127,6 +130,23 @@
   body #profile-responsive {
     margin-top: 65px;
     padding: 300px 0 300px;
+  }
+}
+@media only screen and (min-width: 280px) and (max-width: 320px) {
+  body .post-card {
+    width: 289px;
+    max-width: 100%;
+  }
+  body #refreshIcon {
+    margin-left: 130px;
+  }
+  body .searchError {
+    max-width: 295px;
+    width: 100%;
+  }
+  body .searchBar.responsive {
+    max-width: 300px;
+    width: 100%;
   }
 }
 body .profile-info {

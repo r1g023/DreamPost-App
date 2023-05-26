@@ -146,6 +146,7 @@
         margin-top: -30px;
     }
   }
+}
 
   @media only screen and (max-width: 370px) {
     body {
@@ -206,7 +207,7 @@
         .searchBar.responsive {
           max-width: 270px;
           width: 100%;
-          background: green;
+        
         }
 
         // refresh icon
@@ -289,10 +290,38 @@
         #profile-responsive {
           margin-top: 65px;
           padding: 300px 0 300px;
-          border: 10px solid green;
+         
         }
       }
     }
+
+        // adjust width to post card since on smaller screens, the post card is too big and goes off the screen
+        @media only screen and (min-width: 280px) and (max-width: 320px) {
+          body {
+            .post-card {
+              width: 289px;
+              max-width: 100%;
+            }
+
+               // refresh icon
+            #refreshIcon {
+              margin-left: 130px;
+            }
+
+            // search error 
+            .searchError {
+              max-width: 295px;
+              width: 100%;
+            }
+
+            .searchBar.responsive {
+              max-width: 300px;
+              
+              width: 100%;
+            }
+    
+          }
+        }
 //////////////////////////////////////////////////////////////////////////////////
   // main styling for whole app within body
    body {
@@ -302,9 +331,7 @@
           font-size: 15px;
         }
 
-        .profile-container {
-          // border: 10px solid green;
-        }
+    
 
         .searchBar {
           max-width: 410px;
@@ -327,6 +354,7 @@
           padding-left: 20px;
         }
 
+      
         
       // share button styling on post card and it works on mobile as well
       .shareButtonContainer {
@@ -349,4 +377,7 @@
         width: 100%;
         margin: 0 auto;
       }
+
+      
    }
+

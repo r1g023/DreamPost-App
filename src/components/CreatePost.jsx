@@ -73,10 +73,8 @@ const ADD_POST = gql`
 // Styled Modal on top of the default MUI Modal
 const StyledModal = styled(Modal)({
   display: "flex",
-
-  justifyContent: "center",
-  // fit content to modal
   alignItems: "center",
+  justifyContent: "center",
 });
 
 // Styled Box on top of the default MUI Box
