@@ -4,6 +4,7 @@ import { ThemeProvider } from "@mui/material";
 import App from "./App";
 // import "./style.less";
 import "./App.css";
+import jwt_decode from "jwt-decode";
 
 import { BrowserRouter } from "react-router-dom";
 import { theme } from "./theme";
@@ -41,6 +42,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
+      {/* if token is expired, remove token from local storage */}
+      {localStorage.getItem(AUTH_TOKEN) &&
+        jwt_decode(localStorage.getItem(AUTH_TOKEN)).exp * 1000 < Date.now() &&
+        localStorage.removeItem(AUTH_TOKEN)}
       <BrowserRouter>
         <App />
       </BrowserRouter>

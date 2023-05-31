@@ -14,7 +14,7 @@ const GET_BOOKS = gql`
   }
 `;
 
-const Books = () => {
+const Books = ({ mode }) => {
   const { user } = React.useContext(UserContext);
   // console.log("user on Books----->", userId);
   const navigate = useNavigate();
@@ -40,11 +40,16 @@ const Books = () => {
             paddingLeft: "22px",
             paddingRight: "22px",
             height: "100vh",
+            background: mode ? "#2C394B" : "",
+            color: mode ? "white" : "",
           }}>
           <h1 className="books">Books</h1>
           {data.getBooks.map((book) => (
             <div key={book.id}>
-              <p>{book.name}</p>
+              <ul>
+                <li>{book.name}</li>
+                <br />
+              </ul>
             </div>
           ))}
 

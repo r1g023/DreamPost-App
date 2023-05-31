@@ -1,10 +1,10 @@
 @media only screen and (max-width: 433px) {
   body .searchBar.responsive {
-    max-width: 360px;
+    max-width: 377px;
     width: 100%;
   }
   body #refreshIcon {
-    margin-left: 160px;
+    margin-left: 170px;
   }
   body .searchError {
     max-width: 385px;
@@ -24,21 +24,20 @@
 }
 @media only screen and (max-width: 395px) {
   body .searchBar.responsive {
-    max-width: 340px;
+    max-width: 362px;
     width: 100%;
   }
   body .searchError {
-    max-width: 355px;
+    max-width: 360px;
   }
   body #refreshIcon {
-    margin-left: 150px;
+    margin-left: 160px;
   }
 }
 @media only screen and (max-width: 385px) {
   body .searchBar.responsive {
     max-width: 329px;
     width: 100%;
-    background: blue;
   }
   body .searchError {
     max-width: 340px;
@@ -49,42 +48,38 @@
 }
 @media only screen and (max-width: 376px) {
   body .searchBar.responsive {
-    max-width: 323px;
+    max-width: 339px;
     width: 100%;
-    background: green;
   }
   body .searchError {
     max-width: 340px;
   }
   body #refreshIcon {
-    margin-left: 140px;
+    margin-left: 149px;
   }
   body .post-form-responsiveness {
-    border: 10px solid red;
     margin-top: -30px;
   }
 }
 @media only screen and (max-width: 370px) {
   body .searchBar.responsive {
-    max-width: 303px;
+    max-width: 331px;
     width: 100%;
-    background: red;
   }
   body .searchError {
     max-width: 325px;
   }
   body #refreshIcon {
-    margin-left: 133px;
+    margin-left: 145px;
   }
 }
 @media only screen and (max-width: 359px) {
   body .searchBar.responsive {
     max-width: 308px;
     width: 100%;
-    background: purple;
   }
   body #refreshIcon {
-    margin-left: 130px;
+    margin-left: 125px;
   }
 }
 @media only screen and (max-width: 320px) {
@@ -93,7 +88,7 @@
     width: 100%;
   }
   body #refreshIcon {
-    margin-left: 120px;
+    margin-left: 125px;
   }
   body .searchError {
     max-width: 295px;
@@ -103,11 +98,10 @@
 @media only screen and (max-width: 280px) {
   body .searchBar.responsive {
     max-width: 240px;
-    border: 10px solid red;
     width: 100%;
   }
   body #refreshIcon {
-    margin-left: 110px;
+    margin-left: 115px;
   }
   body .searchError {
     max-width: 250px;
@@ -118,6 +112,9 @@
   body #profile-responsive {
     margin-top: 73px;
     padding: 200px 0 200px;
+  }
+  body #refreshIcon {
+    margin-left: 185px;
   }
 }
 @media only screen and (min-width: 361px) and (max-width: 599px) {
@@ -147,6 +144,10 @@
   body .searchBar.responsive {
     max-width: 300px;
     width: 100%;
+  }
+  body #profile-responsive {
+    margin-top: 65px;
+    padding: 325px 0 325px;
   }
 }
 body .profile-info {
