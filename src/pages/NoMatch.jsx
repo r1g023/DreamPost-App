@@ -11,31 +11,69 @@ const StyledContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding-bottom: 25px;
+  padding-top: 79px;
 `;
 
-const NoMatch = () => {
+const NoMatch = ({ mode }) => {
   const { user } = React.useContext(UserContext);
-  return (
-    <StyledContainer>
-      <h1>This page doesn't exist</h1>
 
-      <h3>please make sure your role is 'admin' and try again</h3>
-      <h2 style={{ color: "red" }}>Current Role: {user.role}</h2>
+  // useEffect to keep track of user role
+  React.useEffect(() => {
+    // if the role is user then add the "404" on tab
+    if (user.role === "user") {
+      document.title = "404 - Page Not Found";
+    }
+  }, [user.role]);
+
+  return (
+    <StyledContainer
+      className="noMatch"
+      style={{
+        background: mode ? "#2C3948" : "",
+        color: mode ? "white" : "",
+        marginTop: "30px",
+      }}>
+      <h1
+        style={{
+          fontSize: "1.8rem",
+          textAlign: "center",
+          margin: " 0 auto",
+        }}>
+        This page doesn't exist
+      </h1>
+      <br />
+
+      <h3 style={{ padding: "15px" }}>
+        Please make sure your role is 'admin' and try again
+      </h3>
+      <br />
+      <br />
+      <h2 style={{ color: "red" }}>
+        Current Role:{" "}
+        <span style={{ color: "green", fontSize: "2rem" }}> {user.role}</span>{" "}
+      </h2>
 
       {/* Edit Profile Link remove styling */}
       <Link
         to="/profile"
-        style={{ textDecoration: "none", color: "white", marginTop: "20px" }}
-      >
+        style={{
+          textDecoration: "none",
+          color: "white",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}>
         <Button variant="contained" color="otherColor">
           Edit Profile
         </Button>
       </Link>
 
-      <img src={imagerror} alt="404" width="500px" />
+      <img src={imagerror} alt="404" width="100%" className="imageError" />
 
-      <Button variant="contained">
-        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+      <Button variant="contained" sx={{ marginTop: "20px" }}>
+        <Link
+          to="/"
+          style={{ textDecoration: "none", color: mode ? "white" : "white" }}>
           Home
         </Link>
       </Button>

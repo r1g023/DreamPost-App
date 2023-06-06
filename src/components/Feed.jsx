@@ -95,13 +95,14 @@ const Feed = ({
         // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
         cache.writeQuery({
           query: GET_POSTS,
+          // also grab the post id
           data: { getPosts: newData },
         });
       },
     });
 
     // console.log("deletedPost--->", deletedPost);
-    console.log("deletedPost", deletedPost);
+    // console.log("deletedPost", deletedPost);
     return deletedPost;
   };
 
@@ -141,8 +142,7 @@ const Feed = ({
           width: "100%",
           color: "grey.500",
         }}
-        spacing={2}
-      >
+        spacing={2}>
         <LinearProgress
           color="otherColor"
           sx={{ position: "absolute", left: 0, right: 0, height: "7px" }}
@@ -159,13 +159,16 @@ const Feed = ({
       </Stack>
     );
 
-  // if (error) {
-  //   console.log("myError ---->>>>>>> Error: ", error.message);
-  //   window.confirm("Error: " + error.message + ". Please refresh the page.");
-  // }
+  // adding this in case of an error the reload the page
+  if (error) {
+    let confirmRefresh = window.confirm("Error: something went wrong.");
+    if (confirmRefresh) {
+      window.location.reload();
+    }
+  }
 
   return (
-    <div style={{ zIndex: 2 }}>
+    <div className="searchResults" style={{ zIndex: 2 }}>
       <NavBarSearch
         setSearchValue={(e) => setSearchValue(e.target.value)}
         searchValue={searchValue}
@@ -178,7 +181,7 @@ const Feed = ({
       {/* Refresh Icon */}
       <RotateRightSharpIcon
         className="searchIcon"
-        id="myTest"
+        id="refreshIcon"
         //add size
         fontSize="large"
         title="See Latest Posts"
@@ -200,8 +203,7 @@ const Feed = ({
           style={{
             color: mode ? "white" : "black",
             marginTop: searchValue || errorMessage ? "160px" : "0px",
-          }}
-        >
+          }}>
           <p style={{ color: "red" }}> {errorMessage}</p>
           <p>Clear results to see latest posts...</p>
         </h2>
@@ -210,35 +212,26 @@ const Feed = ({
       <div
         style={{
           marginTop: "20px",
-        }}
-      >
+          height: errorMessage || searchValue ? "100vh" : "",
+        }}>
         <Box flex={6} p={3} sx={{ display: "block", marginTop: "110px" }}>
           {/* all posts */}
           {postData &&
             postData
               .map((item) => {
-                console.log("non search result data", item);
+                // console.log("non search result data", item);
                 return (
                   <Post
                     post={item}
                     key={item.id}
-                    handlePostDelete={() => {
-                      // if post is deleted and error, clear search results and add alert to refresh page
+                    handlePostDelete={(myTest) => {
                       let confirmDelete = window.confirm(
-                        "Are you sure you want to delete this post?"
+                        "Are you sure you want to delete your Post?"
                       );
-                      // if no error, delete post
-                      if (confirmDelete && !error) {
+                      if (confirmDelete) {
                         handlePostDelete(item);
-                      }
-                      // if error, clear search results and add alert to refresh page
-                      if (error) {
-                        console.log("item delete------->", item);
-                        // let confirmRefresh = window.confirm(
-                        //   "Error: " +
-                        //     error.message +
-                        //     ". Please refresh the page."
-                        // );
+
+                        window.location.reload(false);
                       }
                     }}
                     mode={mode}
@@ -254,13 +247,19 @@ const Feed = ({
             data &&
             data.getPosts
               .map((item) => {
-                console.log("search result data", item);
+                // console.log("search result data", item);
                 return (
                   <Post
                     post={item}
                     key={item.id}
                     handlePostDelete={() => {
-                      handlePostDelete(item);
+                      // confirm before deleting
+                      let confirmDelete = window.confirm(
+                        "Are you sure you want to delete this post?"
+                      );
+                      if (confirmDelete) {
+                        handlePostDelete(item);
+                      }
                     }}
                     mode={mode}
                     postData={postData}

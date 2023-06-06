@@ -4,16 +4,15 @@ import { Image } from "cloudinary-react";
 import axios from "axios";
 // import css file from ilndex.css
 import moment from "moment";
-// import "../index.css";
+// import "../index.css"
+import ClearIcon from "@mui/icons-material/Clear";
 
 import {
   Avatar,
   Button,
   Fab,
   FormControl,
-  FormHelperText,
   IconButton,
-  InputLabel,
   Modal,
   styled,
   TextField,
@@ -25,6 +24,8 @@ import { Box } from "@mui/system";
 import { UserContext } from "../App";
 import { PhotoCamera } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+// import useCreatePostForm
+import useCreatePostForm from "../formHooks/useCreatePostForm";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -84,23 +85,37 @@ const UserBox = styled(Box)({
 });
 
 //Styled form
-const StyledForm = styled(FormControl)({
-  background: "white",
-  padding: "1rem",
-  borderRadius: "0.7rem",
-  gap: "0.2rem",
-});
+// const StyledForm = styled(FormControl)({
+//   background: "white",
+//   padding: "1rem",
+//   borderRadius: "0.7rem",
+//   gap: "0.2rem",
+// });
 
 // Remove image upload button from the form
 const Input = styled("input")({
   display: "none",
+  color: "white",
+  background: "white",
 });
 
 const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
+  // form hooks
+  const [value, setValue, errors, buttonDisabled, handlePostChanges] =
+    useCreatePostForm({
+      title: "",
+      date: "",
+      image: null,
+      user: "",
+      post: "",
+    });
+
+  // console.log("value----->", value);
+
   const [open, setOpen] = React.useState(false);
   //add post date to useEffect
 
-  const { refetch } = useQuery(GET_POSTS);
+  // const { refetch } = useQuery(GET_POSTS);
 
   const toggleModal = () => {
     setOpen(!open);
@@ -116,23 +131,21 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     moment().endOf("day").format("MM/DD/YYYY").toLocaleString("en-US")
   );
 
-  const [addPost, setAddPost] = React.useState({
-    title: "",
-    date: "",
-    image: null,
-    user: "",
-    post: "",
-  });
-
-  React.useEffect(() => {
-    // if new post clear results
-  }, [startDate, addPost]);
+  // replaced  addPost and setAddPost formHooks
+  // const [value, setValue] = React.useState({
+  //   title: "",
+  //   date: "",
+  //   image: null,
+  //   user: "",
+  //   post: "",
+  // });
 
   // console.log("user on create post----->", user);
 
-  // console.log("addPost on create post----->", data);
+  // console.log("value on create post----->", data);
 
   //on post submit, scroll to top function call
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -141,22 +154,13 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     });
   };
 
-  // handle changes for posts  input fields
-  function handleChange(e) {
-    // console.log(e.target.name, e.target.value);
-    setAddPost({
-      ...addPost,
-      [e.target.name]: e.target.value,
-    });
-  }
-
   //upload image to Cloud
   function uploadImage(e) {
     const formData = new FormData();
     formData.append("file", selectedImages);
     formData.append("upload_preset", "xhfk3bp5_u");
-    console.log("post on image upload test");
-    console.count("post on image count:");
+    // console.log("post on image upload test");
+    // console.count("post on image count:");
 
     const postImage = async () => {
       try {
@@ -164,11 +168,11 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
           "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
           formData
         );
-        console.log("response", response);
-        // add response to my addPost image form
+        // console.log("response", response);
+        // add response to my value image form
         setUploadPhoto(response.data.secure_url);
       } catch {
-        console.log("error uploading image");
+        // console.log("error uploading image");
       }
     };
 
@@ -182,22 +186,22 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
 
   // handle submit for posts
   async function handleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     // add upload image to my submit form
     const newPost = await createPost({
       variables: {
-        title: addPost.title,
+        title: value.title,
         date: startDate,
         image: uploadPhoto,
-        post: addPost.post,
+        post: value.post,
         user: user.username,
         user_id: user.id,
       },
 
       refetchQueries: [{ query: GET_POSTS }],
     });
-    setAddPost({
+    setValue({
       title: "",
       date: "",
       image: "",
@@ -222,14 +226,19 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   return (
     <>
       <Tooltip
-        onClick={toggleModal}
+        onClick={() => {
+          // this will ensure that the user cannot create a post without uploading an image first
+          if (!uploadPhoto) {
+            setTogglePhoto(true);
+          }
+          toggleModal();
+        }}
         title="Create Post"
         sx={{
           position: "fixed",
           bottom: 20,
           left: { xs: "calc(50% - 25px)", md: 30 },
-        }}
-      >
+        }}>
         <Fab color={mode ? "" : "primary"} aria-label="add">
           <AddIcon />
         </Fab>
@@ -241,83 +250,37 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
           open={open}
           onClose={toggleModal}
           aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+          aria-describedby="modal-modal-description">
           <Box
+            p={3}
             width={300}
             height={420}
             bgcolor="white"
             borderRadius={"10px"}
-            p={3}
             textAlign="center"
-          >
+            sx={{
+              background: "none",
+              // might need to adjust this as the post modal sometimes does not look correct because of the margin,
+              marginLeft: "-1rem",
+            }}>
             {/*userbox of current logged in user.username */}
             <UserBox>
               {/*form */}
 
               <FormControl
+                className="post-form-responsiveness"
                 style={{
-                  background: "white",
-                  padding: "1rem",
+                  padding: "2rem",
                   borderRadius: "0.7rem",
                   gap: "0.2rem",
-                }}
-              >
+                  background: mode ? "#1B2430" : "white",
+                  color: mode ? "white" : "black",
+                  // add margin bottom to the form
+                  // marginTop: "-100px",
+                  marginTop: "-50px",
+                  boxShadow: "0px 0px 12px 0px orange",
+                }}>
                 {togglePhoto ? (
-                  <>
-                    <Avatar
-                      src={user.avatar}
-                      // src="https://i.pravatar.cc/300" //default random image
-                      sx={{ border: "1px solid red", margin: "0 auto" }}
-                    />
-                    <Typography variant="h6" sx={{ color: "green" }}>
-                      @{user.username}
-                    </Typography>
-                    <TextField
-                      id="demo-helper-text-aligned"
-                      label="Post Title"
-                      name="title"
-                      onChange={handleChange}
-                    />
-                    {/* <TextField
-                      id="demo-helper-text-aligned"
-                      label="post"
-                      name="post"
-                      onChange={handleChange}
-                      sx={{ marginTop: "0.5rem" }}
-                    /> */}
-                    <TextField
-                      id="standard-multiline-static"
-                      label="What's on your mind?"
-                      name="post"
-                      multiline
-                      rows={4}
-                      onChange={handleChange}
-                      sx={{ marginTop: "0.5rem" }}
-                      variant="standard"
-                      color="otherColor"
-                    />
-                    <Button
-                      variant="contained"
-                      color="success"
-                      type="submit"
-                      onClick={handleSubmit}
-                    >
-                      Add Post
-                    </Button>{" "}
-                    {/* <h2>Photo upload is required</h2> */}
-                    <span style={{ fontSize: "12px" }}>
-                      Don't forget to upload a photo
-                    </span>
-                    <Button
-                      variant="outlined"
-                      onClick={() => setTogglePhoto(!togglePhoto)}
-                      color="otherColor"
-                    >
-                      Upload Photo
-                    </Button>
-                  </>
-                ) : (
                   <>
                     <label htmlFor="icon-button-file">
                       <label htmlFor="image" style={{ display: "block" }}>
@@ -328,22 +291,28 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         accept="image/*"
                         id="icon-button-file"
                         type="file"
-                        sx={{ color: "red" }}
+                        sx={{ color: "red", background: "red" }}
                         onChange={(e) => {
-                          console.log("e.target.files", e.target.files);
+                          // console.log("e.target.files", e.target.files);
                           setSelectedImages(e.target.files[0]);
                         }}
                       />
                       <IconButton
-                        color="primary"
+                        sx={{ color: mode ? "green" : "black" }}
                         aria-label="upload picture"
-                        component="span"
-                      >
+                        component="span">
                         <PhotoCamera />
                       </IconButton>
                     </label>
                     {uploadPhoto && (
                       <Image
+                        style={{
+                          // make the image responsive
+                          height: "225px",
+                          width: "200px",
+                          display: "block",
+                          margin: "0 auto",
+                        }}
                         cloudName="dcvh93esc"
                         publicId={`${uploadPhoto}`}
                       />
@@ -383,27 +352,206 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         variant="contained"
                         color="success"
                         sx={{ marginTop: 5 }}
-                        onClick={() => setTogglePhoto(!togglePhoto)}
-                      >
+                        onClick={() => setTogglePhoto(!togglePhoto)}>
                         Submit
                       </Button>
                     )}
                     <Button
                       variant="outlined"
                       color="error"
-                      sx={{ marginTop: "3rem" }}
+                      sx={{ marginTop: "1rem" }}
                       onClick={() => {
+                        // fix toggle when canceling photo upload
                         setUploadPhoto(null);
                         setTogglePhoto(!togglePhoto);
-                      }}
-                    >
+                      }}>
                       Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {/* add an X button to close modal */}
+                    <span title="Close and cancel new post">
+                      <ClearIcon
+                        sx={{
+                          cursor: "pointer",
+                          fontSize: 40,
+                          position: "absolute",
+                          right: 20,
+                          top: 20,
+                        }}
+                        color="error"
+                        title="Close and cancel new post"
+                        onClick={toggleModal}
+                      />
+                    </span>
+                    <Avatar
+                      src={user.avatar}
+                      // src="https://i.pravatar.cc/300" //default random image
+                      sx={{ border: "1px solid red", margin: "0 auto" }}
+                    />
+                    <Typography variant="h6" sx={{ color: "green" }}>
+                      @{user.username}
+                    </Typography>
+                    {/* if no upload photo then disable title and post */}
+                    <TextField
+                      id="demo-helper-text-aligned"
+                      label={
+                        !uploadPhoto ? (
+                          "Upload a photo first"
+                        ) : (
+                          // add a background color to the title only if the user clicks on input
+                          <span
+                            style={{
+                              background: mode ? "white" : "",
+                              color: mode ? "black" : "black",
+                              fontSize: "1.2rem",
+                              padding: "0.2rem",
+                            }}>
+                            Enter a Title
+                          </span>
+                        )
+                      }
+                      placeholder="Enter a title"
+                      name="title"
+                      onChange={handlePostChanges}
+                      disabled={!uploadPhoto ? true : false}
+                      sx={{
+                        boxShadow: "0px 0px 12px 0px gray",
+                        marginTop: "0.5rem",
+                        width: "100%",
+                        color: mode ? "red" : "black",
+                        background: mode ? "white" : "",
+                      }}
+                    />
+                    {/* error for title */}
+                    {errors ? (
+                      <p
+                        style={{
+                          color: "red",
+
+                          fontSize: "14px",
+                          textAlign: "left",
+                        }}>
+                        {errors.title}
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                    {/* <TextField
+                      id="demo-helper-text-aligned"
+                      label="post"
+                      name="post"
+                      onChange={handlePostChanges}
+                      sx={{ marginTop: "0.5rem" }}
+                    /> */}
+                    <TextField
+                      id="standard-multiline-static"
+                      label={
+                        !uploadPhoto
+                          ? "Upload a photo first"
+                          : "What's on your mind?"
+                      }
+                      name="post"
+                      multiline
+                      rows={4}
+                      onChange={handlePostChanges}
+                      sx={{
+                        marginTop: "0.5rem",
+                        width: "100%",
+
+                        boxShadow: "0px 0px 12px 0px gray",
+                        background: mode ? "white" : "",
+                      }}
+                      variant="standard"
+                      color="otherColor"
+                      disabled={!uploadPhoto ? true : false}
+                    />
+                    {/* error for post */}
+                    {errors ? (
+                      <p
+                        style={{
+                          color: "red",
+
+                          fontSize: "14px",
+                          textAlign: "left",
+                        }}>
+                        {" "}
+                        {errors.post}
+                      </p>
+                    ) : null}
+                    <br />
+                    <Button
+                      variant="contained"
+                      color="success"
+                      type="submit"
+                      disabled={buttonDisabled}
+                      sx={{
+                        border: mode ? "1px solid white" : "",
+                        color: mode ? "white" : "",
+                      }}
+                      onClick={() => {
+                        // if no image is uploaded, alert user to upload image first
+                        if (!uploadPhoto) {
+                          window.alert("Please upload a photo");
+                        }
+                        handleSubmit();
+                      }}>
+                      {/* add grayish color to button when disabled, enclose in span */}
+                      <span style={{ color: "gray" }}>Submit</span>
+                    </Button>{" "}
+                    {/* <h2>Photo upload is required</h2> */}
+                    <span style={{ fontSize: "12px" }}>
+                      {/* if photo is uploaded do not display text  -*/}
+                      {!uploadPhoto ? (
+                        <span style={{ color: "red" }}>
+                          Photo upload is required
+                        </span>
+                      ) : (
+                        <>
+                          <span style={{ color: "green" }}>
+                            Photo uploaded already, please enter a title and
+                            post.
+                          </span>
+                          <br />
+                          <br />
+                          {/* <span style={{ color: "orange" }}>
+                            Or click remove photo to upload a new one.
+                          </span> */}
+                          {/* add a button to remove photo */}
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            sx={{ marginTop: "1rem" }}
+                            onClick={() => {
+                              // fix toggle when canceling photo upload
+                              setUploadPhoto(null);
+                              setTogglePhoto(!togglePhoto);
+                            }}>
+                            Remove Photo
+                          </Button>
+                        </>
+                      )}
+                    </span>
+                    <Button
+                      variant="outlined"
+                      disabled={uploadPhoto ? true : false}
+                      onClick={() => {
+                        //  do not submit if there's no photo
+                        if (!uploadPhoto) {
+                          setTogglePhoto(!togglePhoto);
+                        }
+                        return;
+                      }}
+                      color="otherColor">
+                      Upload Photo
                     </Button>
                   </>
                 )}
               </FormControl>
             </UserBox>
           </Box>
+          {/* add an X button to close modal */}
         </StyledModal>
       ) : null}
     </>

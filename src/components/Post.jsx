@@ -189,7 +189,10 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
-  // GET users from query
+
+  let currentUser = userList.getUsers.find(
+    (user) => user.username === post.user
+  );
 
   React.useEffect(() => {
     // console.log("comment data on Post.jsx USE EFFECT---->", data);
@@ -264,7 +267,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           });
         },
       });
-      console.log("deleted comment errors--->", deletedComment);
+      // console.log("deleted comment errors--->", deletedComment);
 
       return deletedComment;
     }
@@ -307,10 +310,14 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   // console.log("user on POST COMMENT ---->", user);
 
   const isCurrentUser = user.username === post.user;
+  // console.log("isCurrentUser--->", isCurrentUser);
+  // console.log("userList--->", userList);
+  // console.log("currentUser--->", currentUser);
 
   return (
     <>
       <Card
+        className="post-card"
         sx={{
           margin: "30px auto",
           background: mode ? "#2C394B" : "white",
@@ -318,8 +325,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           maxWidth: "400px",
           width: "100%",
           boxShadow: mode ? "0px 0px 12px 0px gray" : "0px 0px 12px 0px gray",
-        }}
-      >
+        }}>
         {/* Card Header */}
         <CardHeader
           avatar={
@@ -330,8 +336,10 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                 userList &&
                 userList.getUsers.find((user) => user.username === post.user)
                   .avatar
-              }
-            ></Avatar>
+              }>
+              {/* if no avatar, display first letter of username */}
+              {currentUser.username.charAt(0).toUpperCase()}
+            </Avatar>
           }
           action={
             <IconButton
@@ -341,8 +349,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
               aria-expanded={open ? "true" : null}
               aria-haspopup="true"
               onClick={handleClick}
-              sx={{ color: mode ? "white" : "black" }}
-            >
+              sx={{ color: mode ? "white" : "black" }}>
               <MoreVertIcon />
             </IconButton>
           }
@@ -353,8 +360,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                 component="span"
                 fontWeight="fontWeightBold"
                 variant="body2"
-                color="text.primary"
-              >
+                color="text.primary">
                 <span style={{ color: mode ? "white" : "", fontSize: "10px" }}>
                   posted on {post.date}
                 </span>
@@ -373,8 +379,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
             textAlign: isCurrentUser ? "center" : "center",
             borderRadius: isCurrentUser ? "10px" : "10px",
             margin: "5px",
-          }}
-        >
+          }}>
           @{post.user}
         </h4>
 
@@ -394,8 +399,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                 maxHeight: 15 * 4.5,
                 width: "9ch",
               },
-            }}
-          >
+            }}>
             {options.map((option) => (
               <MenuItem key={option} onClick={() => handlePostDelete(post.id)}>
                 {option}
@@ -425,8 +429,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           <IconButton
             aria-label="share"
             sx={{ color: mode ? "white" : "" }}
-            onClick={() => setToggleModal(!toggleModal)}
-          >
+            onClick={() => setToggleModal(!toggleModal)}>
             <ShareIcon />
           </IconButton>
 
@@ -436,8 +439,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
             onClick={handleExpandClick} // toggle true || false
             aria-expanded={expanded}
             aria-label="show more"
-            sx={{ color: mode ? "white" : "" }}
-          >
+            sx={{ color: mode ? "white" : "" }}>
             <ExpandMoreIcon />
           </ExpandMore>
           <span style={{ fontSize: "13px" }}>Comments</span>
@@ -472,8 +474,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                   color: mode ? "white" : "002A53",
                   borderColor: mode ? "white" : "002A53",
                 }}
-                type="submit"
-              >
+                type="submit">
                 Add Comment
               </Button>
             </form>

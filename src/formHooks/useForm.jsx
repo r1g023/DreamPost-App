@@ -22,7 +22,10 @@ export default function useForm(initialValue) {
     formSchema.isValid(value).then((valid) => {
       setButtonDisabled(!valid);
     });
+    // add local storage to value.title and value.post
   }, [value, formSchema]);
+
+  // get
 
   //validate for errors if inputs are not filled out completely based on yup
   function validateChanges(e) {
@@ -35,7 +38,7 @@ export default function useForm(initialValue) {
         setErrors({ ...errors, [e.target.name]: "" });
       })
       .catch((err) => {
-        console.log("errors on yup validation---->", err.errors);
+        // console.log("errors on yup validation---->", err.errors);
         setErrors({ ...errors, [e.target.name]: err.errors[0] });
       });
   }

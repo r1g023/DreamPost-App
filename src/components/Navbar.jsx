@@ -47,7 +47,9 @@ const Navbar = ({ setUser }) => {
   const [open, setOpen] = React.useState(false);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
-  React.useEffect(() => {}, [user, user.username, user.role, user.avatar]);
+  React.useEffect(() => {
+    // keep user logged in
+  }, [user, user.username, user.role, user.avatar]);
 
   return (
     <>
@@ -56,8 +58,7 @@ const Navbar = ({ setUser }) => {
         style={{
           paddingTop: "9px",
           zIndex: "10",
-        }}
-      >
+        }}>
         {/* If there's no user.username logged in, display logo */}
         {!user.username ? (
           <img
@@ -73,8 +74,7 @@ const Navbar = ({ setUser }) => {
             {/* header*/}
             <Typography
               variant="h4"
-              sx={{ display: { xs: "none", sm: "block" } }}
-            >
+              sx={{ display: { xs: "none", sm: "block" } }}>
               {user.username ? (
                 <p>
                   <img
@@ -110,15 +110,13 @@ const Navbar = ({ setUser }) => {
               <Badge
                 badgeContent={1}
                 color="secondary"
-                sx={{ cursor: "pointer" }}
-              >
+                sx={{ cursor: "pointer" }}>
                 <MailIcon />
               </Badge>
               <Badge
                 badgeContent={8}
                 color="secondary"
-                sx={{ cursor: "pointer" }}
-              >
+                sx={{ cursor: "pointer" }}>
                 {" "}
                 <Notifications />
               </Badge>
@@ -136,12 +134,12 @@ const Navbar = ({ setUser }) => {
               <Avatar
                 sx={{ height: 30, width: 30, cursor: "pointer" }}
                 alt="profile photo"
-                src={user.avatar ? user.avatar : user.username[0].toUpperCase()}
+                // show first letter of username if no avatar
+                src={user.avatar ? user.avatar : false}
               />
               <Typography
                 variant="span"
-                sx={{ marginRight: "5px", cursor: "pointer" }}
-              >
+                sx={{ marginRight: "5px", cursor: "pointer" }}>
                 {user.username}
               </Typography>
               {/*Link to books */}
@@ -164,14 +162,12 @@ const Navbar = ({ setUser }) => {
           transformOrigin={{
             vertical: "top",
             horizontal: "right",
-          }}
-        >
+          }}>
           {/* Profile page */}
           <MenuItem>
             <Link
               to="/profile"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+              style={{ textDecoration: "none", color: "black" }}>
               Profile
             </Link>
           </MenuItem>
@@ -184,8 +180,7 @@ const Navbar = ({ setUser }) => {
               onClick={() => {
                 navigate("/");
                 window.location.reload(false);
-              }}
-            >
+              }}>
               Home
             </Link>
           </MenuItem>
@@ -210,12 +205,13 @@ const Navbar = ({ setUser }) => {
               window.localStorage.removeItem("editName");
               // remove localstore ab.storage.device and ab.storage.server
               window.localStorage.removeItem("ab.storage");
+              // remove setValue and Value localstorage
+              window.localStorage.removeItem("value");
 
               navigate("/login");
               // remove user upon logout
               setUser("");
-            }}
-          >
+            }}>
             Logout
           </MenuItem>
         </Menu>

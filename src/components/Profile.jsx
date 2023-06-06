@@ -130,7 +130,7 @@ const StyledBox = styled(Box)({
 
 const Profile = () => {
   const { user, setUser, mode, setMode } = useContext(UserContext);
-  console.log("user on Profile****", user);
+  // console.log("user on Profile****", user);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [toggleModal, setToggleModal] = React.useState(false);
@@ -170,7 +170,7 @@ const Profile = () => {
   const [reload, setReload] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("data on Profile", data);
+    // console.log("data on Profile", data);
     localStorage.getItem("user");
     const editNameData = localStorage.getItem("editName");
     if (editNameData) {
@@ -198,11 +198,11 @@ const Profile = () => {
           "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
           formData
         );
-        console.log("response", response);
+        // console.log("response", response);
         // add response to my addPost image form
         setUploadPhoto(response.data.secure_url);
       } catch {
-        console.log("error uploading image");
+        // console.log("error uploading image");
       }
     };
     postImage();
@@ -211,8 +211,8 @@ const Profile = () => {
   // handle form submission .
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("updateUserID Submit", updateUserID);
-    console.log("editName Submit", editName);
+    // console.log("updateUserID Submit", updateUserID);
+    // console.log("editName Submit", editName);
     updateUser({
       variables: {
         id: user.id,
@@ -225,7 +225,7 @@ const Profile = () => {
     })
       // add it to set user on local storage
       .then((res) => {
-        console.log("res on Profile", res);
+        // console.log("res on Profile", res);
         // setUser(res.data.updateUser);
         setUser({
           ...user,
@@ -241,7 +241,7 @@ const Profile = () => {
 
   // handle PHOTO form submission
   function handlePhotoSubmit() {
-    console.log("updateUserID", updateUserID);
+    // console.log("updateUserID", updateUserID);
     updateUser({
       variables: {
         id: user.id,
@@ -250,7 +250,7 @@ const Profile = () => {
     })
       // add it to set user on local storage
       .then((res) => {
-        console.log("res on Profile", res);
+        // console.log("res on Profile", res);
         // setUser(res.data.updateUser);
         setUser({
           ...user,
@@ -266,14 +266,14 @@ const Profile = () => {
   }
 
   const handleChange = (e) => {
-    console.log("E TARGET", e.target.name, e.target.value);
+    // console.log("E TARGET", e.target.name, e.target.value);
     setEditName({
       ...editName,
       [e.target.name]: e.target.value,
     });
   };
 
-  console.log("PROFILE did mount");
+  // console.log("PROFILE did mount");
   return (
     <div
       className="profile-container responsive"
@@ -281,14 +281,11 @@ const Profile = () => {
       style={{
         backgroundColor: mode ? "#002A53" : "#E1D9D1",
         opacity: 0.9,
-        height: "100vh",
-        marginTop: "60px",
-        // scrollBehavior: "smooth",
-        // overflowY: "scroll",
-        // overflowX: "hidden",
-      }}
-    >
-      {console.log("PROFILE DID RENDER--->")}
+        // marginTop: "73px",
+        // border: "3px solid red",
+        // padding: "50px 0 50px",
+      }}>
+      {/* {console.log("PROFILE DID RENDER--->")} */}
       {/* form to update user */}
       <StyledBox>
         <h1 style={{ color: mode ? "white" : "black", paddingTop: "40px" }}>
@@ -298,8 +295,7 @@ const Profile = () => {
         <Button
           onClick={(prev) => setToggleModal(!toggleModal)}
           variant="outlined"
-          color="otherColor"
-        >
+          color="otherColor">
           Change Avatar
         </Button>
 
@@ -312,8 +308,7 @@ const Profile = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-              }}
-            >
+              }}>
               <label
                 htmlFor="image"
                 style={{
@@ -321,8 +316,7 @@ const Profile = () => {
                   color: mode ? "white" : "white",
                   textAlign: "center",
                   fontSize: "1rem",
-                }}
-              >
+                }}>
                 Click avatar to select new image and click upload button
               </label>
               <Typography
@@ -331,8 +325,7 @@ const Profile = () => {
                   display: "block",
 
                   textAlign: "center",
-                }}
-              >
+                }}>
                 <span style={{ color: "green" }}>@{user.username}</span>
               </Typography>
               {/* Current Avatar Icon */}
@@ -342,7 +335,7 @@ const Profile = () => {
                 type="file"
                 name="avatar"
                 onChange={(e) => {
-                  console.log("e.target.files", e.target.files);
+                  // console.log("e.target.files", e.target.files);
                   setSelectedImages(e.target.files[0]);
                 }}
               />
@@ -350,8 +343,7 @@ const Profile = () => {
               <IconButton
                 color="primary"
                 aria-label="upload picture"
-                component="span"
-              >
+                component="span">
                 <Avatar
                   src={user.avatar}
                   // src="https://i.pravatar.cc/300"
@@ -363,8 +355,7 @@ const Profile = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                }}
-              >
+                }}>
                 {uploadPhoto && (
                   <Image
                     cloudName="dcvh93esc"
@@ -384,8 +375,7 @@ const Profile = () => {
 
                 display: "flex",
                 flexDirection: "column",
-              }}
-            >
+              }}>
               {!uploadPhoto && (
                 <CloudUploadIcon
                   color="otherColor"
@@ -405,8 +395,7 @@ const Profile = () => {
                   onClick={handlePhotoSubmit}
                   variant="contained"
                   color="success"
-                  sx={{ marginTop: 5 }}
-                >
+                  sx={{ marginTop: 5 }}>
                   Upload Photo
                 </Button>
               )}
@@ -418,8 +407,7 @@ const Profile = () => {
         <IconButton
           color="primary"
           aria-label="upload picture"
-          component="span"
-        >
+          component="span">
           <Avatar
             src={user.avatar}
             // src="https://i.pravatar.cc/300"
@@ -431,8 +419,7 @@ const Profile = () => {
           sx={{
             display: "block",
             textAlign: "center",
-          }}
-        >
+          }}>
           <span style={{ color: "green" }}>@{user.username}</span>
         </Typography>
         {/* ----------------------------------------------------------------------------------------------------------------FORM STARTS HERE--------------------------------------------------------*/}
@@ -445,8 +432,7 @@ const Profile = () => {
             display: "flex",
             flexDirection: "column",
             width: "55%",
-          }}
-        >
+          }}>
           <>
             {/* first_name */}
             <TextField
@@ -473,7 +459,7 @@ const Profile = () => {
                 name="dob"
                 value={editName.dob}
                 onChange={(newValue) => {
-                  console.log("newValue", newValue);
+                  // console.log("newValue", newValue);
                   setEditName({
                     ...editName,
                     dob: newValue,
@@ -492,8 +478,7 @@ const Profile = () => {
                 name="role"
                 label="Role"
                 onChange={handleChange}
-                value={editName.role || ""}
-              >
+                value={editName.role || ""}>
                 <MenuItem value="">
                   <em>Must Select One</em>
                 </MenuItem>
@@ -518,8 +503,7 @@ const Profile = () => {
               variant="contained"
               color="success"
               type="submit"
-              onClick={handleSubmit}
-            >
+              onClick={handleSubmit}>
               Update Profile
             </Button>{" "}
           </>
@@ -533,8 +517,7 @@ const Profile = () => {
             width: "65%",
             background: mode ? "" : "white",
             borderRadius: "0.7rem",
-          }}
-        >
+          }}>
           <h3 className="profile">
             First_Name:
             <span className="profile-info"> {editName.first_name}</span>
@@ -576,8 +559,7 @@ const Profile = () => {
               display: "flex",
               justifyContent: "center",
               marginTop: "1rem",
-            }}
-          >
+            }}>
             <p>Full Avatar</p>
           </Box>
           <div style={{ textAlign: "center", marginTop: "10px" }}>

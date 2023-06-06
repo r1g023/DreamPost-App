@@ -86,7 +86,7 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
         dark_mode: e.target.checked,
       },
     }).then((res) => {
-      console.log("result", res);
+      // console.log("result", res);
       setMode(res.data.updateUser.dark_mode);
       setUser({
         ...user,
@@ -110,8 +110,7 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
             xs: "none",
             sm: "block",
           },
-        }}
-      >
+        }}>
         <Box sx={{ position: "fixed" }}>
           {/* Lists of items */}
           <List>
@@ -131,8 +130,7 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
               style={{
                 textDecoration: "none",
                 color: mode ? "white" : "black",
-              }}
-            >
+              }}>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
