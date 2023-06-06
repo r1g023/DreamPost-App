@@ -94,6 +94,7 @@
         .searchBar.responsive {
           max-width: 329px;
           width: 100%;
+          background: blue;
         }
   
         // styling for searchBar on Feed page
@@ -122,6 +123,8 @@
       .searchBar.responsive {
         max-width: 323px;
         width: 100%;
+       
+        background: green;
       }
 
        // styling for searchBar on Feed page
@@ -138,6 +141,9 @@
         //height: 100vh;
         //padding-bottom: 125px;
       //}
+      .post-form-responsiveness {
+        border: 10px solid red;
+        margin-top: -30px;
     }
   }
 
@@ -145,8 +151,10 @@
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 307px;
+        max-width: 303px;
         width: 100%;
+    
+        background: red;
       }
 
        // styling for searchBar on Feed page
@@ -157,6 +165,8 @@
       #refreshIcon {
         margin-left: 133px;
       }
+
+      
 
       //#profile-responsive {
         //padding-top: 125px;
@@ -174,6 +184,8 @@
       .searchBar.responsive {
         max-width: 308px;
         width: 100%;
+         
+        background: purple;
       }
 
       #refreshIcon {
@@ -194,7 +206,7 @@
         .searchBar.responsive {
           max-width: 270px;
           width: 100%;
-
+          background: green;
         }
 
         // refresh icon
@@ -222,6 +234,7 @@
         // for search bar
         .searchBar.responsive {
           max-width: 240px;
+          border: 10px solid red;
           width: 100%;
         }
 
@@ -276,7 +289,7 @@
         #profile-responsive {
           margin-top: 65px;
           padding: 300px 0 300px;
-          // border: 10px solid green;
+          border: 10px solid green;
         }
       }
     }
@@ -328,5 +341,12 @@
       // added this to remove scrollbar on search results when on mobile phones
       .feed-responsiveOverflow {
         height: auto;
+      }
+
+      // styling for the noMatch component in case the user's role is set to user
+      .noMatch {
+        max-width: 320px;
+        width: 100%;
+        margin: 0 auto;
       }
    }

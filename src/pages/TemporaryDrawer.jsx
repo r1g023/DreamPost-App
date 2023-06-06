@@ -93,7 +93,7 @@ export default function TemporaryDrawer() {
         dark_mode: e.target.checked,
       },
     }).then((res) => {
-      console.log("result", res);
+      // console.log("result", res);
       setUser({
         ...user,
         dark_mode: localStorage.setItem(
@@ -125,15 +125,13 @@ export default function TemporaryDrawer() {
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
-            sx={{}}
-          >
+            sx={{}}>
             <Box
               sx={{
                 backgroundColor: "primary.main",
                 height: "100%",
                 color: "white",
-              }}
-            >
+              }}>
               {/* Lists of items */}
               <List sx={{ marginTop: "50%" }}>
                 {/* Home page */}
@@ -149,8 +147,7 @@ export default function TemporaryDrawer() {
                 {/* profile */}
                 <Link
                   to="/profile"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
+                  style={{ textDecoration: "none", color: "white" }}>
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>

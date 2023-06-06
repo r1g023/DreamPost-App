@@ -15,6 +15,13 @@ import { Link, useNavigate } from "react-router-dom";
 import useSignupForm from "../formHooks/useSignupForm";
 import { LoadingButton } from "@mui/lab";
 
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+
 const StyledBox = styled(Box)({
   display: "flex",
   justifyContent: "center",
@@ -60,6 +67,17 @@ const Signup = () => {
   // mutation for signup user
   const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
 
+  //password visibility
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   // Signup user
   async function handleSubmit(e) {
     e.preventDefault();
@@ -97,8 +115,7 @@ const Signup = () => {
             display: "flex",
             flexDirection: "column",
             width: "50%",
-          }}
-        >
+          }}>
           {/* Email */}
           <span style={{ color: "blue", fontWeight: "900" }}>email</span>
           <TextField
@@ -127,13 +144,34 @@ const Signup = () => {
 
           {/* Password */}
           <span style={{ color: "blue", fontWeight: "900" }}>Password</span>
-          <TextField
+
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            label="Password"
+            name="password"
+            onChange={handleChanges}
+            value={value.password}
+            autoComplete="current-password"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end">
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          {/* <TextField
             id="demo-helper-text-aligned"
             label="password"
             name="password"
             onChange={handleChanges}
             value={value.password}
-          />
+          /> */}
           {errors.password ? (
             <p style={{ color: "red", fontSize: "11px" }}>{errors.password}</p>
           ) : null}
@@ -148,8 +186,7 @@ const Signup = () => {
               name="role"
               label="Role"
               onChange={handleChanges}
-              value={value.role}
-            >
+              value={value.role}>
               <MenuItem value="">
                 <em>Must Select One</em>
               </MenuItem>
@@ -179,10 +216,9 @@ const Signup = () => {
             color="success"
             disabled={buttonDisabled}
             type="submit"
-            loading={loading}
+            // loading={loading}
             loadingPosition={"start"}
-            loadingIndicator={<CircularProgress color="primary" size={20} />}
-          >
+            loadingIndicator={<CircularProgress color="primary" size={20} />}>
             Signup
           </LoadingButton>
         </form>
@@ -197,8 +233,7 @@ const Signup = () => {
                 padding: "5px",
                 borderRadius: "5px",
                 textDecoration: "none",
-              }}
-            >
+              }}>
               Login
             </span>
           </Link>

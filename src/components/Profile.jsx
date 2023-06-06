@@ -130,7 +130,7 @@ const StyledBox = styled(Box)({
 
 const Profile = () => {
   const { user, setUser, mode, setMode } = useContext(UserContext);
-  console.log("user on Profile****", user);
+  // console.log("user on Profile****", user);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [toggleModal, setToggleModal] = React.useState(false);
@@ -170,7 +170,7 @@ const Profile = () => {
   const [reload, setReload] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("data on Profile", data);
+    // console.log("data on Profile", data);
     localStorage.getItem("user");
     const editNameData = localStorage.getItem("editName");
     if (editNameData) {
@@ -198,11 +198,11 @@ const Profile = () => {
           "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
           formData
         );
-        console.log("response", response);
+        // console.log("response", response);
         // add response to my addPost image form
         setUploadPhoto(response.data.secure_url);
       } catch {
-        console.log("error uploading image");
+        // console.log("error uploading image");
       }
     };
     postImage();
@@ -211,8 +211,8 @@ const Profile = () => {
   // handle form submission .
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("updateUserID Submit", updateUserID);
-    console.log("editName Submit", editName);
+    // console.log("updateUserID Submit", updateUserID);
+    // console.log("editName Submit", editName);
     updateUser({
       variables: {
         id: user.id,
@@ -225,7 +225,7 @@ const Profile = () => {
     })
       // add it to set user on local storage
       .then((res) => {
-        console.log("res on Profile", res);
+        // console.log("res on Profile", res);
         // setUser(res.data.updateUser);
         setUser({
           ...user,
@@ -241,7 +241,7 @@ const Profile = () => {
 
   // handle PHOTO form submission
   function handlePhotoSubmit() {
-    console.log("updateUserID", updateUserID);
+    // console.log("updateUserID", updateUserID);
     updateUser({
       variables: {
         id: user.id,
@@ -250,7 +250,7 @@ const Profile = () => {
     })
       // add it to set user on local storage
       .then((res) => {
-        console.log("res on Profile", res);
+        // console.log("res on Profile", res);
         // setUser(res.data.updateUser);
         setUser({
           ...user,
@@ -266,14 +266,14 @@ const Profile = () => {
   }
 
   const handleChange = (e) => {
-    console.log("E TARGET", e.target.name, e.target.value);
+    // console.log("E TARGET", e.target.name, e.target.value);
     setEditName({
       ...editName,
       [e.target.name]: e.target.value,
     });
   };
 
-  console.log("PROFILE did mount");
+  // console.log("PROFILE did mount");
   return (
     <div
       className="profile-container responsive"
@@ -285,7 +285,7 @@ const Profile = () => {
         // border: "3px solid red",
         // padding: "50px 0 50px",
       }}>
-      {console.log("PROFILE DID RENDER--->")}
+      {/* {console.log("PROFILE DID RENDER--->")} */}
       {/* form to update user */}
       <StyledBox>
         <h1 style={{ color: mode ? "white" : "black", paddingTop: "40px" }}>
@@ -335,7 +335,7 @@ const Profile = () => {
                 type="file"
                 name="avatar"
                 onChange={(e) => {
-                  console.log("e.target.files", e.target.files);
+                  // console.log("e.target.files", e.target.files);
                   setSelectedImages(e.target.files[0]);
                 }}
               />
@@ -459,7 +459,7 @@ const Profile = () => {
                 name="dob"
                 value={editName.dob}
                 onChange={(newValue) => {
-                  console.log("newValue", newValue);
+                  // console.log("newValue", newValue);
                   setEditName({
                     ...editName,
                     dob: newValue,

@@ -38,7 +38,7 @@ export default function useForm(initialValue) {
         setErrors({ ...errors, [e.target.name]: "" });
       })
       .catch((err) => {
-        console.log("errors on yup validation---->", err.errors);
+        // console.log("errors on yup validation---->", err.errors);
         setErrors({ ...errors, [e.target.name]: err.errors[0] });
       });
   }
