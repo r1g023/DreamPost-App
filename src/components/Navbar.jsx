@@ -205,6 +205,8 @@ const Navbar = ({ setUser }) => {
               window.localStorage.removeItem("editName");
               // remove localstore ab.storage.device and ab.storage.server
               window.localStorage.removeItem("ab.storage");
+              // remove setValue and Value localstorage
+              window.localStorage.removeItem("value");
 
               navigate("/login");
               // remove user upon logout

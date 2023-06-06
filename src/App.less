@@ -12,13 +12,13 @@
       
       // for search bar
       .searchBar.responsive {
-        max-width: 360px;
+        max-width: 377px;
         width: 100%;  
       }
 
    
       #refreshIcon {
-        margin-left: 160px;
+        margin-left: 170px;
       }
 
       .searchError {
@@ -65,18 +65,19 @@
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 340px;
+        max-width: 362px;
         width: 100%;
+     
       }
 
       // styling for searchBar on Feed page
       .searchError {
-        max-width: 355px;
+        max-width: 360px;
       }
 
 
       #refreshIcon {
-        margin-left: 150px;
+        margin-left: 160px;
       }
 
       //#profile-responsive {
@@ -94,7 +95,6 @@
         .searchBar.responsive {
           max-width: 329px;
           width: 100%;
-          background: blue;
         }
   
         // styling for searchBar on Feed page
@@ -121,10 +121,8 @@
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 323px;
+        max-width: 339px;
         width: 100%;
-       
-        background: green;
       }
 
        // styling for searchBar on Feed page
@@ -133,7 +131,7 @@
       }
 
       #refreshIcon {
-        margin-left: 140px;
+        margin-left: 149px;
       }
 
       //#profile-responsive {
@@ -142,19 +140,17 @@
         //padding-bottom: 125px;
       //}
       .post-form-responsiveness {
-        border: 10px solid red;
         margin-top: -30px;
     }
   }
+}
 
   @media only screen and (max-width: 370px) {
     body {
       // for search bar
       .searchBar.responsive {
-        max-width: 303px;
+        max-width: 331px;
         width: 100%;
-    
-        background: red;
       }
 
        // styling for searchBar on Feed page
@@ -163,7 +159,7 @@
       }
 
       #refreshIcon {
-        margin-left: 133px;
+        margin-left: 145px;
       }
 
       
@@ -184,12 +180,10 @@
       .searchBar.responsive {
         max-width: 308px;
         width: 100%;
-         
-        background: purple;
       }
 
       #refreshIcon {
-        margin-left: 130px;
+        margin-left: 125px;
       }
       
 
@@ -206,12 +200,11 @@
         .searchBar.responsive {
           max-width: 270px;
           width: 100%;
-          background: green;
         }
 
         // refresh icon
         #refreshIcon {
-          margin-left: 120px;
+          margin-left: 125px;
         }
 
         // search error 
@@ -234,13 +227,13 @@
         // for search bar
         .searchBar.responsive {
           max-width: 240px;
-          border: 10px solid red;
           width: 100%;
+       
         }
 
         // refresh icon
         #refreshIcon {
-          margin-left: 110px;
+          margin-left: 115px;
         }
 
         // search error 
@@ -269,6 +262,10 @@
           padding: 200px 0 200px;
           // border: 10px solid orange;
         }
+
+        #refreshIcon {
+          margin-left: 185px;
+        }
       }
     }
 
@@ -289,10 +286,44 @@
         #profile-responsive {
           margin-top: 65px;
           padding: 300px 0 300px;
-          border: 10px solid green;
+         
         }
       }
     }
+
+        // adjust width to post card since on smaller screens, the post card is too big and goes off the screen
+        @media only screen and (min-width: 280px) and (max-width: 320px) {
+          body {
+            .post-card {
+              width: 289px;
+              max-width: 100%;
+            }
+
+               // refresh icon
+            #refreshIcon {
+              margin-left: 130px;
+            }
+
+            // search error 
+            .searchError {
+              max-width: 295px;
+              width: 100%;
+            }
+
+            .searchBar.responsive {
+              max-width: 300px;
+              
+              width: 100%;
+            }
+
+            #profile-responsive {
+              margin-top: 65px;
+              padding: 325px 0 325px;
+              // border: 10px solid orange;
+            }
+    
+          }
+        }
 //////////////////////////////////////////////////////////////////////////////////
   // main styling for whole app within body
    body {
@@ -302,9 +333,8 @@
           font-size: 15px;
         }
 
-        .profile-container {
-          // border: 10px solid green;
-        }
+  
+    
 
         .searchBar {
           max-width: 410px;
@@ -327,6 +357,7 @@
           padding-left: 20px;
         }
 
+      
         
       // share button styling on post card and it works on mobile as well
       .shareButtonContainer {
@@ -349,4 +380,7 @@
         width: 100%;
         margin: 0 auto;
       }
+
+      
    }
+

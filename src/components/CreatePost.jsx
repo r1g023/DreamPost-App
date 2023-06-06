@@ -73,10 +73,8 @@ const ADD_POST = gql`
 // Styled Modal on top of the default MUI Modal
 const StyledModal = styled(Modal)({
   display: "flex",
-
-  justifyContent: "center",
-  // fit content to modal
   alignItems: "center",
+  justifyContent: "center",
 });
 
 // Styled Box on top of the default MUI Box
@@ -97,6 +95,8 @@ const UserBox = styled(Box)({
 // Remove image upload button from the form
 const Input = styled("input")({
   display: "none",
+  color: "white",
+  background: "white",
 });
 
 const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
@@ -291,14 +291,14 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         accept="image/*"
                         id="icon-button-file"
                         type="file"
-                        sx={{ color: "red" }}
+                        sx={{ color: "red", background: "red" }}
                         onChange={(e) => {
                           // console.log("e.target.files", e.target.files);
                           setSelectedImages(e.target.files[0]);
                         }}
                       />
                       <IconButton
-                        color="primary"
+                        sx={{ color: mode ? "green" : "black" }}
                         aria-label="upload picture"
                         component="span">
                         <PhotoCamera />

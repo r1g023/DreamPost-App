@@ -60,7 +60,7 @@ function App() {
             path="/books"
             element={
               <PrivateRoute>
-                <Books />
+                <Books mode={mode} />
               </PrivateRoute>
             }
           />

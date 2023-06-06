@@ -116,11 +116,18 @@ const Rightbar = ({ mode }) => {
                       key={item.id}
                       sx={{
                         cursor: "pointer",
-                        boxShadow: "5px 10px 18px #888888",
-                        borderRadius: "10px",
+
+                        textAlign: "center",
+                        margin: "0 auto",
+
                         "&:hover": {
                           opacity: "0.9",
-                          boxShadow: "none",
+
+                          // add faded border
+                          boxShadow: mode
+                            ? "0 0 20px #888888"
+                            : "0 0 20px #000",
+                          borderRadius: "10px",
                         },
                       }}>
                       <img
