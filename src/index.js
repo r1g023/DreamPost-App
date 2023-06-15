@@ -21,7 +21,7 @@ const authLink = new HttpLink({
   // local host dev environment
   // uri: "http://localhost:5000/graphql/auth",
 
-  // railway deployed production environment
+  // railway deployed production environment.
   uri: process.env.REACT_APP_GRAPHQL_AUTH,
 });
 
