@@ -30,7 +30,7 @@ const NavBarSearch = ({
         marginTop: "19px",
         zIndex: "1",
         // marginLeft: searchValue ? "-15px" : "0px",
-        marginLeft: errorMessage ? "10px" : searchValue ? "18px" : "18px",
+        marginLeft: errorMessage ? "10px" : searchValue ? "8px" : "18px",
 
         border: mode ? "" : "1px solid orange",
         boxShadow: mode ? "0px 0px 7px 0px orange" : "0px 0px 12px 0px gray",

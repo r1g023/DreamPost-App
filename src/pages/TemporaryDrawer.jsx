@@ -17,6 +17,7 @@ import { Switch } from "@mui/material";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 //add toggle DARK_MODE to user.dark_mode option
 const DARK_MODE = gql`
@@ -165,6 +166,23 @@ export default function TemporaryDrawer() {
                     width: "100%",
                   }}
                 /> */}
+
+                {/* Books */}
+                <Link
+                  to="/books"
+                  style={{ textDecoration: "none", color: "white" }}>
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        {/* book icon */}
+                        <AutoStoriesIcon
+                          color={mode ? "whiteColor" : "otherColor"}
+                        />
+                      </ListItemIcon>
+                      <ListItemText primary="Books" />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
 
                 {/* ------------ Night Mode ------------- */}
                 <ListItem disablePadding>
