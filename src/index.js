@@ -4,7 +4,6 @@ import { ThemeProvider } from "@mui/material";
 import App from "./App";
 // import "./style.less";
 import "./App.css";
-import jwt_decode from "jwt-decode";
 
 import { BrowserRouter } from "react-router-dom";
 import { theme } from "./theme";
@@ -18,19 +17,11 @@ import {
 import { AUTH_TOKEN } from "./auth-token";
 
 const authLink = new HttpLink({
-  // local host dev environment
-  // uri: "http://localhost:5000/graphql/auth",
-
-  // railway deployed production environment.
-  uri: process.env.REACT_APP_GRAPHQL_AUTH,
+  uri: "http://localhost:5000/graphql/auth",
 });
 
 const graphqlAPI = new HttpLink({
-  // local host dev environment
-  // uri: "http://localhost:5000/graphql",
-
-  // railway deployed production environment
-  uri: process.env.REACT_APP_GRAPHQL_API,
+  uri: "http://localhost:5000/graphql",
   // get token from local storage and add to headers
   headers: {
     authorization: localStorage.getItem(AUTH_TOKEN) || "",
@@ -50,10 +41,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
-      {/* if token is expired, remove token from local storage */}
-      {localStorage.getItem(AUTH_TOKEN) &&
-        jwt_decode(localStorage.getItem(AUTH_TOKEN)).exp * 1000 < Date.now() &&
-        localStorage.removeItem(AUTH_TOKEN)}
       <BrowserRouter>
         <App />
       </BrowserRouter>

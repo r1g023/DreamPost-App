@@ -1,10 +1,10 @@
 @media only screen and (max-width: 433px) {
   body .searchBar.responsive {
-    max-width: 360px;
+    max-width: 378px;
     width: 100%;
   }
   body #refreshIcon {
-    margin-left: 160px;
+    margin-left: 167px;
   }
   body .searchError {
     max-width: 385px;
@@ -24,14 +24,14 @@
 }
 @media only screen and (max-width: 395px) {
   body .searchBar.responsive {
-    max-width: 340px;
+    max-width: 353px;
     width: 100%;
   }
   body .searchError {
     max-width: 355px;
   }
   body #refreshIcon {
-    margin-left: 150px;
+    margin-left: 155px;
   }
 }
 @media only screen and (max-width: 385px) {
@@ -48,14 +48,14 @@
 }
 @media only screen and (max-width: 376px) {
   body .searchBar.responsive {
-    max-width: 323px;
+    max-width: 339px;
     width: 100%;
   }
   body .searchError {
     max-width: 340px;
   }
   body #refreshIcon {
-    margin-left: 140px;
+    margin-left: 147px;
   }
   body .post-form-responsiveness {
     margin-top: -30px;
@@ -63,19 +63,19 @@
 }
 @media only screen and (max-width: 370px) {
   body .searchBar.responsive {
-    max-width: 303px;
+    max-width: 323px;
     width: 100%;
   }
   body .searchError {
     max-width: 325px;
   }
   body #refreshIcon {
-    margin-left: 133px;
+    margin-left: 137px;
   }
 }
 @media only screen and (max-width: 359px) {
   body .searchBar.responsive {
-    max-width: 308px;
+    max-width: 323px;
     width: 100%;
   }
   body #refreshIcon {
@@ -84,7 +84,7 @@
 }
 @media only screen and (max-width: 320px) {
   body .searchBar.responsive {
-    max-width: 270px;
+    max-width: 284px;
     width: 100%;
   }
   body #refreshIcon {
@@ -97,7 +97,7 @@
 }
 @media only screen and (max-width: 280px) {
   body .searchBar.responsive {
-    max-width: 240px;
+    max-width: 245px;
     width: 100%;
   }
   body #refreshIcon {

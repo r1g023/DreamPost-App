@@ -95,7 +95,9 @@ function Login({ setUser }) {
 
   let navigate = useNavigate();
   function refreshPage() {
-    window.location.reload(false);
+    // force reloadp age twice
+    window.location.reload();
+    window.location.reload();
   }
 
   // mutation for login user
@@ -120,6 +122,7 @@ function Login({ setUser }) {
     setUser(loginNewUser.data.loginUser.username);
     navigate("/");
     refreshPage();
+    window.location.reload(false);
   }
 
   return (

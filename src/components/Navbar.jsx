@@ -135,7 +135,7 @@ const Navbar = ({ setUser }) => {
                 sx={{ height: 30, width: 30, cursor: "pointer" }}
                 alt="profile photo"
                 // show first letter of username if no avatar
-                src={user.avatar ? user.avatar : false}
+                src={user.avatar ? user.avatar : ""}
               />
               <Typography
                 variant="span"

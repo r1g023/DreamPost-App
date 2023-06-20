@@ -356,6 +356,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         Submit
                       </Button>
                     )}
+
                     <Button
                       variant="outlined"
                       color="error"
