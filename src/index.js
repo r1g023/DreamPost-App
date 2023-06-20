@@ -17,11 +17,13 @@ import {
 import { AUTH_TOKEN } from "./auth-token";
 
 const authLink = new HttpLink({
-  uri: "http://localhost:5000/graphql/auth",
+  // uri: "http://localhost:5000/graphql/auth",
+  uri: process.env.REACT_APP_GRAPHQL_AUTH,
 });
 
 const graphqlAPI = new HttpLink({
-  uri: "http://localhost:5000/graphql",
+  // uri: "http://localhost:5000/graphql",
+  uri: process.env.REACT_APP_GRAPHQL_API,
   // get token from local storage and add to headers
   headers: {
     authorization: localStorage.getItem(AUTH_TOKEN) || "",
