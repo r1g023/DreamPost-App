@@ -1,8 +1,10 @@
 import React, { createContext, useEffect } from "react";
+
 //import css from index.css
 import "./index.css";
 import { Box } from "@mui/material";
 import "./App.css";
+import { inject } from "@vercel/analytics";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -15,6 +17,7 @@ import Navbar from "./components/Navbar";
 import NoMatch from "./pages/NoMatch";
 import Profile from "./components/Profile";
 export const UserContext = createContext();
+inject();
 
 function App() {
   const [user, setUser] = React.useState("");
