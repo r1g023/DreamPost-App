@@ -47,9 +47,7 @@ const Navbar = ({ setUser }) => {
   const [open, setOpen] = React.useState(false);
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
-  React.useEffect(() => {
-    // keep user logged in
-  }, [user, user.username, user.role, user.avatar]);
+  React.useEffect(() => {}, [user, user.username, user.role, user.avatar]);
 
   return (
     <>
