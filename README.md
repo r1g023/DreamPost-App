@@ -19,10 +19,14 @@ App screenshots below:
 
 ![dreampostlogin](https://github.com/r1g023/material_ui_react/assets/57161327/7d19d381-53eb-41fc-bbcf-16a54764321f)
 <br>
+<br>
 ![dreampostsignup](https://github.com/r1g023/material_ui_react/assets/57161327/6b8b2ff9-21c3-4571-aaf1-672ee845bdc6)
+<br>
 <br>
 ![dreamposthomepage](https://github.com/r1g023/material_ui_react/assets/57161327/a256ac08-632d-4c65-884b-76106e4946e1)
 <br>
+<br>
 ![dreampostmobile](https://github.com/r1g023/material_ui_react/assets/57161327/09306b9a-66d1-4995-ae23-b819dac90f25)
+<br>
 <br>
 ![dreampostprofile](https://github.com/r1g023/material_ui_react/assets/57161327/95c07894-9aef-467e-9522-960ef973dc4c)
