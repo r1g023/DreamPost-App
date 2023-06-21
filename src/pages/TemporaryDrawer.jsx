@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import { AccountBox, ModeNight } from "@mui/icons-material";
 import { Switch } from "@mui/material";
-import { Link } from "react-router-dom";
+
 import { UserContext } from "../App";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
@@ -143,6 +143,7 @@ export default function TemporaryDrawer() {
                   <ListItemButton
                     component="a"
                     onClick={() => {
+                      window.location.reload();
                       navigate("/");
                       window.location.reload();
                     }}>

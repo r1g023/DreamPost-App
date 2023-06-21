@@ -123,10 +123,12 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
                 navigate("/");
                 window.location.reload();
               }}>
-              <ListItemButton component="a" onClick={() => {
-                navigate("/");
-                window.location.reload();
-              }>
+              <ListItemButton
+                component="a"
+                onClick={() => {
+                  navigate("/");
+                  window.location.reload();
+                }}>
                 <ListItemIcon>
                   <HomeIcon color={mode ? "whiteColor" : "otherColor"} />
                 </ListItemIcon>

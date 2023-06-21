@@ -77,9 +77,10 @@ const Books = ({ mode }) => {
                 onClick={() => {
                   // refresh page
                   window.location.reload();
+                  navigate("/");
                 }}>
                 <Link
-                  // to={"/"}
+                  to={"/"}
                   reloadDocument={true}
                   style={{ textDecoration: "none", color: "white" }}>
                   Home
