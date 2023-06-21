@@ -173,11 +173,12 @@ const Navbar = ({ setUser }) => {
           {/* Home page with force reload */}
           <MenuItem>
             <Link
-              to="/"
+              // to="/"
               style={{ textDecoration: "none", color: "black" }}
               onClick={() => {
+                window.location.reload();
                 navigate("/");
-                window.location.reload(false);
+                window.location.reload();
               }}>
               Home
             </Link>

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -72,6 +73,8 @@ export default function TemporaryDrawer() {
     left: false,
   });
 
+  const navigate = useNavigate();
+
   const { user, setUser, mode } = React.useContext(UserContext);
   const [updateUser, { data, error }] = useMutation(DARK_MODE);
 
@@ -137,7 +140,12 @@ export default function TemporaryDrawer() {
               <List sx={{ marginTop: "50%" }}>
                 {/* Home page */}
                 <ListItem disablePadding>
-                  <ListItemButton component="a" href="/">
+                  <ListItemButton
+                    component="a"
+                    onClick={() => {
+                      navigate("/");
+                      window.location.reload();
+                    }}>
                     <ListItemIcon>
                       <HomeIcon color={mode ? "whiteColor" : "otherColor"} />
                     </ListItemIcon>

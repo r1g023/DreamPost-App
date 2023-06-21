@@ -64,6 +64,7 @@ const DARK_MODE = gql`
 const Sidebar = ({ mode, setMode, user, setUser }) => {
   // const { user, setUser } = React.useContext(UserContext);
   const [updateUser, { data, error }] = useMutation(DARK_MODE);
+  const navigate = useNavigate();
   // const [mode, setMode] = React.useState(user.dark_mode);
 
   React.useEffect(() => {
@@ -115,8 +116,17 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
           {/* Lists of items */}
           <List>
             {/* Home page */}
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="/">
+            <ListItem
+              disablePadding
+              onClick={() => {
+                // navigate to home page and refresh
+                navigate("/");
+                window.location.reload();
+              }}>
+              <ListItemButton component="a" onClick={() => {
+                navigate("/");
+                window.location.reload();
+              }>
                 <ListItemIcon>
                   <HomeIcon color={mode ? "whiteColor" : "otherColor"} />
                 </ListItemIcon>

@@ -72,9 +72,14 @@ const Books = ({ mode }) => {
                 </Link>
               </Button>
 
-              <Button sx={{ marginLeft: "10px" }}>
+              <Button
+                sx={{ marginLeft: "10px" }}
+                onClick={() => {
+                  // refresh page
+                  window.location.reload();
+                }}>
                 <Link
-                  to={"/"}
+                  // to={"/"}
                   reloadDocument={true}
                   style={{ textDecoration: "none", color: "white" }}>
                   Home
