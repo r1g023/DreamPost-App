@@ -10,6 +10,8 @@ API Link: [https://github.com/r1g023/nodeExpress-graphQL]
 I deployed my app to both Vercel and Netlify, links below: 
 
 Vercel: [https://dream-post-ril0101.vercel.app/]
+<br>
+<br>
 Netlify: [https://dream-post.netlify.app/] 
 
 Both links above are using the same API so feel free to leave me any feedback if you spot any bugs. Or, feel free to collaborate to make the app a better user experience. 
