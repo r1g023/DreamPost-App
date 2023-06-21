@@ -1,4 +1,4 @@
-# material_ui_react
+# Dream Post social media APP
 
 This is a social media-like-app done with React / LESS / Apollo GraphQL on the frontend, I call it DREAM POST
 
