@@ -153,6 +153,23 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
               </ListItem>
             </Link>
 
+            {/* Books */}
+            <Link
+              to="/books"
+              style={{
+                textDecoration: "none",
+                color: mode ? "white" : "black",
+              }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <Person color={mode ? "whiteColor" : "otherColor"} />
+                  </ListItemIcon>
+                  <ListItemText primary="Books" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+
             {/* ------------ Night Mode ------------- */}
             <ListItem disablePadding>
               <ListItemButton component="a" href="#night-mode">
