@@ -2,6 +2,7 @@
   "name": "material_ui_react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "." ,
   "dependencies": {
     "@apollo/client": "^3.6.8",
     "@emotion/react": "^11.9.0",
@@ -34,7 +35,7 @@
     "eject": "react-scripts eject"
   },
   "engines": {
-    "node": "18.14.0"
+    "node": "18.0.0"
   },
   "eslintConfig": {
     "extends": [
