@@ -16,3 +16,4 @@ Both links above are using the same API so feel free to leave me any feedback if
 
 App screenshots below: 
 
+![dreamposthomepage](https://github.com/r1g023/material_ui_react/assets/57161327/a256ac08-632d-4c65-884b-76106e4946e1)
