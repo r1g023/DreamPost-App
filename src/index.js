@@ -18,12 +18,12 @@ import { AUTH_TOKEN } from "./auth-token";
 
 const authLink = new HttpLink({
   // uri: "http://localhost:5000/graphql/auth", // <= this is the auth server
-  uri: "https://nodeexpress-graphql-production.up.railway.app/graphql/auth",
+  uri: "https://graphql-api-dreampost-api.koyeb.app/graphql/auth/"
 });
 
 const graphqlAPI = new HttpLink({
   // uri: "http://localhost:5000/graphql",
-  uri: "https://nodeexpress-graphql-production.up.railway.app/graphql",
+  uri: "https://graphql-api-dreampost-api.koyeb.app/graphql/",
   // get token from local storage and add to headers
   headers: {
     authorization: localStorage.getItem(AUTH_TOKEN) || "",
