@@ -2,7 +2,7 @@
   "name": "material_ui_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://material-ui-react-nlmrs5yhl-rigos-projects-22b984ff.vercel.app/",
   "dependencies": {
     "@apollo/client": "^3.6.8",
     "@emotion/react": "^11.9.0",
