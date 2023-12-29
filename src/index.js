@@ -43,7 +43,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename="/">
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </ThemeProvider>
