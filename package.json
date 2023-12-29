@@ -2,7 +2,7 @@
   "name": "material_ui_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://r1g023.github.io/material_ui_react/login",
+  "homepage": ".",
   "dependencies": {
     "@apollo/client": "^3.6.8",
     "@emotion/react": "^11.9.0",
