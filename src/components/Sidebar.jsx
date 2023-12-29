@@ -64,6 +64,7 @@ const DARK_MODE = gql`
 const Sidebar = ({ mode, setMode, user, setUser }) => {
   // const { user, setUser } = React.useContext(UserContext);
   const [updateUser, { data, error }] = useMutation(DARK_MODE);
+  const navigate = useNavigate();
   // const [mode, setMode] = React.useState(user.dark_mode);
 
   React.useEffect(() => {
@@ -86,7 +87,7 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
         dark_mode: e.target.checked,
       },
     }).then((res) => {
-      console.log("result", res);
+      // console.log("result", res);
       setMode(res.data.updateUser.dark_mode);
       setUser({
         ...user,
@@ -110,14 +111,24 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
             xs: "none",
             sm: "block",
           },
-        }}
-      >
+        }}>
         <Box sx={{ position: "fixed" }}>
           {/* Lists of items */}
           <List>
             {/* Home page */}
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="/">
+            <ListItem
+              disablePadding
+              onClick={() => {
+                // navigate to home page and refresh
+                navigate("/");
+                window.location.reload();
+              }}>
+              <ListItemButton
+                component="a"
+                onClick={() => {
+                  navigate("/");
+                  window.location.reload();
+                }}>
                 <ListItemIcon>
                   <HomeIcon color={mode ? "whiteColor" : "otherColor"} />
                 </ListItemIcon>
@@ -131,14 +142,30 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
               style={{
                 textDecoration: "none",
                 color: mode ? "white" : "black",
-              }}
-            >
+              }}>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
                     <AccountBox color={mode ? "whiteColor" : "otherColor"} />
                   </ListItemIcon>
                   <ListItemText primary="Profile" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+
+            {/* Books */}
+            <Link
+              to="/books"
+              style={{
+                textDecoration: "none",
+                color: mode ? "white" : "black",
+              }}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <Person color={mode ? "whiteColor" : "otherColor"} />
+                  </ListItemIcon>
+                  <ListItemText primary="Books" />
                 </ListItemButton>
               </ListItem>
             </Link>

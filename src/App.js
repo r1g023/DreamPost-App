@@ -1,8 +1,10 @@
 import React, { createContext, useEffect } from "react";
+
 //import css from index.css
 import "./index.css";
 import { Box } from "@mui/material";
 import "./App.css";
+import { inject } from "@vercel/analytics";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -15,13 +17,14 @@ import Navbar from "./components/Navbar";
 import NoMatch from "./pages/NoMatch";
 import Profile from "./components/Profile";
 export const UserContext = createContext();
+inject();
 
 function App() {
   const [user, setUser] = React.useState("");
   const [mode, setMode] = React.useState(user.dark_mode);
   let navigate = useNavigate();
 
-  console.log("user on app---->", user);
+  // console.log("user on app---->", user);
 
   useEffect(() => {
     const data = localStorage.getItem("user");
@@ -32,19 +35,19 @@ function App() {
     document.title = user.username
       ? `Welcome  ${user.username} `
       : "please login";
-  }, [user.username, user.dark_mode, navigate]);
+  }, [user.username, user.dark_mode, user.role, navigate]);
 
   return (
     <UserContext.Provider value={{ user, setUser, mode, setMode }}>
       {/* console log req.decodedToken from backend API */}
       {/* add styling to Box for small screens */}
-      <Box sx={{ overflow: "hidden" }}>
+      <Box sx={{ overflow: "hidden", background: mode ? "#2C394B" : "" }}>
         <Navbar setUser={setUser} mode={mode} />
 
         <Routes>
           <Route path={"/login"} element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<NoMatch />} />
+          <Route path="*" element={<NoMatch mode={mode} />} />
 
           {/*home page */}
           <Route
@@ -60,7 +63,7 @@ function App() {
             path="/books"
             element={
               <PrivateRoute>
-                <Books />
+                <Books mode={mode} />
               </PrivateRoute>
             }
           />

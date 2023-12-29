@@ -92,8 +92,7 @@ const Comments = ({
   return (
     <div
       className="commentContainer"
-      style={{ maxWidth: "390px", width: "100%" }}
-    >
+      style={{ maxWidth: "390px", width: "100%" }}>
       {/* form for adding new comment */}
 
       <div style={{ padding: 14 }}>
@@ -103,8 +102,7 @@ const Comments = ({
             background: mode ? "#30475E" : "",
             color: mode ? "white" : "",
             boxShadow: mode ? "0px 0px 7px 0px gray" : "0px 0px 12px 0px gray",
-          }}
-        >
+          }}>
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <Avatar
@@ -123,8 +121,7 @@ const Comments = ({
                   margin: 0,
                   textAlign: "left",
                   color: isCurrentUser ? "green" : "",
-                }}
-              >
+                }}>
                 {user}
               </h4>
 
@@ -142,8 +139,7 @@ const Comments = ({
                     style={{
                       border: "5px solid purple",
                       wordBreak: "break-word",
-                    }}
-                  >
+                    }}>
                     {id === selectedCommentId.id && (
                       <textarea
                         style={{
@@ -161,8 +157,7 @@ const Comments = ({
                       variant="contained"
                       color="success"
                       sx={{ padding: "5px", marginTop: "5px" }}
-                      onClick={() => handleCommentEdit(id)}
-                    >
+                      onClick={() => handleCommentEdit(id)}>
                       Update
                     </Button>
                   </Modal>
@@ -176,8 +171,7 @@ const Comments = ({
                     padding: "10px",
                     overflow: "hidden",
                     wordWrap: "break-word",
-                  }}
-                >
+                  }}>
                   {comment}
                 </p>
               )}
@@ -187,8 +181,7 @@ const Comments = ({
                   color: mode ? "white" : "gray",
                   marginTop: "20px",
                   borderTop: "1px dashed gray",
-                }}
-              >
+                }}>
                 posted on {date}
               </p>
             </Grid>
@@ -204,8 +197,7 @@ const Comments = ({
                 <span
                   className="material-icons"
                   style={{ cursor: "pointer" }}
-                  onClick={() => handleCommentLike(id)}
-                >
+                  onClick={() => handleCommentLike(id)}>
                   {" thumb_up_alt"}
                 </span>
               )}
@@ -214,8 +206,7 @@ const Comments = ({
                 <span
                   className="material-icons"
                   style={{ color: "green", cursor: "pointer" }}
-                  onClick={() => handleCommentLike(id)}
-                >
+                  onClick={() => handleCommentLike(id)}>
                   {" thumb_up_alt"}
                 </span>
               )}
@@ -238,16 +229,14 @@ const Comments = ({
                     }}
                     onClick={() => {
                       setCommentUpdateToggle(!commentUpdateToggle);
-                    }}
-                  ></i>
+                    }}></i>
 
                   {/* Delete comment button */}
                   <IconButton
                     aria-label="delete"
                     size="large"
                     color="secondary"
-                    onClick={() => handleCommentDelete(id)}
-                  >
+                    onClick={() => handleCommentDelete(id)}>
                     <DeleteIcon fontSize="inherit" />
                   </IconButton>
                 </>

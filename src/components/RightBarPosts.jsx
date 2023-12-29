@@ -23,16 +23,14 @@ const RightBarPosts = ({ data, mode }) => {
         width: "100%",
         maxWidth: 360,
         borderBottom: mode ? "1px solid #e0e0e0" : "none",
-      }}
-    >
+      }}>
       <ListItem
         alignItems="flex-start"
         col={10}
         sx={{
           overflow: "auto",
           "&:hover": { boxShadow: "5px 5px 10px #888888", cursor: "pointer" },
-        }}
-      >
+        }}>
         <ListItemAvatar>
           <Avatar alt={data.name} src={data.image} />
         </ListItemAvatar>
@@ -45,8 +43,7 @@ const RightBarPosts = ({ data, mode }) => {
                 component="span"
                 variant="body2"
                 color="text.primary"
-                fontWeight="fontWeightBold"
-              >
+                fontWeight="fontWeightBold">
                 <span style={{ color: mode ? "white" : "", fontSize: "1.1em" }}>
                   {data.title}
                 </span>
@@ -63,15 +60,13 @@ const RightBarPosts = ({ data, mode }) => {
                 component="span"
                 fontWeight="fontWeightBold"
                 variant="body2"
-                color="text.primary"
-              >
+                color="text.primary">
                 <span
                   style={{
                     color: mode ? "white" : "",
                     fontSize: "1em",
                     textDecoration: "underline",
-                  }}
-                >
+                  }}>
                   @{data.user}
                 </span>
                 <span style={{ color: mode ? "white" : "" }}> - </span>
