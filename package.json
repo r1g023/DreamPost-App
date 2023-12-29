@@ -1,7 +1,7 @@
 {
   "name": "material_ui_react",
   "version": "0.1.0",
-  "private": true, 
+  "private": true,
   "homepage": ".",
   "dependencies": {
     "@apollo/client": "^3.6.8",
@@ -30,6 +30,8 @@
   },
   "scripts": {
     "start": "concurrently --kill-others \"less-watch-compiler --config less-watcher.config.json\" \"react-scripts start\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
