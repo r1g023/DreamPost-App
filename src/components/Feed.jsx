@@ -67,7 +67,7 @@ const Feed = ({
     // console.log("Post data on Feed USE EFFECT---************->", postData);
     // console.log("data on Feed USE EFFECT________________________->", data);
     // if new post, rerender posts
-  }, [data, postData, setPostData, deletePost, error]);
+  }, [data, postData, setPostData, deletePost]);
 
   function scrollToTop() {
     window.scrollTo({
@@ -220,7 +220,7 @@ const Feed = ({
             postData
               .map((item) => {
                 // console.log("non search result data", item);
-                return (
+              return (
                   <Post
                     post={item}
                     key={item.id}
