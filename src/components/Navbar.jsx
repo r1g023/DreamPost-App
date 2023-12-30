@@ -175,7 +175,7 @@ const Navbar = ({ setUser }) => {
               <Typography
                 variant="span"
                 sx={{ marginRight: "5px", cursor: "pointer" }}>
-                test
+               
                 {user.username}
               </Typography>
               {/*Link to books */}
