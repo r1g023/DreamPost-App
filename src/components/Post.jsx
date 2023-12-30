@@ -190,9 +190,9 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
 
-  let currentUser = userList.getUsers.find(
-    (user) => user.username === post.user
-  );
+  // let currentUser = userList.getUsers.find(
+  //   (user) => user.username === post.user
+  // );
 
   React.useEffect(() => {
     // console.log("comment data on Post.jsx USE EFFECT---->", data);
@@ -338,7 +338,8 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                   .avatar
               }>
               {/* if no avatar, display first letter of username */}
-              {currentUser.username.charAt(0).toUpperCase()}
+              {/* {currentUser.username.charAt(0).toUpperCase()} */}
+              {"R"}
             </Avatar>
           }
           action={
