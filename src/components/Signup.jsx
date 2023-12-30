@@ -78,6 +78,18 @@ const Signup = () => {
     event.preventDefault();
   };
 
+  // for the loading spinner
+  const [loadings, setLoading] = React.useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/login");
+    }, 3000);
+  };
+
   // Signup user
   async function handleSubmit(e) {
     e.preventDefault();
@@ -90,7 +102,7 @@ const Signup = () => {
       },
       context: { clientName: "authLink" },
     });
-    navigate("/login");
+    handleClick();
   }
 
   // signupError to validate if user/email already exist in database upon signup
@@ -217,10 +229,18 @@ const Signup = () => {
             disabled={buttonDisabled}
             type="submit"
             // loading={loading}
-            loadingPosition={"start"}
-            loadingIndicator={<CircularProgress color="primary" size={20} />}>
-            Signup
-          </LoadingButton>
+            loadingPosition={"center"}
+            loading={loadings}
+            startIcon={
+              loadings ? (
+                <CircularProgress color="inherit" size={20} />
+              ) : (
+                "Signup"
+              )
+            }
+            loadingIndicator={
+              <CircularProgress color="primary" size={20} />
+            }></LoadingButton>
         </form>
 
         {/* if registered, go back to login */}

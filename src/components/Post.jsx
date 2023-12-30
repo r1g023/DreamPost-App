@@ -338,8 +338,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                   .avatar
               }>
               {/* if no avatar, display first letter of username */}
-              {/* {currentUser.username.charAt(0).toUpperCase()} */}
-              {"R"}
+              {post.user.charAt(0).toUpperCase()}
             </Avatar>
           }
           action={

@@ -45,9 +45,36 @@ const Navbar = ({ setUser }) => {
   const navigate = useNavigate();
   const { user } = React.useContext(UserContext);
   const [open, setOpen] = React.useState(false);
+  const [logout, setLogout] = React.useState(false);
+
+  // this is for the hidden menu
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const opens = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // console.log("user.username on navbar logged in----->", currentUser);
   // const isCurrentUser = currentUser.user.username === user.username;
-  React.useEffect(() => {}, [user, user.username, user.role, user.avatar]);
+  React.useEffect(() => {
+    if (user === "") {
+      setLogout(true);
+    }
+  }, [user]);
+
+  // this if for logging out the user
+  const handleLogout = () => {
+    window.localStorage.removeItem("auth-token");
+    window.localStorage.removeItem("user");
+    window.localStorage.removeItem("editName");
+    window.localStorage.removeItem("ab.storage");
+    window.localStorage.removeItem("value");
+
+    handleClose();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -119,11 +146,16 @@ const Navbar = ({ setUser }) => {
                 <Notifications />
               </Badge>
 
+              {/* reminder this is linked with the Hidden Menu, which prevents the anchorEl error on Avatar for all screen sizes */}
               <Avatar
                 sx={{ height: 30, width: 30 }}
                 alt="Github Avatar"
                 src={user.avatar}
-                onClick={() => setOpen(!open)}
+                id="basic-button"
+                aria-controls={opens ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={opens ? "true" : undefined}
+                onClick={handleClick}
               />
             </StyledIcons>
 
@@ -134,10 +166,16 @@ const Navbar = ({ setUser }) => {
                 alt="profile photo"
                 // show first letter of username if no avatar
                 src={user.avatar ? user.avatar : ""}
+                id="basic-button"
+                aria-controls={opens ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={opens ? "true" : undefined}
+                onClick={handleClick}
               />
               <Typography
                 variant="span"
                 sx={{ marginRight: "5px", cursor: "pointer" }}>
+                test
                 {user.username}
               </Typography>
               {/*Link to books */}
@@ -149,10 +187,10 @@ const Navbar = ({ setUser }) => {
 
         {/* Hidden Menu */}
         <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
-          open={open}
-          onClose={() => setOpen(!open)}
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={opens}
+          onClose={handleClose}
           anchorOrigin={{
             vertical: "top",
             horizontal: "right",
@@ -197,20 +235,7 @@ const Navbar = ({ setUser }) => {
           </MenuItem>
 
           {/* Logout */}
-          <MenuItem
-            onClick={() => {
-              window.localStorage.removeItem("auth-token");
-              window.localStorage.removeItem("user");
-              window.localStorage.removeItem("editName");
-              // remove localstore ab.storage.device and ab.storage.server
-              window.localStorage.removeItem("ab.storage");
-              // remove setValue and Value localstorage
-              window.localStorage.removeItem("value");
-
-              navigate("/login");
-              // remove user upon logout
-              setUser("");
-            }}>
+          <MenuItem id="basic-menu" onClick={handleLogout}>
             Logout
           </MenuItem>
         </Menu>
