@@ -7,13 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 
 import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import FilledInput from "@mui/material/FilledInput";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
+
 import InputAdornment from "@mui/material/InputAdornment";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
+
+import { ToastContainer } from "react-toastify";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -129,6 +126,7 @@ function Login({ setUser }) {
     <div style={{ backgroundColor: "#002A53", opacity: 0.9 }}>
       <StyledBox>
         <h1 style={{ color: "white" }}>Login</h1>
+        <ToastContainer />
         <form
           onSubmit={handleSubmit}
           style={{
@@ -156,36 +154,29 @@ function Login({ setUser }) {
 
           {/*password */}
           <span style={{ color: "blue", fontWeight: "900" }}>Password</span>
-          {/* <TextField
-            type="password"
-            label="password"
-            name="password"
-            // add an eye icon to show password
 
-            onChange={handleChanges}
-            value={value.password}
-            autoComplete="current-password"
-          /> */}
-
-          <OutlinedInput
+          <TextField
             id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
             label="Password"
+            type={showPassword ? "text" : "password"}
             name="password"
-            onChange={handleChanges}
             value={value.password}
             autoComplete="current-password"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end">
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
+            onChange={handleChanges}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    // onClick={handleClickShowPassword}
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           {errors.password ? (
@@ -228,6 +219,8 @@ function Login({ setUser }) {
           </Link>
         </p>
       </StyledBox>
+      {/* show toast container if session is expired */}
+      <ToastContainer />
     </div>
   );
 }

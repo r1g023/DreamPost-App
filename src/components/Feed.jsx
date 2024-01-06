@@ -12,6 +12,10 @@ import { useQuery, useMutation, gql } from "@apollo/client";
 import Modal from "./Modal";
 import RotateRightSharpIcon from "@mui/icons-material/RotateRightSharp";
 
+import jwt_decode from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
+import { UserContext } from "../App";
+
 const GET_POSTS = gql`
   query getPosts {
     getPosts {
@@ -59,15 +63,9 @@ const Feed = ({
   postError,
 }) => {
   const [deletePost, { error }] = useMutation(DELETE_POST);
+  const { user, setUser } = React.useContext(UserContext);
 
-  // const [errorMessage, setErrorMessage] = useState("");
-
-  //useEffect
-  React.useEffect(() => {
-    // console.log("Post data on Feed USE EFFECT---************->", postData);
-    // console.log("data on Feed USE EFFECT________________________->", data);
-    // if new post, rerender posts
-  }, [data, postData, setPostData, deletePost]);
+  React.useEffect(() => {}, [data, postData, setPostData, deletePost]);
 
   function scrollToTop() {
     window.scrollTo({
@@ -79,61 +77,70 @@ const Feed = ({
 
   // handle delete post
   const handlePostDelete = async (post) => {
-    // let confirmDelete = window.confirm(
-    //   "Are you sure you want to delete this post?"
-    // );
+    const token = window.localStorage.getItem("auth-token");
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      let deletedPost = await deletePost({
+        variables: { id: post.id },
+        //get from cache and update upon delete instead of refetching post query
+        update: (cache) => {
+          // console.log("post cache--->", cache);
+          const prevData = cache.readQuery({ query: GET_POSTS });
+          // console.log("prevData--->", prevData);
+          const newData = prevData.getPosts.filter(
+            (item) => item.id !== post.id
+          );
+          // console.log("newData--->", newData);
+          // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
+          cache.writeQuery({
+            query: GET_POSTS,
+            // also grab the post id
+            data: { getPosts: newData },
+          });
+        },
+      });
 
-    let deletedPost = await deletePost({
-      variables: { id: post.id },
-      //get from cache and update upon delete instead of refetching post query
-      update: (cache) => {
-        // console.log("post cache--->", cache);
-        const prevData = cache.readQuery({ query: GET_POSTS });
-        // console.log("prevData--->", prevData);
-        const newData = prevData.getPosts.filter((item) => item.id !== post.id);
-        // console.log("newData--->", newData);
-        // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
-        cache.writeQuery({
-          query: GET_POSTS,
-          // also grab the post id
-          data: { getPosts: newData },
-        });
-      },
-    });
-
-    // console.log("deletedPost--->", deletedPost);
-    // console.log("deletedPost", deletedPost);
-    return deletedPost;
+      // console.log("deletedPost--->", deletedPost);
+      // console.log("deletedPost", deletedPost);
+      return deletedPost;
+    }
   };
 
   // handle submit
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // add data to search.posts array
-    let result = data.getPosts.filter((item) => {
-      // console.log("item search", item);
+    const token = window.localStorage.getItem("auth-token");
 
-      if (item.title.match(new RegExp(searchValue, "i"))) return item;
-      if (item.post.match(new RegExp(searchValue, "i"))) return item;
-      if (item.user.match(new RegExp(searchValue, "i"))) return item;
-    });
-    // console.log("result", result);
-    // save no result to errors
-    result.length === 0
-      ? setErrorMessage("No results found for " + searchValue)
-      : setErrorMessage("");
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
 
-    setPostData(result);
-    scrollToTop();
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      let result = data.getPosts.filter((item) => {
+        // console.log("item", item);
+
+        if (item.title.match(new RegExp(searchValue, "i"))) return item;
+        if (item.post.match(new RegExp(searchValue, "i"))) return item;
+        if (item.user.match(new RegExp(searchValue, "i"))) return item;
+      });
+
+      result.length === 0
+        ? setErrorMessage("No results found for " + searchValue)
+        : setErrorMessage("");
+
+      setPostData(result);
+      scrollToTop();
+    }
   };
-
-  // // clear results
-  // function clearResults() {
-  //   setSearchValue("");
-  //   let results = data.getPosts.map((item) => item);
-  //   setPostData(results);
-  //   setErrorMessage("");
-  // }
 
   if (loading)
     return (
@@ -220,7 +227,7 @@ const Feed = ({
             postData
               .map((item) => {
                 // console.log("non search result data", item);
-              return (
+                return (
                   <Post
                     post={item}
                     key={item.id}

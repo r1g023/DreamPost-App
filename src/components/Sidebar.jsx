@@ -9,11 +9,12 @@ import {
   Switch,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import { AccountBox, ModeNight, Person, Settings } from "@mui/icons-material";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { AccountBox, ModeNight, Person } from "@mui/icons-material";
+import { gql, useMutation } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 
-//add toggle DARK_MODE to user.dark_mode option
 const DARK_MODE = gql`
   mutation updateUserID($id: Int!, $dark_mode: Boolean) {
     updateUser(id: $id, dark_mode: $dark_mode) {
@@ -62,17 +63,10 @@ const DARK_MODE = gql`
 `;
 
 const Sidebar = ({ mode, setMode, user, setUser }) => {
-  // const { user, setUser } = React.useContext(UserContext);
   const [updateUser, { data, error }] = useMutation(DARK_MODE);
   const navigate = useNavigate();
-  // const [mode, setMode] = React.useState(user.dark_mode);
 
   React.useEffect(() => {
-    // setMode(!mode);
-
-    // setMode(user.dark_mode);
-    // get dark_mode from user.dark_mode on localStorage
-    // if (localStorage.getItem("dark_mode")) {
     let userDarkMode = localStorage.getItem("user.dark_mode");
     if (userDarkMode) {
       setMode(userDarkMode);
@@ -81,24 +75,34 @@ const Sidebar = ({ mode, setMode, user, setUser }) => {
 
   // toggle handle user on checkbox input
   const handleChange = (e) => {
-    let result = updateUser({
-      variables: {
-        id: user.id,
-        dark_mode: e.target.checked,
-      },
-    }).then((res) => {
-      // console.log("result", res);
-      setMode(res.data.updateUser.dark_mode);
-      setUser({
-        ...user,
-        dark_mode: localStorage.setItem(
-          "user",
-          JSON.stringify(res.data.updateUser)
-        ),
-      });
-    });
+    const token = window.localStorage.getItem("auth-token");
 
-    return result;
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      let result = updateUser({
+        variables: {
+          id: user.id,
+          dark_mode: e.target.checked,
+        },
+      }).then((res) => {
+        setMode(res.data.updateUser.dark_mode);
+        setUser({
+          ...user,
+          dark_mode: localStorage.setItem(
+            "user",
+            JSON.stringify(res.data.updateUser)
+          ),
+        });
+      });
+
+      return result;
+    }
   };
 
   return (

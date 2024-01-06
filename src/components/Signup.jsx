@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Box,
-  Button,
   CircularProgress,
   FormControl,
   InputLabel,
@@ -19,7 +18,6 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 
 const StyledBox = styled(Box)({
@@ -129,10 +127,10 @@ const Signup = () => {
             width: "50%",
           }}>
           {/* Email */}
-          <span style={{ color: "blue", fontWeight: "900" }}>email</span>
+          <span style={{ color: "blue", fontWeight: "900" }}>Email</span>
           <TextField
             id="demo-helper-text-aligned"
-            label="email"
+            label="Email"
             name="email"
             onChange={handleChanges}
             value={value.email}
@@ -145,7 +143,7 @@ const Signup = () => {
           <span style={{ color: "blue", fontWeight: "900" }}>Username</span>
           <TextField
             id="demo-helper-text-aligned"
-            label="username"
+            label="Username"
             name="username"
             onChange={handleChanges}
             value={value.username}
@@ -156,34 +154,29 @@ const Signup = () => {
 
           {/* Password */}
           <span style={{ color: "blue", fontWeight: "900" }}>Password</span>
-
-          <OutlinedInput
+          <TextField
             id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
             label="Password"
+            type={showPassword ? "text" : "password"}
             name="password"
-            onChange={handleChanges}
             value={value.password}
-            autoComplete="current-password"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end">
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
+            onChange={handleChanges}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    // onClick={handleClickShowPassword}
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
-          {/* <TextField
-            id="demo-helper-text-aligned"
-            label="password"
-            name="password"
-            onChange={handleChanges}
-            value={value.password}
-          /> */}
+
           {errors.password ? (
             <p style={{ color: "red", fontSize: "11px" }}>{errors.password}</p>
           ) : null}

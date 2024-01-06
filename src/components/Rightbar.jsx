@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { friends, itemData } from "../online-users";
+import { friends,  } from "../online-users";
 import RightBarConversations from "./RightBarConversations";
 import RightBarPosts from "./RightBarPosts";
 import { useQuery, gql } from "@apollo/client";
@@ -145,17 +145,7 @@ const Rightbar = ({ mode }) => {
                   .reverse()}
             </>
           )}
-          {/*Mock data for the latest posts */}
-          {/* {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.title}
-                loading="lazy"
-              />
-            </ImageListItem>
-          ))} */}
+         
         </ImageList>
         {/* container for the latest comment conversations */}
         <Typography variant="h5" fontWeight={400} mt={4} mb={2}>

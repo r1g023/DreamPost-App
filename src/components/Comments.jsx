@@ -4,29 +4,19 @@ import {
   Avatar,
   Box,
   Button,
-  CardHeader,
-  Checkbox,
-  Chip,
   Divider,
-  Fab,
   Grid,
   IconButton,
   Paper,
-  Stack,
-  Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import ShareIcon from "@mui/icons-material/Share";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { Favorite, FavoriteBorder, ThumbUpAlt } from "@mui/icons-material";
+
 import { UserContext } from "../App";
 import SvgIcon from "@mui/material/SvgIcon";
 import Modal from "./Modal";
-import moment from "moment";
+
 import { GET_USERS } from "../pages/MainPage";
 
 //container for like and edit/delete buttons
@@ -40,14 +30,6 @@ const StyledDeleteEditBox = styled(Box)({
   display: "flex",
   justifyContent: "flex-end",
 });
-
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
 
 const Comments = ({
   id,
@@ -70,25 +52,16 @@ const Comments = ({
 }) => {
   const currentUser = React.useContext(UserContext);
 
-  // get current loggedIn user
   const isCurrentUser = currentUser.user.username === user;
 
   const { data } = useQuery(GET_USERS);
-  // console.log("userListData on Comment component---->", data);
 
-  React.useEffect(() => {
-    // keep track of commentData
-  }, [commentData, data, user]);
+  React.useEffect(() => {}, [commentData, data, user]);
 
-  // React.useEffect(() => {}, []);
   let selectedCommentId = commentData.getComments.find(
     (comment) => comment.id === id
   );
 
-  // let datamore = data.getUsers.find(
-  //   (user) => user.username === user
-  // );
-  // console.log("datamore-->", datamore);
   return (
     <div
       className="commentContainer"
@@ -126,42 +99,33 @@ const Comments = ({
               </h4>
 
               {isCurrentUser && commentUpdateToggle && selectedCommentId ? (
-                (console.log(
-                  "selectedCommentId -->",
-                  selectedCommentId,
-                  "and",
-                  selectedCommentId.id === id,
-                  id
-                ),
-                (
-                  <Modal
-                    onCancel={() => setCommentUpdateToggle(false)}
-                    style={{
-                      border: "5px solid purple",
-                      wordBreak: "break-word",
-                    }}>
-                    {id === selectedCommentId.id && (
-                      <textarea
-                        style={{
-                          resize: "vertical",
-                          overflow: "auto",
-                        }}
-                        name="editComment"
-                        placeholder="Edit comment..."
-                        value={editComment}
-                        onChange={setEditComment}
-                      />
-                    )}
+                <Modal
+                  onCancel={() => setCommentUpdateToggle(false)}
+                  style={{
+                    border: "5px solid purple",
+                    wordBreak: "break-word",
+                  }}>
+                  {id === selectedCommentId.id && (
+                    <textarea
+                      style={{
+                        resize: "vertical",
+                        overflow: "auto",
+                      }}
+                      name="editComment"
+                      placeholder="Edit comment..."
+                      value={editComment}
+                      onChange={setEditComment}
+                    />
+                  )}
 
-                    <Button
-                      variant="contained"
-                      color="success"
-                      sx={{ padding: "5px", marginTop: "5px" }}
-                      onClick={() => handleCommentEdit(id)}>
-                      Update
-                    </Button>
-                  </Modal>
-                ))
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={{ padding: "5px", marginTop: "5px" }}
+                    onClick={() => handleCommentEdit(id)}>
+                    Update
+                  </Button>
+                </Modal>
               ) : (
                 <p
                   style={{

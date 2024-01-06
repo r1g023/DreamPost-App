@@ -27,7 +27,9 @@ import { UserContext } from "../App";
 
 import Comments from "./Comments";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+
+import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 
 const options = ["delete"];
 
@@ -162,9 +164,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-// Post Card for the Post List on the Feed component
 const Post = ({ post, handlePostDelete, mode, userList }) => {
-  // console.log("Post data on Post component---->", post);
   const [toggleModal, setToggleModal] = React.useState(false);
   const [editComment, setEditComment] = React.useState("");
 
@@ -187,27 +187,19 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
     setAnchorEl(null);
   };
 
-  // get comments from the database using the GET_COMMENTS query
   const { data, error, loading } = useQuery(GET_COMMENTS);
-
-  // let currentUser = userList.getUsers.find(
-  //   (user) => user.username === post.user
-  // );
 
   React.useEffect(() => {
     // console.log("comment data on Post.jsx USE EFFECT---->", data);
     //reload comments after submitting
   }, [data]);
 
-  // get mutation for delete comment
   const [deleteCommentID] = useMutation(DELETE_COMMENT);
   const [updateCommentID] = useMutation(UPDATE_COMMENT);
   const [addComment] = useMutation(ADD_COMMENT);
   const [commentUpdateToggle, setCommentUpdateToggle] = React.useState(false);
-  const { user } = React.useContext(UserContext);
-  // add comment to mutation
+  const { user, setUser } = React.useContext(UserContext);
 
-  // add comment post object
   const [comment, setComment] = React.useState({
     id: "",
     comment: "",
@@ -220,22 +212,33 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   // Add new comment to comment list
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    let newComment = await addComment({
-      variables: {
-        comment: comment.comment,
-        user: user.username,
-        post_id: post.id,
-        date: startDate,
-      },
-      refetchQueries: [{ query: GET_COMMENTS }],
-    });
-    setComment({
-      comment: "",
-      user: "",
-      post_id: "",
-      date: "",
-    });
+    const token = window.localStorage.getItem("auth-token");
+
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      e.preventDefault();
+      let newComment = await addComment({
+        variables: {
+          comment: comment.comment,
+          user: user.username,
+          post_id: post.id,
+          date: startDate,
+        },
+        refetchQueries: [{ query: GET_COMMENTS }],
+      });
+      setComment({
+        comment: "",
+        user: "",
+        post_id: "",
+        date: "",
+      });
+    }
   };
 
   //handle change for add comment
@@ -245,74 +248,102 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   // handle delete comment
   const handleCommentDelete = async (comment) => {
-    let confirmDelete = window.confirm(
-      "Are you sure you want to delete this comment?"
-    );
-    if (confirmDelete) {
-      let deletedComment = await deleteCommentID({
-        variables: { id: comment.id },
-        //get from cache and update upon delete instead of refetching comment query
-        update: (cache) => {
-          // console.log("comment cache--->", cache);
-          const prevData = cache.readQuery({ query: GET_COMMENTS });
-          // console.log("prevData--->", prevData);
-          const newData = prevData.getComments.filter(
-            (item) => item.id !== comment.id
-          );
-          // console.log("newData--->", newData);
-          // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
-          cache.writeQuery({
-            query: GET_COMMENTS,
-            data: { getComments: newData },
-          });
+    const token = window.localStorage.getItem("auth-token");
+
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+        onClose: () => {
+          setUser("");
         },
       });
-      // console.log("deleted comment errors--->", deletedComment);
+    } else {
+      let confirmDelete = window.confirm(
+        "Are you sure you want to delete this comment?"
+      );
+      if (confirmDelete) {
+        let deletedComment = await deleteCommentID({
+          variables: { id: comment.id },
+          //get from cache and update upon delete instead of refetching comment query
+          update: (cache) => {
+            // console.log("comment cache--->", cache);
+            const prevData = cache.readQuery({ query: GET_COMMENTS });
+            // console.log("prevData--->", prevData);
+            const newData = prevData.getComments.filter(
+              (item) => item.id !== comment.id
+            );
+            // console.log("newData--->", newData);
+            // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
+            cache.writeQuery({
+              query: GET_COMMENTS,
+              data: { getComments: newData },
+            });
+          },
+        });
+        // console.log("deleted comment errors--->", deletedComment);
 
-      return deletedComment;
+        return deletedComment;
+      }
     }
   };
 
   // handle update comment and like
   const handleCommentLike = (comment) => {
-    // console.log("comment on handleCommentLike--->", comment);
-    updateCommentID({
-      variables: {
-        id: comment.id,
-        liked: !comment.liked,
-        count:
-          comment.count +
-          1 *
-            (user.username === comment.user && comment.liked === true ? -1 : 1),
-      },
-    });
+    const token = window.localStorage.getItem("auth-token");
+
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      updateCommentID({
+        variables: {
+          id: comment.id,
+          liked: !comment.liked,
+          count:
+            comment.count +
+            1 *
+              (user.username === comment.user && comment.liked === true
+                ? -1
+                : 1),
+        },
+      });
+    }
   };
 
   // handle comment edit and update
   const handleCommentEdit = (comment) => {
-    updateCommentID({
-      variables: {
-        id: comment.id,
-        comment: editComment,
-      },
-    });
-    setCommentUpdateToggle(!commentUpdateToggle);
+    const token = window.localStorage.getItem("auth-token");
+    // console.log("token", token);
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      updateCommentID({
+        variables: {
+          id: comment.id,
+          comment: editComment,
+        },
+      });
+      setCommentUpdateToggle(!commentUpdateToggle);
+    }
   };
 
   // handle comment edit and update
   const handleCommentUpdate = (e) => {
-    // only edit the selected comment
     setEditComment(e.target.value);
   };
 
-  // console.log("data----> comment----->", data);
-
-  // console.log("user on POST COMMENT ---->", user);
-
   const isCurrentUser = user.username === post.user;
-  // console.log("isCurrentUser--->", isCurrentUser);
-  // console.log("userList--->", userList);
-  // console.log("currentUser--->", currentUser);
 
   return (
     <>

@@ -1,10 +1,11 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import { Image } from "cloudinary-react";
 import axios from "axios";
-// import css file from ilndex.css
+
 import moment from "moment";
-// import "../index.css"
+
 import ClearIcon from "@mui/icons-material/Clear";
 
 import {
@@ -24,8 +25,10 @@ import { Box } from "@mui/system";
 import { UserContext } from "../App";
 import { PhotoCamera } from "@mui/icons-material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-// import useCreatePostForm
+
 import useCreatePostForm from "../formHooks/useCreatePostForm";
+import jwt_decode from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
 
 const GET_POSTS = gql`
   query getPosts {
@@ -84,14 +87,6 @@ const UserBox = styled(Box)({
   justifyContent: "center",
 });
 
-//Styled form
-// const StyledForm = styled(FormControl)({
-//   background: "white",
-//   padding: "1rem",
-//   borderRadius: "0.7rem",
-//   gap: "0.2rem",
-// });
-
 // Remove image upload button from the form
 const Input = styled("input")({
   display: "none",
@@ -110,17 +105,12 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
       post: "",
     });
 
-  // console.log("value----->", value);
-
   const [open, setOpen] = React.useState(false);
-  //add post date to useEffect
-
-  // const { refetch } = useQuery(GET_POSTS);
 
   const toggleModal = () => {
     setOpen(!open);
   };
-  const { user } = React.useContext(UserContext);
+  const { user, setUser } = React.useContext(UserContext);
 
   const [createPost, { data, loading, error }] = useMutation(ADD_POST);
   const [selectedImages, setSelectedImages] = React.useState([]);
@@ -130,21 +120,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     // moment get current hour in PM or AM format
     moment().endOf("day").format("MM/DD/YYYY").toLocaleString("en-US")
   );
-
-  // replaced  addPost and setAddPost formHooks
-  // const [value, setValue] = React.useState({
-  //   title: "",
-  //   date: "",
-  //   image: null,
-  //   user: "",
-  //   post: "",
-  // });
-
-  // console.log("user on create post----->", user);
-
-  // console.log("value on create post----->", data);
-
-  //on post submit, scroll to top function call
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -156,31 +131,38 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
 
   //upload image to Cloud
   function uploadImage(e) {
-    const formData = new FormData();
-    formData.append("file", selectedImages);
-    formData.append("upload_preset", "xhfk3bp5_u");
-    // console.log("post on image upload test");
-    // console.count("post on image count:");
-
-    const postImage = async () => {
-      try {
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
-          formData
-        );
-        // console.log("response", response);
-        // add response to my value image form
-        setUploadPhoto(response.data.secure_url);
-      } catch {
-        // console.log("error uploading image");
-      }
-    };
-
-    // do not post if no image is selected
-    if (!selectedImages) {
-      return false;
+    const token = window.localStorage.getItem("auth-token");
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+        onClose: () => {
+          setUser("");
+        },
+      });
     } else {
-      postImage();
+      //
+      const formData = new FormData();
+      formData.append("file", selectedImages);
+      formData.append("upload_preset", "xhfk3bp5_u");
+
+      const postImage = async () => {
+        try {
+          const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
+            formData
+          );
+
+          setUploadPhoto(response.data.secure_url);
+        } catch {
+          throw new Error("Error uploading image");
+        }
+      };
+
+      if (!selectedImages) {
+        return false;
+      } else {
+        postImage();
+      }
     }
   }
 
@@ -219,9 +201,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
   }
 
   if (loading) return <h1>Loading....</h1>;
-  // if (error) return <h1>Error: Error....</h1>;
-  // console.log("error----->", error);
-  // console.log("myImage-----THIS ONE?>", uploadPhoto);
 
   return (
     <>
@@ -275,8 +254,7 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                   gap: "0.2rem",
                   background: mode ? "#1B2430" : "white",
                   color: mode ? "white" : "black",
-                  // add margin bottom to the form
-                  // marginTop: "-100px",
+
                   marginTop: "-50px",
                   boxShadow: "0px 0px 12px 0px orange",
                 }}>

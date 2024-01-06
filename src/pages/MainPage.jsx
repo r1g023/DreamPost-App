@@ -69,17 +69,12 @@ export const GET_USERS = gql`
   }
 `;
 
-// will need to bring posts here as well
-
 const MainPage = () => {
   const { user, setUser, mode, setMode } = React.useContext(UserContext);
   const [searchValue, setSearchValue] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
   const getAllPosts = useQuery(GET_POSTS);
-  // console.log("error retrieving posts....----->", getAllPosts.error);
-
-  // console.log("datas---->", getAllPosts);
 
   const [postData, setPostData] = React.useState(getAllPosts.data);
 
@@ -91,13 +86,10 @@ const MainPage = () => {
   }
 
   const navigate = useNavigate();
-  // GET users from query
+
   const { data } = useQuery(GET_USERS);
-  // console.log("userListData on Post component---->", data);
 
   React.useEffect(() => {
-    // setMode(!mode);
-
     setMode(user.dark_mode);
     if (user.role === "user") {
       navigate("*");
@@ -155,13 +147,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-// searchValue,
-// setSearchValue,
-// clearResults,
-// errorMessage,
-// setErrorMessage,
-// data,
-// postData,
-// setPostData,
-// loading,
-// error,

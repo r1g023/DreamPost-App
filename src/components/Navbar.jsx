@@ -13,7 +13,7 @@ import { styled } from "@mui/system";
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import { Notifications } from "@mui/icons-material";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import DreamPost from "../assets/DreamPost.png";
 import TemporaryDrawer from "../pages/TemporaryDrawer";
 import { UserContext } from "../App";
@@ -56,22 +56,20 @@ const Navbar = ({ setUser }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  // console.log("user.username on navbar logged in----->", currentUser);
-  // const isCurrentUser = currentUser.user.username === user.username;
+
   React.useEffect(() => {
     if (user === "") {
       setLogout(true);
     }
   }, [user]);
 
-  // this if for logging out the user
   const handleLogout = () => {
     window.localStorage.removeItem("auth-token");
     window.localStorage.removeItem("user");
     window.localStorage.removeItem("editName");
     window.localStorage.removeItem("ab.storage");
     window.localStorage.removeItem("value");
-
+    setUser("");
     handleClose();
     navigate("/login");
   };
@@ -94,7 +92,7 @@ const Navbar = ({ setUser }) => {
         ) : null}
 
         {/* If there's a user.username logged in, display all the tools on navbar */}
-        {user.username ? (
+        {user && (
           <StyledToolbar>
             {/* header*/}
             <Typography
@@ -116,10 +114,9 @@ const Navbar = ({ setUser }) => {
                     }}
                   />
                 </p>
-              ) : (
-                setUser("")
-              )}
+              ) : null}
             </Typography>
+
             {/*----------------------------------------------------------------------------------------------------------------*/}
             {/* Search and show Icon when screen is XS */}
             <TemporaryDrawer />
@@ -164,7 +161,6 @@ const Navbar = ({ setUser }) => {
               <Avatar
                 sx={{ height: 30, width: 30, cursor: "pointer" }}
                 alt="profile photo"
-                // show first letter of username if no avatar
                 src={user.avatar ? user.avatar : ""}
                 id="basic-button"
                 aria-controls={opens ? "basic-menu" : undefined}
@@ -175,14 +171,11 @@ const Navbar = ({ setUser }) => {
               <Typography
                 variant="span"
                 sx={{ marginRight: "5px", cursor: "pointer" }}>
-               
                 {user.username}
               </Typography>
               {/*Link to books */}
             </StyledUserBox>
           </StyledToolbar>
-        ) : (
-          setUser("")
         )}
 
         {/* Hidden Menu */}
@@ -200,7 +193,7 @@ const Navbar = ({ setUser }) => {
             horizontal: "right",
           }}>
           {/* Profile page */}
-          <MenuItem>
+          <MenuItem onClick={handleClose}>
             <Link
               to="/profile"
               style={{ textDecoration: "none", color: "black" }}>
@@ -209,7 +202,7 @@ const Navbar = ({ setUser }) => {
           </MenuItem>
 
           {/* Home page with force reload */}
-          <MenuItem>
+          <MenuItem onClick={handleClose}>
             <Link
               to="/"
               style={{ textDecoration: "none", color: "black" }}
@@ -223,7 +216,7 @@ const Navbar = ({ setUser }) => {
           </MenuItem>
 
           {/*Book page */}
-          <MenuItem>
+          <MenuItem onClick={handleClose}>
             <Link
               to="/books"
               style={{ textDecoration: "none", color: "black" }}

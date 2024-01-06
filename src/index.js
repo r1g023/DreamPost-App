@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "@mui/material";
 import App from "./App";
-// import "./style.less";
 import "./App.css";
 
 import { BrowserRouter } from "react-router-dom";
@@ -15,6 +14,20 @@ import {
   HttpLink,
 } from "@apollo/client";
 import { AUTH_TOKEN } from "./auth-token";
+
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        getPosts: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+      },
+    },
+  },
+});
 
 const authLink = new HttpLink({
   // uri: "http://localhost:5000/graphql/auth", // <= this is the auth server
@@ -36,7 +49,7 @@ const client = new ApolloClient({
     authLink, // <= apollo will send to this if clientName is "authLink"
     graphqlAPI // <= otherwise will send to this
   ),
-  cache: new InMemoryCache(),
+  cache: cache,
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

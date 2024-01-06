@@ -1,31 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserContext } from "../App";
 
 function PrivateRoute({ children }) {
-  // keep track of token on local storage with useEffect
-
   const token = window.localStorage.getItem("auth-token");
-  // console.log("token", token);
-
-  // use jwt-decode to decode token in useEffect
-  // console.log("token", token);
-  // let decodedToken = jwt_decode(token);
-  // console.log("decodedToken", decodedToken);
-
-  // if (decodedToken.exp * 1000 < Date.now()) {
-  //   return <Navigate to="/login" />;
-  // }
+  const { user, setUser } = React.useContext(UserContext);
 
   if (!token) {
-    localStorage.removeItem("editName");
-    localStorage.removeItem("user");
-    localStorage.removeItem("auth-token");
-    window.localStorage.clear();
+    window.localStorage.removeItem("auth-token");
+    window.localStorage.removeItem("user");
+    window.localStorage.removeItem("editName");
+    window.localStorage.removeItem("ab.storage");
+    window.localStorage.removeItem("value");
+
+    toast.error("Your session has expired. Please login again.", {
+      autoClose: 5000,
+
+      onClose: () => {
+        setUser("");
+      },
+    });
     return <Navigate to="/login" />;
   }
 
-  return children;
+  const decoded = jwt_decode(token);
+  if (decoded.exp * 1000 < Date.now()) {
+    window.localStorage.removeItem("auth-token");
+    window.localStorage.removeItem("user");
+    window.localStorage.removeItem("editName");
+    window.localStorage.removeItem("ab.storage");
+    window.localStorage.removeItem("value");
+
+    toast.error("Your session has expired. Please login again.", {
+      autoClose: 5000,
+
+      onClose: () => {
+        setUser("");
+      },
+    });
+
+    return <Navigate to="/login" />;
+  }
+
+  return <>{children}</>;
 }
 
 export default PrivateRoute;

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import imagerror from "../assets/imagerror.jpg";
+import imagerror from "../assets/error404.png";
 import { UserContext } from "../App";
 
 const StyledContainer = styled.div`
@@ -18,9 +18,7 @@ const StyledContainer = styled.div`
 const NoMatch = ({ mode }) => {
   const { user } = React.useContext(UserContext);
 
-  // useEffect to keep track of user role
   React.useEffect(() => {
-    // if the role is user then add the "404" on tab
     if (user.role === "user") {
       document.title = "404 - Page Not Found";
     }
@@ -33,6 +31,7 @@ const NoMatch = ({ mode }) => {
         background: mode ? "#2C3948" : "",
         color: mode ? "white" : "",
         marginTop: "30px",
+        height: "100vh",
       }}>
       <h1
         style={{

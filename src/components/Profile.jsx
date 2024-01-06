@@ -24,6 +24,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import moment from "moment";
 import ProfileModal from "../pages/ProfileModal";
+import jwt_decode from "jwt-decode";
+import { toast, ToastContainer } from "react-toastify";
 
 const GET_USER = gql`
   query getUserById($id: Int!) {
@@ -129,33 +131,21 @@ const StyledBox = styled(Box)({
 });
 
 const Profile = () => {
-  const { user, setUser, mode, setMode } = useContext(UserContext);
+  const { user, setUser, mode } = useContext(UserContext);
   // console.log("user on Profile****", user);
   const [selectedImages, setSelectedImages] = React.useState([]);
   const [uploadPhoto, setUploadPhoto] = React.useState(null);
   const [toggleModal, setToggleModal] = React.useState(false);
-  const navigate = useNavigate();
 
   function toggleModalUpload() {
     setToggleModal(!toggleModal);
     setUploadPhoto(null);
   }
 
-  const { error, data } = useQuery(GET_USER, {
+  const { data } = useQuery(GET_USER, {
     variables: { id: user.id },
   });
   const [updateUser] = useMutation(UPDATE_USER);
-
-  // form for updating user profile
-  const [updateUserID, setUpdateUserID] = React.useState({
-    id: "",
-    first_name: "",
-    last_name: "",
-    dob: "",
-    role: "",
-    avatar: "",
-    about_you: "",
-  });
 
   const [editName, setEditName] = React.useState({
     id: user.id,
@@ -198,8 +188,7 @@ const Profile = () => {
           "https://api.cloudinary.com/v1_1/dcvh93esc/upload",
           formData
         );
-        // console.log("response", response);
-        // add response to my addPost image form
+
         setUploadPhoto(response.data.secure_url);
       } catch {
         // console.log("error uploading image");
@@ -211,47 +200,59 @@ const Profile = () => {
   // handle form submission .
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("updateUserID Submit", updateUserID);
-    // console.log("editName Submit", editName);
-    updateUser({
-      variables: {
-        id: user.id,
-        first_name: editName.first_name,
-        last_name: editName.last_name,
-        dob: editName.dob,
-        role: editName.role,
-        about_you: editName.about_you,
-      },
-    })
-      // add it to set user on local storage
-      .then((res) => {
-        // console.log("res on Profile", res);
-        // setUser(res.data.updateUser);
+    const token = window.localStorage.getItem("auth-token");
+
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      updateUser({
+        variables: {
+          id: user.id,
+          first_name: editName.first_name,
+          last_name: editName.last_name,
+          dob: editName.dob,
+          role: editName.role,
+          about_you: editName.about_you,
+        },
+      }).then((res) => {
         setUser({
           ...user,
-          role: localStorage.setItem(
+          first_name: localStorage.setItem(
             "user",
             JSON.stringify(res.data.updateUser)
           ),
         });
-        setUploadPhoto(null);
+        setReload(!reload);
         window.location.reload();
       });
+      // console.log("updateUserError", updateUserError);
+    }
   };
 
   // handle PHOTO form submission
   function handlePhotoSubmit() {
-    // console.log("updateUserID", updateUserID);
-    updateUser({
-      variables: {
-        id: user.id,
-        avatar: uploadPhoto,
-      },
-    })
-      // add it to set user on local storage
-      .then((res) => {
-        // console.log("res on Profile", res);
-        // setUser(res.data.updateUser);
+    const token = window.localStorage.getItem("auth-token");
+
+    if (!token || (token && jwt_decode(token).exp * 1000 < Date.now())) {
+      toast.error("Your session has expired. Please login again.", {
+        autoClose: 5000,
+        onClose: () => {
+          setUser("");
+        },
+      });
+    } else {
+      updateUser({
+        variables: {
+          id: user.id,
+          avatar: uploadPhoto,
+        },
+      }).then((res) => {
         setUser({
           ...user,
           avatar: localStorage.setItem(
@@ -259,10 +260,11 @@ const Profile = () => {
             JSON.stringify(res.data.updateUser)
           ),
         });
-
-        setUploadPhoto(null);
+        setReload(!reload);
         window.location.reload();
       });
+      // console.log("updateUserError", updateUserError);
+    }
   }
 
   const handleChange = (e) => {

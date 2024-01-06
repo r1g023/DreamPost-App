@@ -9,13 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 
-// {
-//   id: 2,
-//   name: "John Doe",
-//   avatar:
-//     "https://cdn.pixabay.com/photo/2017/01/31/21/23/avatar-2027366_1280.png",
-//   comment: "Wish I could come, but I'm out of town this…",
-
 const RightBarPosts = ({ data, mode }) => {
   return (
     <List
