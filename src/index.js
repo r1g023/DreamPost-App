@@ -49,6 +49,7 @@ const client = new ApolloClient({
     authLink, // <= apollo will send to this if clientName is "authLink"
     graphqlAPI // <= otherwise will send to this
   ),
+
   cache: cache,
 });
 
