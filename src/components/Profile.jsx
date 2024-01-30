@@ -168,9 +168,6 @@ const Profile = () => {
     }
   }, [data, user, reload, setUser]);
 
-  let dateToFormat = "2018-05-16 12:57:13"; //TIMESTAMP
-  moment(dateToFormat).format("DD/MM/YYYY"); // you get "16/05/2018"
-
   // set localStorage to editName
   React.useEffect(() => {
     localStorage.setItem("editName", JSON.stringify(editName));
@@ -531,7 +528,9 @@ const Profile = () => {
           <h3 className="profile">
             DOB:{" "}
             <span className="profile-info">
-              {moment(user.dob).format("MM/DD/YYYY")}
+              {moment(user.dob, "MM-DD-YYYY").isValid()
+                ? moment(user.dob, "MM-DD-YYYY").format("MM/DD/YYYY")
+                : "Invalid date"}
             </span>
           </h3>
           <h3 className="profile">

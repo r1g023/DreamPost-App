@@ -8,6 +8,8 @@ import {
   Grid,
   IconButton,
   Paper,
+  TextField,
+  toggleButtonClasses,
 } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -49,12 +51,14 @@ const Comments = ({
   date,
   mode,
   userList,
+  handleCommentUpdate,
 }) => {
   const currentUser = React.useContext(UserContext);
 
   const isCurrentUser = currentUser.user.username === user;
 
   const { data } = useQuery(GET_USERS);
+  const [editingCommentId, setEditingCommentId] = React.useState(null);
 
   React.useEffect(() => {}, [commentData, data, user]);
 
@@ -66,8 +70,6 @@ const Comments = ({
     <div
       className="commentContainer"
       style={{ maxWidth: "390px", width: "100%" }}>
-      {/* form for adding new comment */}
-
       <div style={{ padding: 14 }}>
         <Paper
           style={{
@@ -98,31 +100,37 @@ const Comments = ({
                 {user}
               </h4>
 
-              {isCurrentUser && commentUpdateToggle && selectedCommentId ? (
+              {isCurrentUser && editingCommentId === id ? (
                 <Modal
-                  onCancel={() => setCommentUpdateToggle(false)}
+                  onCancel={() => {
+                    setEditingCommentId(null);
+                    setCommentUpdateToggle(false);
+                  }}
                   style={{
                     border: "5px solid purple",
                     wordBreak: "break-word",
                   }}>
-                  {id === selectedCommentId.id && (
-                    <textarea
+                  {id === selectedCommentId.id && editingCommentId === id && (
+                    <TextField
                       style={{
                         resize: "vertical",
                         overflow: "auto",
                       }}
-                      name="editComment"
-                      placeholder="Edit comment..."
-                      value={editComment}
-                      onChange={setEditComment}
-                    />
+                      name="comment"
+                      placeholder={comment}
+                      value={editComment.comment}
+                      onChange={handleCommentUpdate}></TextField>
                   )}
 
                   <Button
                     variant="contained"
                     color="success"
                     sx={{ padding: "5px", marginTop: "5px" }}
-                    onClick={() => handleCommentEdit(id)}>
+                    onClick={() => {
+                      handleCommentEdit(id);
+                      setEditingCommentId(null);
+                      setCommentUpdateToggle(false);
+                    }}>
                     Update
                   </Button>
                 </Modal>
@@ -154,9 +162,6 @@ const Comments = ({
           {/* container for the like and edit/delete buttons */}
           <StyledBox>
             <Box sx={{ width: "30%" }}>
-              {/* if current user has not liked the comment, then show like button,
-              else show unlike button
-              */}
               {!liked && (
                 <span
                   className="material-icons"
@@ -180,7 +185,6 @@ const Comments = ({
 
             {/* container for edit and delete buttons */}
             <StyledDeleteEditBox sx={{ width: "70%" }}>
-              {/* Edit comment button, only show if the current logged in user made the comment*/}
               {isCurrentUser && (
                 <>
                   <i
@@ -192,7 +196,11 @@ const Comments = ({
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      setCommentUpdateToggle(!commentUpdateToggle);
+                      setEditingCommentId(id);
+                      setEditComment({
+                        id: id,
+                        comment: comment,
+                      });
                     }}></i>
 
                   {/* Delete comment button */}

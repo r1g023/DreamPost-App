@@ -166,7 +166,6 @@ const ExpandMore = styled((props) => {
 
 const Post = ({ post, handlePostDelete, mode, userList }) => {
   const [toggleModal, setToggleModal] = React.useState(false);
-  const [editComment, setEditComment] = React.useState("");
 
   const [startDate, setStartDate] = React.useState(
     moment().format("MM/DD/YYYY")
@@ -189,11 +188,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   const { data, error, loading } = useQuery(GET_COMMENTS);
 
-  React.useEffect(() => {
-    // console.log("comment data on Post.jsx USE EFFECT---->", data);
-    //reload comments after submitting
-  }, [data]);
-
   const [deleteCommentID] = useMutation(DELETE_COMMENT);
   const [updateCommentID] = useMutation(UPDATE_COMMENT);
   const [addComment] = useMutation(ADD_COMMENT);
@@ -209,6 +203,27 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
     post_id: "",
     date: "",
   });
+
+  const userComment = user.comments.find(
+    (comment) => comment.userId === user.id
+  );
+
+  const [editComment, setEditComment] = React.useState({
+    id: user.id,
+    comment: userComment ? userComment.comment : "",
+  });
+
+  React.useEffect(() => {
+    localStorage.getItem("user");
+    const editComment = localStorage.getItem("editComment");
+    if (editComment) {
+      setEditComment(JSON.parse(editComment));
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    localStorage.setItem("editComment", JSON.stringify(editComment));
+  }, [editComment]);
 
   // Add new comment to comment list
   const handleSubmit = async (e) => {
@@ -331,16 +346,23 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
       updateCommentID({
         variables: {
           id: comment.id,
-          comment: editComment,
+          comment: editComment.comment,
         },
+      }).then(() => {
+        setEditComment({
+          ...editComment,
+          comment: JSON.parse(localStorage.getItem("editComment")).comment,
+        });
+        setCommentUpdateToggle(!commentUpdateToggle);
       });
-      setCommentUpdateToggle(!commentUpdateToggle);
     }
   };
 
   // handle comment edit and update
   const handleCommentUpdate = (e) => {
-    setEditComment(e.target.value);
+    console.log("e.target.value", e.target.value);
+
+    setEditComment({ ...editComment, [e.target.name]: e.target.value });
   };
 
   const isCurrentUser = user.username === post.user;
@@ -521,8 +543,9 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                         handleCommentDelete={() => handleCommentDelete(item)}
                         handleCommentLike={() => handleCommentLike(item)}
                         handleCommentEdit={() => handleCommentEdit(item)}
-                        setEditComment={handleCommentUpdate}
+                        handleCommentUpdate={handleCommentUpdate}
                         editComment={editComment}
+                        setEditComment={setEditComment}
                         setCommentUpdateToggle={setCommentUpdateToggle}
                         commentUpdateToggle={commentUpdateToggle}
                         commentData={data}
