@@ -213,17 +213,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
     comment: userComment ? userComment.comment : "",
   });
 
-  React.useEffect(() => {
-    localStorage.getItem("user");
-    const editComment = localStorage.getItem("editComment");
-    if (editComment) {
-      setEditComment(JSON.parse(editComment));
-    }
-  }, [data]);
-
-  React.useEffect(() => {
-    localStorage.setItem("editComment", JSON.stringify(editComment));
-  }, [editComment]);
+  React.useEffect(() => {}, [data]);
 
   // Add new comment to comment list
   const handleSubmit = async (e) => {
@@ -351,7 +341,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
       }).then(() => {
         setEditComment({
           ...editComment,
-          comment: JSON.parse(localStorage.getItem("editComment")).comment,
+          comment: editComment.comment,
         });
         setCommentUpdateToggle(!commentUpdateToggle);
       });
@@ -360,8 +350,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   // handle comment edit and update
   const handleCommentUpdate = (e) => {
-    console.log("e.target.value", e.target.value);
-
     setEditComment({ ...editComment, [e.target.name]: e.target.value });
   };
 
@@ -390,7 +378,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
                 userList.getUsers.find((user) => user.username === post.user)
                   .avatar
               }>
-              {/* if no avatar, display first letter of username */}
               {post.user.charAt(0).toUpperCase()}
             </Avatar>
           }
@@ -510,7 +497,26 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           <CardContent>
             <h3>Comments</h3>
             {/* Add Comment Form */}
-            <form onSubmit={handleSubmit} className="mb3">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (comment.comment === "") {
+                  toast.warn("Please add a Comment", {
+                    position: "bottom-left",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: 0,
+                    type: "warning",
+                    theme: mode ? "dark" : "light",
+                  });
+                } else {
+                  handleSubmit(e);
+                }
+              }}
+              className="mb3">
               <textarea
                 style={{ display: "block", width: 253, maxWidth: 253 }}
                 name="comment"

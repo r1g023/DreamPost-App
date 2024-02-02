@@ -24,6 +24,11 @@ const cache = new InMemoryCache({
             return incoming;
           },
         },
+        getComments: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
       },
     },
   },

@@ -28,7 +28,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import useCreatePostForm from "../formHooks/useCreatePostForm";
 import jwt_decode from "jwt-decode";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const GET_POSTS = gql`
   query getPosts {

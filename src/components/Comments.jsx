@@ -112,14 +112,21 @@ const Comments = ({
                   }}>
                   {id === selectedCommentId.id && editingCommentId === id && (
                     <TextField
-                      style={{
-                        resize: "vertical",
-                        overflow: "auto",
-                      }}
-                      name="comment"
-                      placeholder={comment}
+                      id="outlined-multiline-static"
+                      label="Edit Comment"
+                      multiline
+                      rows={4}
+                      fullWidth
                       value={editComment.comment}
-                      onChange={handleCommentUpdate}></TextField>
+                      onChange={handleCommentUpdate}
+                      name="comment"
+                      sx={{
+                        "& textarea": {
+                          paddingRight: "0.5em",
+                          color: mode ? "white" : "",
+                        },
+                      }}
+                    />
                   )}
 
                   <Button
@@ -127,6 +134,11 @@ const Comments = ({
                     color="success"
                     sx={{ padding: "5px", marginTop: "5px" }}
                     onClick={() => {
+                      if (editComment.comment.trim() === "") {
+                        setEditingCommentId(null);
+                        setCommentUpdateToggle(false);
+                        return;
+                      }
                       handleCommentEdit(id);
                       setEditingCommentId(null);
                       setCommentUpdateToggle(false);
@@ -185,7 +197,7 @@ const Comments = ({
 
             {/* container for edit and delete buttons */}
             <StyledDeleteEditBox sx={{ width: "70%" }}>
-              {isCurrentUser && (
+              {isCurrentUser && editingCommentId !== id && (
                 <>
                   <i
                     className="fa fa-edit"
