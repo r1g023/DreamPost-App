@@ -9,14 +9,13 @@ import {
   IconButton,
   Paper,
   TextField,
-  toggleButtonClasses,
 } from "@mui/material";
 import { styled } from "@mui/system";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { UserContext } from "../App";
-import SvgIcon from "@mui/material/SvgIcon";
+
 import Modal from "./Modal";
 
 import { GET_USERS } from "../pages/MainPage";

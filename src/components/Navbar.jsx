@@ -64,11 +64,13 @@ const Navbar = ({ setUser }) => {
   }, [user]);
 
   const handleLogout = () => {
+    window.localStorage.removeItem("likedComments");
     window.localStorage.removeItem("auth-token");
     window.localStorage.removeItem("user");
     window.localStorage.removeItem("editName");
     window.localStorage.removeItem("ab.storage");
     window.localStorage.removeItem("value");
+
     setUser("");
     handleClose();
     navigate("/login");
@@ -82,7 +84,6 @@ const Navbar = ({ setUser }) => {
           paddingTop: "9px",
           zIndex: "10",
         }}>
-        {/* If there's no user.username logged in, display logo */}
         {!user.username ? (
           <img
             src={DreamPost}
@@ -91,7 +92,6 @@ const Navbar = ({ setUser }) => {
           />
         ) : null}
 
-        {/* If there's a user.username logged in, display all the tools on navbar */}
         {user && (
           <StyledToolbar>
             {/* header*/}
@@ -156,7 +156,7 @@ const Navbar = ({ setUser }) => {
               />
             </StyledIcons>
 
-            {/* User avatar and name for smaller screens - display if mobile */}
+            {/* User avatar and name for smaller screens */}
             <StyledUserBox onClick={() => setOpen(!open)}>
               <Avatar
                 sx={{ height: 30, width: 30, cursor: "pointer" }}

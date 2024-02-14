@@ -10,6 +10,8 @@ function PrivateRoute({ children }) {
   const { user, setUser } = React.useContext(UserContext);
 
   if (!token) {
+    window.localStorage.removeItem("likedComments");
+
     window.localStorage.removeItem("auth-token");
     window.localStorage.removeItem("user");
     window.localStorage.removeItem("editName");
@@ -28,6 +30,7 @@ function PrivateRoute({ children }) {
 
   const decoded = jwt_decode(token);
   if (decoded.exp * 1000 < Date.now()) {
+    window.localStorage.removeItem("likedComments");
     window.localStorage.removeItem("auth-token");
     window.localStorage.removeItem("user");
     window.localStorage.removeItem("editName");

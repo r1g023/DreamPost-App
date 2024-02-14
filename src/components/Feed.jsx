@@ -88,16 +88,14 @@ const Feed = ({
     } else {
       let deletedPost = await deletePost({
         variables: { id: post.id },
-        //get from cache and update upon delete instead of refetching post query
+
         update: (cache) => {
-          // console.log("post cache--->", cache);
           const prevData = cache.readQuery({ query: GET_POSTS });
           // console.log("prevData--->", prevData);
           const newData = prevData.getPosts.filter(
             (item) => item.id !== post.id
           );
-          // console.log("newData--->", newData);
-          // once all data has been cleared from cache and added to newData, write it back to the cache so that when post is deleted, it will query comments array and  and update the post array with the new data array
+
           cache.writeQuery({
             query: GET_POSTS,
             // also grab the post id

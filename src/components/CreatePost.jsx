@@ -166,11 +166,9 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
     }
   }
 
-  // handle submit for posts
   async function handleSubmit(e) {
     // e.preventDefault();
 
-    // add upload image to my submit form
     const newPost = await createPost({
       variables: {
         title: value.title,
@@ -271,7 +269,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         type="file"
                         sx={{ color: "red", background: "red" }}
                         onChange={(e) => {
-                          // console.log("e.target.files", e.target.files);
                           setSelectedImages(e.target.files[0]);
                         }}
                       />
@@ -285,7 +282,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     {uploadPhoto && (
                       <Image
                         style={{
-                          // make the image responsive
                           height: "225px",
                           width: "200px",
                           display: "block",
@@ -311,7 +307,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                           // }, 5000);
                           if (uploadImage) {
                             uploadImage();
-                            // Remove the image from the input
                             setSelectedImages(null);
                           }
                           if (!selectedImages && !uploadPhoto) {
@@ -340,7 +335,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       color="error"
                       sx={{ marginTop: "1rem" }}
                       onClick={() => {
-                        // fix toggle when canceling photo upload
                         setUploadPhoto(null);
                         setTogglePhoto(!togglePhoto);
                       }}>
@@ -372,14 +366,12 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                     <Typography variant="h6" sx={{ color: "green" }}>
                       @{user.username}
                     </Typography>
-                    {/* if no upload photo then disable title and post */}
                     <TextField
                       id="demo-helper-text-aligned"
                       label={
                         !uploadPhoto ? (
                           "Upload a photo first"
                         ) : (
-                          // add a background color to the title only if the user clicks on input
                           <span
                             style={{
                               background: mode ? "white" : "",
@@ -470,18 +462,15 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                         color: mode ? "white" : "",
                       }}
                       onClick={() => {
-                        // if no image is uploaded, alert user to upload image first
                         if (!uploadPhoto) {
                           window.alert("Please upload a photo");
                         }
                         handleSubmit();
                       }}>
-                      {/* add grayish color to button when disabled, enclose in span */}
                       <span style={{ color: "gray" }}>Submit</span>
                     </Button>{" "}
                     {/* <h2>Photo upload is required</h2> */}
                     <span style={{ fontSize: "12px" }}>
-                      {/* if photo is uploaded do not display text  -*/}
                       {!uploadPhoto ? (
                         <span style={{ color: "red" }}>
                           Photo upload is required
@@ -494,16 +483,12 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                           </span>
                           <br />
                           <br />
-                          {/* <span style={{ color: "orange" }}>
-                            Or click remove photo to upload a new one.
-                          </span> */}
-                          {/* add a button to remove photo */}
+
                           <Button
                             variant="outlined"
                             color="error"
                             sx={{ marginTop: "1rem" }}
                             onClick={() => {
-                              // fix toggle when canceling photo upload
                               setUploadPhoto(null);
                               setTogglePhoto(!togglePhoto);
                             }}>
@@ -516,7 +501,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
                       variant="outlined"
                       disabled={uploadPhoto ? true : false}
                       onClick={() => {
-                        //  do not submit if there's no photo
                         if (!uploadPhoto) {
                           setTogglePhoto(!togglePhoto);
                         }
@@ -530,7 +514,6 @@ const CreatePost = ({ mode, searchValue, setPostData, postData }) => {
               </FormControl>
             </UserBox>
           </Box>
-          {/* add an X button to close modal */}
         </StyledModal>
       ) : null}
     </>

@@ -194,6 +194,8 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
   const [commentUpdateToggle, setCommentUpdateToggle] = React.useState(false);
   const { user, setUser } = React.useContext(UserContext);
 
+  const [likes, setLikes] = React.useState(0);
+
   const [comment, setComment] = React.useState({
     id: "",
     comment: "",
@@ -215,7 +217,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
   React.useEffect(() => {}, [data]);
 
-  // Add new comment to comment list
   const handleSubmit = async (e) => {
     const token = window.localStorage.getItem("auth-token");
 
@@ -269,7 +270,6 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
       if (confirmDelete) {
         let deletedComment = await deleteCommentID({
           variables: { id: comment.id },
-          //get from cache and update upon delete instead of refetching comment query
           update: (cache) => {
             // console.log("comment cache--->", cache);
             const prevData = cache.readQuery({ query: GET_COMMENTS });
@@ -277,22 +277,19 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
             const newData = prevData.getComments.filter(
               (item) => item.id !== comment.id
             );
-            // console.log("newData--->", newData);
-            // once all data has been cleared from cache and added to newData, write it back to the cache so that when comment is deleted, it will query comments array and  and update the comment array with the new data array
+
             cache.writeQuery({
               query: GET_COMMENTS,
               data: { getComments: newData },
             });
           },
         });
-        // console.log("deleted comment errors--->", deletedComment);
 
         return deletedComment;
       }
     }
   };
 
-  // handle update comment and like
   const handleCommentLike = (comment) => {
     const token = window.localStorage.getItem("auth-token");
 
@@ -305,18 +302,37 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
         },
       });
     } else {
-      updateCommentID({
-        variables: {
-          id: comment.id,
-          liked: !comment.liked,
-          count:
-            comment.count +
-            1 *
-              (user.username === comment.user && comment.liked === true
-                ? -1
-                : 1),
-        },
-      });
+      const likedComments = JSON.parse(
+        window.localStorage.getItem("likedComments") || "[]"
+      );
+
+      if (likedComments.includes(comment.id)) {
+        updateCommentID({
+          variables: {
+            id: comment.id,
+            liked: false,
+            count: comment.count - 1,
+          },
+        });
+
+        window.localStorage.setItem(
+          "likedComments",
+          JSON.stringify(likedComments.filter((id) => id !== comment.id))
+        );
+      } else {
+        updateCommentID({
+          variables: {
+            id: comment.id,
+            liked: true,
+            count: comment.count + 1,
+          },
+        });
+
+        window.localStorage.setItem(
+          "likedComments",
+          JSON.stringify([...likedComments, comment.id])
+        );
+      }
     }
   };
 
@@ -460,11 +476,17 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
 
         {/* Card Like Icon, share button and expand button */}
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" sx={{ color: "white" }}>
+          <IconButton
+            aria-label="add to favorites"
+            sx={{ color: "white" }}
+            onClick={() => {
+              setLikes((prevLikes) => (prevLikes === 0 ? 1 : 0));
+            }}>
             <Checkbox
               icon={<FavoriteBorder sx={{ color: mode ? "white" : "" }} />}
               checkedIcon={<Favorite color="secondary" />}
             />
+            <span style={{ fontSize: "12px" }}>+{likes}</span>
           </IconButton>
           <IconButton
             aria-label="share"

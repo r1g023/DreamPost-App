@@ -79,6 +79,7 @@ const MainPage = () => {
   const [postData, setPostData] = React.useState(getAllPosts.data);
 
   function clearResults() {
+    console.log("clearing results");
     setSearchValue("");
     let results = getAllPosts.data.getPosts.map((item) => item);
     setPostData(results);
