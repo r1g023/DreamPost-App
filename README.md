@@ -5,7 +5,7 @@ This is a social media-like-app done with React / LESS / Apollo GraphQL on the f
 I created my own API (Node Express/Knex/PostgreSQL/JWT/GraphQL) on the backend that lets a user register/login> create new posts > comments > like and share to other social media apps. Check out the deployed (Railway)
  backend API for more info at the link below: 
 
-API Link: [https://github.com/r1g023/nodeExpress-graphQL]
+API Link:  
 
 I deployed my app to both Vercel and Netlify, links below: 
 
