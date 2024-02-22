@@ -18,7 +18,7 @@ function PrivateRoute({ children }) {
     window.localStorage.removeItem("ab.storage");
     window.localStorage.removeItem("value");
 
-    toast.error("Your session has expired. Please login again.", {
+    toast.error("Please login again", {
       autoClose: 5000,
 
       onClose: () => {
