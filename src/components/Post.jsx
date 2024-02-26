@@ -474,7 +474,7 @@ const Post = ({ post, handlePostDelete, mode, userList }) => {
           </Typography>
         </CardContent>
 
-        {/* Card Like Icon, share button and expand button */}
+        {/* Card Like Icon, share button and expand button  */}
         <CardActions disableSpacing>
           <IconButton
             aria-label="add to favorites"
