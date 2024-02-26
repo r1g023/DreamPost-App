@@ -4,7 +4,7 @@ export const postList = [
     title: "Shrimp and Chorizo Paella",
     date: "Jun 15, 2022",
     image:
-      "https://res.cloudinary.com/mealthy1/image/upload/ar_16:11,c_fill,f_auto,h_600,q_auto:best,w_800/v1519240983/cms_recipe_featured_image/nkvv343hiftje2g677zu.png",
+      "https://img.taste.com.au/khmxuX4n/w720-h480-cfill-q80/taste/2017/03/onepan-prawn-chor-paella-125252-1.jpg",
     content:
       "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
     method: "Cook Shrimp: 1 lb, Chorizo: 1 lb",
